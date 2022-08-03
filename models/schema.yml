@@ -1,0 +1,345 @@
+version: 2
+
+models:
+  - name: eada
+    description: This table contains the raw data from the eada along with the end year of the data collected.
+
+    columns:
+      - name: year
+        description: The end year of the data collected from the EADAç∂
+      - name: unitid
+        description: This is a unique identifier for a university
+        tests:
+          - not_null
+      - name: institution_name
+        description: institution_name
+      - name: addr1_txt
+        description: addr1_txt
+      - name: addr2_txt
+        description: addr2_txt
+      - name: city_txt
+        description: city_txt
+      - name: state_cd
+        description: state_cd
+      - name: zip_text
+        description: zip_text
+      - name: ClassificationCode
+        description: ClassificationCode
+      - name: classification_name
+        description: classification_name
+      - name: ClassificationOther
+        description: ClassificationOther
+      - name: EFMaleCount
+        description: Total Men
+      - name: EFFemaleCount
+        description: Total Women
+      - name: EFTotalCount
+        description: Grand Total
+      - name: sector_cd
+        description: sector_cd
+      - name: sector_name
+        description: sector_name
+      - name: STUDENTAID_MEN
+        description: Athletic Student Aid/Men's Team
+      - name: STUDENTAID_WOMEN
+        description: Athletic Student Aid/Women's Team
+      - name: STUDENTAID_COED
+        description: Athletic Student Aid/Coed Team
+      - name: STUDENTAID_TOTAL
+        description: Total Student Aid/ Men's/Women's/Coed Team
+      - name: STUAID_MEN_RATIO
+        description: Ratio Athletic Student Aid/Men's Team
+      - name: STUAID_WOMEN_RATIO
+        description: Ratio Athletic Student Aid/Women's Team
+      - name: STUAID_COED_RATIO
+        description: Ratio Athletic Student Aid/Coed Team
+      - name: RECRUITEXP_MEN
+        description: Recruiting Expenses for Men's Team
+      - name: RECRUITEXP_WOMEN
+        description: Recruiting Expenses for Women's Team
+      - name: RECRUITEXP_COED
+        description: Recruiting Expenses for Coed Team
+      - name: RECRUITEXP_TOTAL
+        description: Total Recruiting Exp./Men and Women's Team
+      - name: HDCOACH_SALARY_MEN
+        description: Annual salary per HD Coach/Men's
+      - name: HDCOACH_SALARY_WOMEN
+        description: Annual Salary per HD Coach/Women's
+      - name: HDCOACH_SALARY_COED
+        description: Annual Salary per HD Coach/Coed
+      - name: NUM_HDCOACH_MEN
+        description: Number HD Coaches Men's Team
+      - name: NUM_HDCOACH_WOMEN
+        description: Number HD Coaches Women's Team
+      - name: NUM_HDCOACH_COED
+        description: Number HD Coaches Coed Team
+      - name: HDCOACH_SAL_FTE_MEN
+        description: Ave. salary per FTE HD Coach/ Men's
+      - name: HDCOACH_SAL_FTE_WOMN
+        description: Ave. salary per FTE HD Coach/ Women's
+      - name: HDCOACH_SAL_FTE_COED
+        description: Ave. salary per FTE HD Coach/Coed
+      - name: FTE_HDCOACH_MEN
+        description: Number FTE HD Coach/Men's Team
+      - name: FTE_HDCOACH_WOMEN
+        description: Number FTE HD Coach/Women's Team
+      - name: FTE_HDCOACH_COED
+        description: Number FTE HD Coach/Coed Team
+      - name: ASCOACH_SALARY_MEN
+        description: Annual Salary/Assist. Coach/Men's
+      - name: ASCOACH_SALARY_WOMEN
+        description: Annual Salary/Assist. Coach/Women's
+      - name: ASCOACH_SALARY_COED
+        description: Annual Salary/Assist. Coach/Coed
+      - name: NUM_ASCOACH_MEN
+        description: Number Assist. Coach/Men's
+      - name: NUM_ASCOACH_WOMEN
+        description: Number Assist. Coach/Women's
+      - name: NUM_ASCOACH_COED
+        description: Number Assist. Coach/Coed
+      - name: ASCOACH_SAL_FTE_MEN
+        description: Ave. salary per FTE/Men's
+      - name: ASCOACH_SAL_FTE_WOMN
+        description: Ave. salary per FTE/Women's
+      - name: ASCOACH_SAL_FTE_COED
+        description: Ave. salary per FTE/Coed
+      - name: FTE_ASCOACH_MEN
+        description: Number FTEs Assist. Coach/Men's
+      - name: FTE_ASCOACH_WOMEN
+        description: Number FTEs Assist. Coach/Women's
+      - name: FTE_ASCOACH_COED
+        description: Number FTEs Assist. Coach/Coed
+      - name: IL_PARTIC_MEN
+        description: Total Number Participants Men
+      - name: IL_PARTIC_WOMEN
+        description: Total Number Participants Women
+      - name: IL_PARTIC_COED_MEN
+        description: Total Number Participants Men Coed
+      - name: IL_PARTIC_COED_WOMEN
+        description: Total Number Participants Women Coed
+      - name: IL_SUM_PARTIC_MEN
+        description: Total Number Participants Men/Men Coed
+      - name: IL_SUM_PARTIC_WOMEN
+        description: Total Number Participants Women/Women Coed
+      - name: IL_OPEXPPERPART_MEN
+        description: Total Exp. Per Participant/Men
+      - name: IL_OPEXPPERTEAM_MEN
+        description: Total Exp. Per Team/Men
+      - name: IL_OPEXPPERPART_WOMEN
+        description: Total Exp. Per Participant/Women
+      - name: IL_OPEXPPERTEAM_WOMEN
+        description: Total Exp. Per Team/Women
+      - name: IL_TOTAL_OPEXP_MENWOMEN
+        description: Total Exp. Men and Women
+      - name: IL_OPEXPPERPART_COED_MEN
+        description: Total Exp. Per Participant/Coed Men
+      - name: IL_OPEXPPERTEAM_COED_MEN
+        description: Total Exp. Per Team/Coed Men
+      - name: IL_OPEXP_PART_COED_WOMEN
+        description: Total Exp. Per Participant Women/Coed
+      - name: IL_OPEXP_TEAM_COED_WOMEN
+        description: Total Exp. Per Team Women/Coed
+      - name: IL_TOTAL_OPEXP_COEDTEAM
+        description: Total Exp. Coed Men/Coed Women
+      - name: IL_SUM_OPEXPPERPART_MEN
+        description: Total Exp. Per Participant/Men/Coed Men
+      - name: IL_SUM_OPEXPPERTEAM_MEN
+        description: Total Exp. Per Team/Men/Coed Men
+      - name: IL_SUM_OPEXPPERPART_WOMEN
+        description: Total Exp. Per Participant/Women/Coed Women
+      - name: IL_SUM_OPEXPPERTEAM_WOMEN
+        description: Total Exp. Per Team/Women/Coed Women
+      - name: IL_TOTAL_OPEXP_INCLCOED
+        description: Total Exp. Men/Women/Coed Men/Women
+      - name: IL_MEN_FTHEADCOACH_MALE
+        description: Total Number Men's HD Coach/Male/Full-Time
+      - name: IL_MEN_PTHEADCOACH_MALE
+        description: Total Number Men's HD Coach/Male/Part-Time
+      - name: IL_MEN_FTUNIVEMPLOY_MALE
+        description: Total Number Men's HD Coach/Male/FTEmp
+      - name: IL_MEN_PTUNIVEMPLOY_MALE
+        description: Total Number Men's HD Coach/Male/PTEmp
+      - name: IL_MEN_FTHEADCOACH_FEM
+        description: Total Number Men's HD Coach/Female/Full-Time
+      - name: IL_MEN_PTHEADCOACH_FEM
+        description: Total Number Men's HD Coach/Female/Part-Time
+      - name: IL_MEN_FTUNIVEMPLOY_FEM
+        description: Total Number Men's HD Coach/Female/FTEmp
+      - name: IL_MEN_PTUNIVEMPLOY_FEM
+        description: Total Number Men's HD Coach/Female/PTEmp
+      - name: IL_MEN_TOTAL_HEADCOACH
+        description: Total Number HD Coach/Men's Team
+      - name: IL_WOMEN_FTHDCOACH_MALE
+        description: Total Number Women's HD Coach/Male/Full-Time
+      - name: IL_WOMEN_PTHDCOACH_MALE
+        description: Total Number Women's HD Coach/Male/Part-Time
+      - name: IL_WOMEN_FTUNIVEMP_MALE
+        description: Total Number Women's HD Coach/Male/FTEmp
+      - name: IL_WOMEN_PTUNIVEMP_MALE
+        description: Total Number Women's HD Coach/Male/PTEmp
+      - name: IL_WOMEN_FTHDCOACH_FEM
+        description: Total Number Women's HD Coach/Female/Full-Time
+      - name: IL_WOMEN_PTHDCOACH_FEM
+        description: Total Number Women's HDCoach/Female/Part-Time
+      - name: IL_WOMEN_FTUNIVEMP_FEM
+        description: Total Number Women's HDCoach/Female/FTEmp
+      - name: IL_WOMEN_PTUNIVEMP_FEM
+        description: Total Number Women's HD Coach/Female/PTEmp
+      - name: IL_WOMEN_TOTAL_HDCOACH
+        description: Total Number HDCoach/Women's Team
+      - name: IL_COED_FTHDCOACH_MALE
+        description: Total Number Coed HD Coach//Male/Full-Time
+      - name: IL_COED_PTHDCOACH_MALE
+        description: Total Number Coed HD Coach/Male/Part-Time
+      - name: IL_COED_FTUNIVEMP_MALE
+        description: Total Number Coed HD Coach/Male/FTEmp
+      - name: IL_COED_PTUNIVEMP_MALE
+        description: Total Number Coed HD Coach/Male/PTEmp
+      - name: IL_COED_FTHDCOACH_FEM
+        description: Total Number Coed HD Coach/Female/Full-Time
+      - name: IL_COED_PTHDCOACH_FEM
+        description: Total Number Coed HD Coach/Female/Part-Time
+      - name: IL_COED_FTUNIVEMP_FEM
+        description: Total Number Coed HD Coach/Female/FTEmp
+      - name: IL_COED_PTUNIVEMP_FEM
+        description: Total Number Coed HD Coach/Female/PTEmp
+      - name: IL_COED_TOTAL_HDCOACH
+        description: Total Number Coed Team HD Coaches
+      - name: IL_SUM_FTHDCOACH_MALE
+        description: Total Number Male HD Coaches/Men/Women/Coed/Full-Time
+      - name: IL_SUM_PTHDCOACH_MALE
+        description: Total Number Male HD Coaches/Men/Women/Coed/Part-Time
+      - name: IL_SUM_FTUNIVEMP_MALE
+        description: Total Number Male HD Coaches/Men/Women/Coed/FTEmp
+      - name: IL_SUM_PTUNIVEMP_MALE
+        description: Total Number Male HD Coaches/Men/Women/Coed/PTEmp
+      - name: IL_SUM_FTHDCOACH_FEM
+        description: Total Number Female HD Coaches/Men/Women/Coed/Full-Time
+      - name: IL_SUM_PTHDCOACH_FEM
+        description: Total Number Female HD Coaches/Men/Women/Coed/Part-Time
+      - name: IL_SUM_FTUNIVEMP_FEM
+        description: Total Number Female HD Coaches/Men/Women/Coed/FTEmp
+      - name: IL_SUM_PTUNIVEMP_FEM
+        description: Total Number Female HD Coaches/Men/Women/Coed/PTEmp
+      - name: IL_SUM_TOTAL_HDCOACH
+        description: Total Number HD Coaches/Men/Women/Coed Teams
+      - name: IL_MEN_FTASCOACH_MALE
+        description: Total Number Men's Assist. Coach/Male/Full-Time
+      - name: IL_MEN_PTASCOACH_MALE
+        description: Total Number Men's Assist. Coach/Male/Part-Time
+      - name: IL_MEN_FTACUNIVEMP_MALE
+        description: Total Number Men's Assist. Coach/Male/FTEmp
+      - name: IL_MEN_PTACUNIVEMP_MALE
+        description: Total Number Men's Assist. Coach/Male/PTEmp
+      - name: IL_MEN_FTASSTCOACH_FEM
+        description: Total Number Men's Assist. Coach/Female/Full-Time
+      - name: IL_MEN_PTASSTCOACH_FEM
+        description: Total Number Men's Assist. Coach/Female/Part-Time
+      - name: IL_MEN_FTACUNIVEMP_FEM
+        description: Total Number Men's Assist. Coach/Female/FTEmp
+      - name: IL_MEN_PTACUNIVEMP_FEM
+        description: Total Number Men's Assist. Coach/Female/PTEmp
+      - name: IL_MEN_TOTAL_ASSTCOACH
+        description: Total Number of Total Assist. Coaches in Men's Team
+      - name: IL_WOMEN_FTASCOACH_MALE
+        description: Total Number Women's Assist. Coach/Male/Full-Time
+      - name: IL_WOMEN_PTASCOACH_MALE
+        description: Total Number Women's Assist. Coach/Male/Part-Time
+      - name: IL_WOMEN_FTACUNEMP_MALE
+        description: Total Number Women's Assist. Coach/Male/FTEmp
+      - name: IL_WOMEN_PTACUNEMP_MALE
+        description: Total Number Women's Assist. Coach/Male/PTEmp
+      - name: IL_WOMEN_FTASTCOACH_FEM
+        description: Total Number Women's Assist. Coach/Female/Full-Time
+      - name: IL_WOMEN_PTASTCOACH_FEM
+        description: Total Number Women's Assist. Coach/Female/Part-Time
+      - name: IL_WOMN_FTACUNIVEMP_FEM
+        description: Total Number Women's Assist. Coach/Female/FTEmp
+      - name: IL_WOMN_PTACUNIVEMP_FEM
+        description: Total Number Women's Assist. Coach Female/PTEmp
+      - name: IL_WOMEN_TOTAL_ASTCOACH
+        description: Total Number of Total Assist. Coaches in Women's Team
+      - name: IL_COED_FTASCOACH_MALE
+        description: Total Number Coed Assist. Coach/Male/Full-Time
+      - name: IL_COED_PTASCOACH_MALE
+        description: Total Number Coed Assist. Coach/Male/Part-Time
+      - name: IL_COED_FTACUNEMP_MALE
+        description: Total Number Coed Assist. Coach/Male/FTEmp
+      - name: IL_COED_PTACUNEMP_MALE
+        description: Total Number Coed Assist. Coach/Male/PTEmp
+      - name: IL_COED_FTASTCOACH_FEM
+        description: Total Number Coed Assist. Coach/Female/Full-Time
+      - name: IL_COED_PTASTCOACH_FEM
+        description: Total Number Coed Assist. Coach/Female/Part-Time
+      - name: IL_COED_FTACUNIVEMP_FEM
+        description: Total Number Coed Assist. Coach/Female/FTEmp
+      - name: IL_COED_PTACUNIVEMP_FEM
+        description: Total Number Coed Assist. Coach/Female/PTEmp
+      - name: IL_COED_TOTAL_ASTCOACH
+        description: Total Number of Total Assist. Coaches in Coed Team
+      - name: IL_SUM_FTASCOACH_MALE
+        description: Total Number Assist. Coach/Men/Women/Coed/Male/Full-Time
+      - name: IL_SUM_PTASCOACH_MALE
+        description: Total Number Assist. Coach/Men/Women/Coed/Male/Part-Time
+      - name: IL_SUM_FTACUNIVEMP_MALE
+        description: Total Number Assist. Coach/Men/Women/Coed/Male/FTEmp
+      - name: IL_SUM_PTACUNIVEMP_MALE
+        description: Total Number Assist. Coach/Men/Women/Coed/Male/PTEmp
+      - name: IL_SUM_FTASCOACH_FEM
+        description: Total Number Assist. Coach/Men/Women/Coed/Female/Full-Time
+      - name: IL_SUM_PTASCOACH_FEM
+        description: Total Number Assist. Coach/Men/Women/Coed/Female/Part-Time
+      - name: IL_SUM_FTACUNIVEMP_FEM
+        description: Total Number Assist. Coach/Men/Women/Coed/Female/FTEmp
+      - name: IL_SUM_PTACUNIVEMP_FEM
+        description: Total Number Assist. Coach/Men/Women/Coed/Female/PTEmp
+      - name: IL_SUM_TOTAL_ASSTCOACH
+        description: Total Number Assist. Coaches/Men/Women/Coed Teams
+      - name: IL_REV_MEN
+        description: Total Revenues per Team for Men
+      - name: IL_REV_WOMEN
+        description: Total Revenues per Team for Women
+      - name: IL_TOTAL_REV_MENWOMEN
+        description: Total Revenues per Team for Men and Women
+      - name: IL_REV_COED_MEN
+        description: Total Revenues per Team for Coed Men
+      - name: IL_REV_COED_WOMEN
+        description: Total Revenues per Team for Coed Women
+      - name: IL_TOTAL_REV_COED
+        description: Total Revenues per Team/ Coed Men/Coed Women
+      - name: IL_REVENUE_MENALL
+        description: Total Revenues per Team for Men's and Coed Men
+      - name: IL_REVENUE_WOMENALL
+        description: Total Revenues per Team for Women's and Coed Women
+      - name: IL_TOTAL_REVENUE_ALL
+        description: Total Revenues per Team and Total Coed Revenues
+      - name: IL_EXP_MEN
+        description: Total Expenses per Team for Men
+      - name: IL_EXP_WOMEN
+        description: Total Expenses per Team for Women
+      - name: IL_TOTAL_EXP_MENWOMEN
+        description: Total Expenses per Team for Men and Women
+      - name: IL_EXP_COED_MEN
+        description: Total Expenses per Team for Coed Men
+      - name: IL_EXP_COED_WOMEN
+        description: Total Expenses per Team for Coed Women
+      - name: IL_TOTAL_EXP_COED
+        description: Total Expenses per Team/Coed Men and Coed Women
+      - name: IL_EXPENSE_MENALL
+        description: Total Expenses per Team for Men's and Coed Men
+      - name: IL_EXPENSE_WOMENALL
+        description: Total Expenses per Team for Women's and Coed Women
+      - name: IL_TOTAL_EXPENSE_ALL
+        description: Total Sum of Expenses per Team and Total Coed Expenses
+      - name: UNDUP_CT_PARTIC_MEN
+        description: Unduplicated Counts of Participants in Men's Team and Men's Coed Team
+      - name: UNDUP_CT_PARTIC_WOMEN
+        description: Unduplicated Counts of Participants in Women's Team and Women's Coed Team.
+      - name: TOT_REVENUE_ALL_NOTALLOC
+        description: Total Revenues Not Allocated by Gender/Sport
+      - name: TOT_EXPENSE_ALL_NOTALLOC
+        description: Total Expenses Not Allocated by Gender/Sport
+      - name: GRND_TOTAL_REVENUE
+        description: Grand Total Revenues
+      - name: GRND_TOTAL_EXPENSE
+        description: Grand Total Expenses
