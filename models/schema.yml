@@ -405,4 +405,18 @@ models:
       - name: grand_total_revenue
       - name: grand_total_expense
       - name: percentage_males_enrolled
+        meta:
+          dimension:
+            label: "Percentage of Males Enrolled"
+            sql: "enrollment_male::float / enrollment_total"
+            hidden: false
+            round: 2
+            format: 'percent'
       - name: percentage_females_enrolled
+        meta:
+          dimension:
+            label: "Percentage of Females Enrolled"
+            sql: "enrollment_female::float / enrollment_total"
+            hidden: false
+            round: 2
+            format: 'Percent'
