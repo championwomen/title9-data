@@ -1,20 +1,20 @@
 version: 2
 
 models:
-  - name: eada
+  - name: eada_full
     description: This table contains the raw data from the eada along with the end year of the data collected.
 
     columns:
       - name: year
-        description: The end year of the data collected from the EADAç∂
+        description: The end year of the data collected from the EADA
       - name: unitid
         description: This is a unique identifier for a university
         tests:
           - not_null
       - name: institution_name
-        description: institution_name
+        description: Institution Name
       - name: addr1_txt
-        description: addr1_txt
+        description: Street Address Line 1
       - name: addr2_txt
         description: addr2_txt
       - name: city_txt
@@ -343,3 +343,64 @@ models:
         description: Grand Total Revenues
       - name: GRND_TOTAL_EXPENSE
         description: Grand Total Expenses
+
+  - name: eada
+    description: This table contains the processed data from the eada along with the end year of the data collected.
+
+    columns:
+      - name: year
+        description: The end year of the data collected from the EADA
+      - name: institution_id
+      - name: institution_name
+      - name: state
+      - name: classification
+      - name: enrollment_male
+      - name: enrollment_female
+      - name: enrollment_total
+      - name: athletic_student_aid_for_men
+      - name: athletic_student_aid_for_women
+      - name: athletic_student_aid_for_coed
+      - name: athletic_student_aid_total
+      - name: athletic_student_aid_ratio_men
+      - name: athletic_student_aid_ratio_women
+      - name: athletic_student_aid_coed_ratio
+      - name: recruiting_expenses_for_men
+      - name: recruiting_expenses_for_women
+      - name: recruiting_expenses_for_coed
+      - name: recruiting_expenses_total
+      - name: num_participating_men_on_mens_teams
+      - name: num_participating_women_on_womens_teams
+      - name: num_participating_men_on_coed_teams
+      - name: num_participating_coed_women
+      - name: num_participating_men_total
+      - name: num_participating_women_total
+      - name: expenses_per_participant_on_mens_teams
+      - name: total_expenses_for_mens_team
+      - name: expenses_per_participant_on_womens_team
+      - name: total_expenses_for_womens_team
+      - name: total_expenses_for_men_and_women
+      - name: expenses_per_participant_men_on_coed_teams
+      - name: total_expenses_for_men_on_coed_teams
+      - name: expenses_per_participant_women_on_coed_teams
+      - name: expenses_per_team_women_on_coed_teams
+      - name: total_expenses_per_coed_team
+      - name: expenses_per_particpant_men_including_coed
+      - name: total_expenses_men_including_coed
+      - name: expenses_per_participant_women_including_coed
+      - name: total_expenses_women_including_coed
+      - name: total_expenses_including_coed
+      - name: total_revenue_mens_teams
+      - name: total_revenue_womens_teams
+      - name: total_revenue_mens_and_womens_teams
+      - name: total_revenue_men_on_coed_teams
+      - name: total_revenue_women_on_coed_teams
+      - name: total_revenue_coed
+      - name: total_revenue_men_including_coed
+      - name: total_revenue_women_including_coed
+      - name: total_revenue_all_teams
+      - name: unduplicated_men_participanting_in_mens_and_coed
+      - name: unduplicated_women_participating_in_womens_and_coed
+      - name: total_revenue_not_allocated_by_gender_or_sport
+      - name: total_expenses_not_allocated_by_gender_or_sport
+      - name: grand_total_revenue
+      - name: grand_total_expense
