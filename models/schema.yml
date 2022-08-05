@@ -432,8 +432,39 @@ models:
       - name: num_participating_women_on_womens_teams
       - name: num_participating_men_on_coed_teams
       - name: num_participating_coed_women
-      - name: num_participating_men_total
-      - name: num_participating_women_total
+      - name: num_participating_men
+        meta:
+          dimension:
+            type: number
+          metrics:
+            total_num_participating_men:
+              type: sum
+      - name: num_participating_women
+        meta:
+          dimension:
+            type: number
+          metrics:
+            total_num_participating_women:
+              type: sum
+      - name: num_participating_athletes
+        meta:
+          dimension:
+            type: number
+          metrics:
+            total_num_participating_athletes:
+              type: sum
+            total_men_participating_percentage:
+              label: "Unduplicated Percentage of Athletes Male"
+              type: number
+              sql: "(${total_num_participating_men}::float / NULLIF(${total_num_participating_athletes},0))"
+              round: 2
+              format: 'percent'
+            total_women_participating_percentage:
+              label: "Unduplicated Percentage of Athletes Female"
+              type: number
+              sql: "(${total_num_participating_women}::float / NULLIF(${total_num_participating_athletes},0))"
+              round: 2
+              format: 'percent'
       - name: expenses_per_participant_on_mens_teams
         meta:
           dimension:
@@ -608,7 +639,7 @@ models:
         meta:
           dimension:
             label: "Percentage of Males Enrolled"
-            sql: "enrollment_male::float / enrollment_total"
+            sql: "enrollment_male::float / NULLIF(enrollment_total,0)"
             hidden: false
             round: 2
             format: 'percent'
@@ -616,7 +647,7 @@ models:
         meta:
           dimension:
             label: "Percentage of Females Enrolled"
-            sql: "enrollment_female::float / enrollment_total"
+            sql: "enrollment_female::float / NULLIF(enrollment_total,0)"
             hidden: false
             round: 2
-            format: 'Percent'
+            format: 'percent'
