@@ -17,7 +17,7 @@ with eada_renanmed as (
     studentaid_men as athletic_student_aid_for_men,
     studentaid_women as athletic_student_aid_for_women,
     studentaid_coed as athletic_student_aid_for_coed,
-    studentaid_total as athletic_student_aid_total,
+    studentaid_total as athletic_student_aid,
     stuaid_men_ratio / 100.0 as athletic_student_aid_ratio_men,
     stuaid_women_ratio / 100.0 as athletic_student_aid_ratio_women,
     stuaid_coed_ratio / 100.0 as athletic_student_aid_coed_ratio,

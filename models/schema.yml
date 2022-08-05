@@ -375,12 +375,17 @@ models:
             label: "Athetic Student Aid for Coed Teams"
             round: 2
             format: 'usd'
-      - name: athletic_student_aid_total
+      - name: athletic_student_aid
         meta:
           dimension:
-            label: "Total Athetic Student Aid"
+            label: "Athetic Student Aid"
             round: 2
             format: 'usd'
+          metrics:
+            total_athletic_student_aid:
+              label: "Total Athletic Student Aid"
+              type: sum
+              format: 'usd'
       - name: athletic_student_aid_ratio_men
         meta:
           dimension:
