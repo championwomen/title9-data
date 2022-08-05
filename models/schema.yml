@@ -404,3 +404,5 @@ models:
       - name: total_expenses_not_allocated_by_gender_or_sport
       - name: grand_total_revenue
       - name: grand_total_expense
+      - name: percentage_males_enrolled
+      - name: percentage_females_enrolled
