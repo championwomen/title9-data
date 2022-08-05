@@ -385,20 +385,20 @@ models:
         meta:
           dimension:
             label: "Percentage of Athentic Student Aid for Male Athetes"
-        round: 2
-        format: 'percent'
+            round: 2
+            format: 'percent'
       - name: athletic_student_aid_ratio_women
         meta:
           dimension:
             label: "Percentage of Athentic Student Aid for Female Athetes"
-        round: 2
-        format: 'percent'
+            round: 2
+            format: 'percent'
       - name: athletic_student_aid_coed_ratio
         meta:
           dimension:
             label: "Percentage of Athentic Student Aid for Coed Athetes"
-        round: 2
-        format: 'percent'
+            round: 2
+            format: 'percent'
       - name: recruiting_expenses_for_men
         meta:
           dimension:
