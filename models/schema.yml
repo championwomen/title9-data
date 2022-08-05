@@ -358,16 +358,71 @@ models:
       - name: enrollment_female
       - name: enrollment_total
       - name: athletic_student_aid_for_men
+        meta:
+          dimension:
+            label: "Athetic Student Aid for Men's Teams"
+            round: 2
+            format: 'usd'
       - name: athletic_student_aid_for_women
+        meta:
+          dimension:
+            label: "Athetic Student Aid for Women's Teams"
+            round: 2
+            format: 'usd'
       - name: athletic_student_aid_for_coed
+        meta:
+          dimension:
+            label: "Athetic Student Aid for Coed Teams"
+            round: 2
+            format: 'usd'
       - name: athletic_student_aid_total
+        meta:
+          dimension:
+            label: "Total Athetic Student Aid"
+            round: 2
+            format: 'usd'
       - name: athletic_student_aid_ratio_men
+        meta:
+          dimension:
+            label: "Percentage of Athentic Student Aid for Male Athetes"
+        round: 2
+        format: 'percent'
       - name: athletic_student_aid_ratio_women
+        meta:
+          dimension:
+            label: "Percentage of Athentic Student Aid for Female Athetes"
+        round: 2
+        format: 'percent'
       - name: athletic_student_aid_coed_ratio
+        meta:
+          dimension:
+            label: "Percentage of Athentic Student Aid for Coed Athetes"
+        round: 2
+        format: 'percent'
       - name: recruiting_expenses_for_men
+        meta:
+          dimension:
+            label: "Recruiting Expenses for Men's Teams"
+            round: 2
+            format: 'usd'
       - name: recruiting_expenses_for_women
+        meta:
+          dimension:
+            label: "Recruiting Expenses for Women's Teams"
+            round: 2
+            format: 'usd'
       - name: recruiting_expenses_for_coed
+        meta:
+          dimension:
+            label: "Recruiting Expenses for Coed Teams"
+            round: 2
+            format: 'usd'
       - name: recruiting_expenses_total
+        meta:
+          dimension:
+            label: "Total Recruiting Expenses"
+            round: 2
+            format: 'usd'
       - name: num_participating_men_on_mens_teams
       - name: num_participating_women_on_womens_teams
       - name: num_participating_men_on_coed_teams
@@ -375,35 +430,175 @@ models:
       - name: num_participating_men_total
       - name: num_participating_women_total
       - name: expenses_per_participant_on_mens_teams
-      - name: total_expenses_for_mens_team
-      - name: expenses_per_participant_on_womens_team
-      - name: total_expenses_for_womens_team
+        meta:
+          dimension:
+            label: "Expenses Per Participant on Men's Teams"
+            round: 2
+            format: 'usd'
+      - name: total_expenses_for_mens_teams
+        meta:
+          dimension:
+            label: "Total Expenses for Men's Teams"
+            round: 2
+            format: 'usd'
+      - name: expenses_per_participant_on_womens_teams
+        meta:
+          dimension:
+            label: "Expenses Per Participant on Women's Teams"
+            round: 2
+            format: 'usd'
+      - name: total_expenses_for_womens_teams
+        meta:
+          dimension:
+            label: "Total Expenses for Women's Teams"
+            round: 2
+            format: 'usd'
       - name: total_expenses_for_men_and_women
+        meta:
+          dimension:
+            label: "Expenses for Men and Women"
+            round: 2
+            format: 'usd'
       - name: expenses_per_participant_men_on_coed_teams
+        meta:
+          dimension:
+            label: "Expenses Per Participant For Men on Coed Teams"
+            round: 2
+            format: 'usd'
       - name: total_expenses_for_men_on_coed_teams
+        meta:
+          dimension:
+            label: "Expenses Per Team Women on Coed Teams"
+            round: 2
+            format: 'usd'
       - name: expenses_per_participant_women_on_coed_teams
-      - name: expenses_per_team_women_on_coed_teams
+        meta:
+          dimension:
+            label: "Expenses Per Participant For Women on Coed Teams"
+            round: 2
+            format: 'usd'
+      - name: total_expenses_for_women_on_coed_teams
+        meta:
+          dimension:
+            label: "Total Expenses For Women on Coed Teams"
+            round: 2
+            format: 'usd'
       - name: total_expenses_per_coed_team
+        meta:
+          dimension:
+            label: "Total Expenses Per Coed Team"
+            round: 2
+            format: 'usd'
       - name: expenses_per_particpant_men_including_coed
+        meta:
+          dimension:
+            label: "Total Expenses Per Participant for Men's Team including Coed"
+            round: 2
+            format: 'usd'
       - name: total_expenses_men_including_coed
+        meta:
+          dimension:
+            label: "Total Expenses for Men's Teams including Coed"
+            round: 2
+            format: 'usd'
       - name: expenses_per_participant_women_including_coed
+        meta:
+          dimension:
+            label: "Total Expenses Per Participant for Women's Team including Coed"
+            round: 2
+            format: 'usd'
       - name: total_expenses_women_including_coed
+        meta:
+          dimension:
+            label: "Total Expenses for Women's Team including Coed"
+            round: 2
+            format: 'usd'
       - name: total_expenses_including_coed
+        meta:
+          dimension:
+            label: "Total Expenses including Coed"
+            round: 2
+            format: 'usd'
       - name: total_revenue_mens_teams
+        meta:
+          dimension:
+            label: "Total Revenue for Men's Teams"
+            round: 2
+            format: 'usd'
       - name: total_revenue_womens_teams
+        meta:
+          dimension:
+            label: "Total Revenue for Women's Teams"
+            round: 2
+            format: 'usd'
       - name: total_revenue_mens_and_womens_teams
+        meta:
+          dimension:
+            label: "Total Revenue for Men's and Women's Teams"
+            round: 2
+            format: 'usd'
       - name: total_revenue_men_on_coed_teams
+        meta:
+          dimension:
+            label: "Total Revenue for Men on Coed Teams"
+            round: 2
+            format: 'usd'
       - name: total_revenue_women_on_coed_teams
+        meta:
+          dimension:
+            label: "Total Revenue for Women on Coed Teams"
+            round: 2
+            format: 'usd'
       - name: total_revenue_coed
+        meta:
+          dimension:
+            label: "Total Revenue for Coed Teams"
+            round: 2
+            format: 'usd'
       - name: total_revenue_men_including_coed
+        meta:
+          dimension:
+            label: "Total Revenue for Men's Teams including Coed"
+            round: 2
+            format: 'usd'
       - name: total_revenue_women_including_coed
+        meta:
+          dimension:
+            label: "Total Revenue for Women's Teams including Coed"
+            round: 2
+            format: 'usd'
       - name: total_revenue_all_teams
+        meta:
+          dimension:
+            label: "Total Revenue All Teams"
+            round: 2
+            format: 'usd'
       - name: unduplicated_men_participanting_in_mens_and_coed
       - name: unduplicated_women_participating_in_womens_and_coed
       - name: total_revenue_not_allocated_by_gender_or_sport
+        meta:
+          dimension:
+            label: "Total Revenue Not Allocated by Gender or Sport"
+            round: 2
+            format: 'usd'
       - name: total_expenses_not_allocated_by_gender_or_sport
+        meta:
+          dimension:
+            label: "Total Expenses Not Allocated by Gender or Sport"
+            round: 2
+            format: 'usd'
       - name: grand_total_revenue
+        meta:
+          dimension:
+            label: "Grand Total Revenue"
+            round: 2
+            format: 'usd'
       - name: grand_total_expense
+        meta:
+          dimension:
+            label: "Grand Total Expenses"
+            round: 2
+            format: 'usd'
       - name: percentage_males_enrolled
         meta:
           dimension:
