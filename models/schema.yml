@@ -353,6 +353,7 @@ models:
         meta:
           dimension:
             type: date
+            sql: to_date(CAST(year AS CHAR(4)), 'yyyy')
       - name: institution_id
       - name: institution_name
       - name: state
