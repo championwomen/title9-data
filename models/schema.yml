@@ -350,6 +350,9 @@ models:
     columns:
       - name: year
         description: The end year of the data collected from the EADA
+        meta:
+          dimension:
+            type: date
       - name: institution_id
       - name: institution_name
       - name: state
@@ -357,6 +360,20 @@ models:
       - name: enrollment_male
       - name: enrollment_female
       - name: enrollment_total
+      - name: enrollment_female_percentage
+        meta:
+          dimension:
+            label: "Enrollment Female Percentage"
+            sql: ${enrollment_female}::float / NULLIF(${enrollment_total},0)
+            round: 2
+            format: "percent"
+      - name: enrollment_female_percentage
+        meta:
+          dimension:
+            label: "Enrollment Male Percentage"
+            sql: ${enrollment_male}::float / NULLIF(${enrollment_total},0)
+            round: 2
+            format: "percent"
       - name: athletic_student_aid_for_men
         meta:
           dimension:
@@ -395,39 +412,56 @@ models:
       - name: athletic_student_aid_ratio_women
         meta:
           dimension:
-            label: "Percentage of Athentic Student Aid for Female Athetes"
+            label: "% of Athentic Student Aid for Female Athetes"
             round: 2
             format: 'percent'
       - name: athletic_student_aid_coed_ratio
         meta:
           dimension:
-            label: "Percentage of Athentic Student Aid for Coed Athetes"
+            hidden: true
+            label: "% of Athentic Student Aid for Coed Athetes"
             round: 2
             format: 'percent'
       - name: recruiting_expenses_for_men
         meta:
           dimension:
-            label: "Recruiting Expenses for Men's Teams"
-            round: 2
-            format: 'usd'
+            hidden: true
+          metrics:
+            total_recruiting_expenses_for_women:
+              type: sum
+              label: "Recruiting Expenses for Men's Teams"
+              round: 2
+              format: 'usd'
       - name: recruiting_expenses_for_women
         meta:
           dimension:
-            label: "Recruiting Expenses for Women's Teams"
-            round: 2
-            format: 'usd'
+            hidden: true
+          metrics:
+            total_recruiting_expenses_for_women:
+              type: sum
+              label: "Recruiting Expenses for Women's Teams"
+              round: 2
+              format: 'usd'
       - name: recruiting_expenses_for_coed
         meta:
           dimension:
-            label: "Recruiting Expenses for Coed Teams"
-            round: 2
-            format: 'usd'
+            hidden: true
+          metrics:
+            total_recruiting_expenses_for_coed:
+              type: sum
+              label: "Recruiting Expenses for Coed Teams"
+              round: 2
+              format: 'usd'
       - name: recruiting_expenses_total
         meta:
           dimension:
-            label: "Total Recruiting Expenses"
-            round: 2
-            format: 'usd'
+            hidden: true
+          metrics:
+            total_recruiting_expenses:
+              type: sum
+              label: "Recruiting Expenses"
+              round: 2
+              format: 'usd'
       - name: num_participating_men_on_mens_teams
       - name: num_participating_women_on_womens_teams
       - name: num_participating_men_on_coed_teams
@@ -436,31 +470,37 @@ models:
         meta:
           dimension:
             type: number
+            hidden: true
           metrics:
             total_num_participating_men:
+              label: "Total # of Male Athletes"
               type: sum
       - name: num_participating_women
         meta:
           dimension:
             type: number
+            hidden: true
           metrics:
             total_num_participating_women:
+              label: "Total # of Female Athletes"
               type: sum
       - name: num_participating_athletes
         meta:
           dimension:
             type: number
+            hidden: true
           metrics:
             total_num_participating_athletes:
+              label: "Total # of Athletes"
               type: sum
             total_men_participating_percentage:
-              label: "Unduplicated Percentage of Athletes Male"
+              label: "Unduplicated % of Athletes Male"
               type: number
               sql: "(${total_num_participating_men}::float / NULLIF(${total_num_participating_athletes},0))"
               round: 2
               format: 'percent'
             total_women_participating_percentage:
-              label: "Unduplicated Percentage of Athletes Female"
+              label: "Unduplicated % of Athletes Female"
               type: number
               sql: "(${total_num_participating_women}::float / NULLIF(${total_num_participating_athletes},0))"
               round: 2
@@ -609,7 +649,7 @@ models:
             label: "Total Revenue All Teams"
             round: 2
             format: 'usd'
-      - name: unduplicated_men_participanting_in_mens_and_coed
+      - name: unduplicated_men_participating_in_mens_and_coed
       - name: unduplicated_women_participating_in_womens_and_coed
       - name: total_revenue_not_allocated_by_gender_or_sport
         meta:
