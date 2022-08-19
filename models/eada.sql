@@ -170,7 +170,5 @@ with eada_renanmed as (
   from raw_eada
 )
 
-select *,
-  enrollment_male::float / enrollment_total as percentage_males_enrolled,
-  enrollment_female::float / enrollment_total as percentage_females_enrolled
+select *
 from eada_renanmed
