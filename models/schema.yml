@@ -765,3 +765,16 @@ models:
         meta:
           dimension:
             sql: CASE WHEN ${participation_gap_female_unduplicated_raw} < 0 THEN NULL ELSE ${participation_gap_female_unduplicated_raw} END
+            round: 0
+      - name: participation_gap_male_unduplicated_raw
+        description: Number of additional male althletes needed to match overall percentage of student body (raw)
+        meta:
+          dimension:
+            hidden: true
+            sql: ${percentage_athletes_in_female_student_body}*${enrollment_male}-${num_participating_men}
+      - name: participation_gap_male_unduplicated
+        description: Number of additional male althletes needed to match overall percentage of student body
+        meta:
+          dimension:
+            sql: CASE WHEN ${participation_gap_male_unduplicated_raw} < 0 THEN NULL ELSE ${participation_gap_male_unduplicated_raw} END
+            round: 0
