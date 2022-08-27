@@ -485,6 +485,18 @@ models:
             total_num_participating_women:
               label: "Total # of Female Athletes"
               type: sum
+      - name: percentage_athletes_in_male_student_body
+        meta:
+          dimension:
+            label: "Percentage of athletes in the male student body"
+            sql: ${num_participating_men}::float/NULLIF(${enrollment_male},0)
+            format: 'percent'
+      - name: percentage_athletes_in_female_student_body
+        meta:
+          dimension:
+            label: "Percentage of athletes in the female student body"
+            sql: ${num_participating_women}::float/NULLIF(${enrollment_female},0)
+            format: 'percent'
       - name: num_participating_athletes
         meta:
           dimension:
@@ -692,3 +704,61 @@ models:
             hidden: false
             round: 2
             format: 'percent'
+      - name: grade_overall
+        meta:
+          dimension:
+            label: "Grade - Overall"
+            sql: "'PLACEHOLDER'"
+      - name: grade_scholarships
+        description: Grade for scholarships counting multi-sport athletes multiple times
+        meta:
+          dimension:
+            label: "Grade - Scholarships"
+            sql: "'PLACEHOLDER'"
+      - name: gap_scholarships
+        description: Gap in scholarships counting multi-sport athletes multiple times
+        meta:
+          dimension:
+            label: "Scholarships Gap"
+            sql: "PLACEHOLDER"
+      - name: grade_participation
+        description: Grade for participation counting multi-sport athletes multiple times
+        meta:
+          dimension:
+            label: "Grade - Participation"
+            sql: "'PLACEHOLDER'"
+      - name: gap_participation
+        description: Gap in participation counting multi-sport athletes multiple times
+        meta:
+          dimension:
+            label: "Participation Gap"
+            sql: "'PLACEHOLDER'"
+      - name: grade_recruiting
+        description: Grade for recruiting counting multi-sport athletes multiple times
+        meta:
+          dimension:
+            label: "Grade - Recruiting"
+            sql: "'PLACEHOLDER'"
+      - name: gap_recruiting
+        description: Gap in recruiting dollars spent on women
+        meta:
+          dimension:
+            label: "Recruiting Gap"
+            sql: "PLACEHOLDER"
+      - name: athelete_percentage_of_student_body
+        description: Percentage of the overall student body that are athletes
+        meta:
+          dimension:
+            label: "Athlete Percentage of Student Body"
+            sql: "PLACEHOLDER"
+      - name: participation_gap_female_unduplicated_raw
+        description: Number of additional female althletes needed to match overall percentage of student body (raw)
+        meta:
+          dimension:
+            hidden: true
+            sql: ${percentage_athletes_in_male_student_body}*${enrollment_female}-${num_participating_women}
+      - name: participation_gap_female_unduplicated
+        description: Number of additional female althletes needed to match overall percentage of student body
+        meta:
+          dimension:
+            sql: CASE WHEN ${participation_gap_female_unduplicated_raw} < 0 THEN NULL ELSE ${participation_gap_female_unduplicated_raw} END
