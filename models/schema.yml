@@ -349,10 +349,13 @@ models:
 
     columns:
       - name: year
+      - name: collected
         description: The end year of the data collected from the EADA
         meta:
           dimension:
+            label: "Collected"
             type: date
+            time_intervals: ['YEAR']
             sql: to_date(CAST(year AS CHAR(4)), 'yyyy')
       - name: institution_id
       - name: institution_name
