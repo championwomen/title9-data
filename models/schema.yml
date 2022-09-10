@@ -362,8 +362,23 @@ models:
       - name: state
       - name: classification
       - name: enrollment_men
+        meta:
+          metrics:
+            total_enrollment_men:
+              type: sum
+              round: 0
       - name: enrollment_women
+        meta:
+          metrics:
+            total_enrollment_women:
+              type: sum
+              round: 0
       - name: enrollment_total
+        meta:
+          metrics:
+            total_enrollment:
+              type: sum
+              round: 0
       - name: enrollment_women_percentage
         meta:
           dimension:
