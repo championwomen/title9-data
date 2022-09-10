@@ -1,5 +1,11 @@
 ### Title 9 DBT
 
+This repository contains the database processing and calculations around the data collected on Title IX from the [Equity in Athletics Data Analysis website](https://ope.ed.gov/athletics).  We've loaded the data from each year into a single database segmented by year.  You can see how we process the data by looking at:
+1. Renaming the columns into names that are more complete and easier to understand.  See `models/eada.sql`.
+2. Setting up the formatting and calculations.  See `models/schema.yml`
+
+We are using DBT to process the data and to be able to re-process and test it easily.
+
 Try running the following commands:
 - dbt run
 - dbt test
