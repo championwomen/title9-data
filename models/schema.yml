@@ -384,12 +384,22 @@ models:
             label: "Athetic Student Aid for Men's Teams"
             round: 2
             format: 'usd'
+          metrics:
+            total_athletic_student_aid_for_men:
+              type: sum
+              format: 'usd'
+              round: 0
       - name: athletic_student_aid_for_women
         meta:
           dimension:
             label: "Athetic Student Aid for Women's Teams"
             round: 2
             format: 'usd'
+          metrics:
+            total_athletic_student_aid_for_women:
+              type: sum
+              format: 'usd'
+              round: 0
       - name: athletic_student_aid_for_coed
         meta:
           dimension:
