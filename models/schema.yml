@@ -773,6 +773,17 @@ models:
               description: "Number of additional women althletes needed to match overall percentage of student body"
               type: sum
               round: 0
+      - name: ideal_participating_women
+        meta:
+          dimension:
+            hidden: true
+            sql: ${num_participating_women} + ${participation_gap_women_unduplicated_row}
+            round: 0
+          metrics:
+            ideal_total_participating_women:
+              label: "Total # Women Participating - Ideal"
+              type: sum
+              round: 0
       - name: participation_gap_men_unduplicated_raw
         description: Number of additional men athletes needed to match overall percentage of student body (raw)
         meta:
