@@ -41,6 +41,8 @@ title9:
 ### Create a database
 We are using PostgreSQL to store this data.  You can create the skeleton of the database using the following command:
 
+Note that the `opeid` column is new, and is only present in the data from 2022 and on.
+
 ``` sql
 CREATE TABLE public.raw_eada (
     year integer,
