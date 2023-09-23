@@ -161,7 +161,7 @@ with eada_renanmed as (
     -- IL_EXPENSE_MENALL,
     -- IL_EXPENSE_WOMENALL,
     -- IL_TOTAL_EXPENSE_ALL,
-    UNDUP_CT_PARTIC_MEN as unduplicated_men_participanting_in_mens_and_coed,
+    UNDUP_CT_PARTIC_MEN as unduplicated_men_participating_in_mens_and_coed,
     UNDUP_CT_PARTIC_WOMEN as unduplicated_women_participating_in_womens_and_coed,
     TOT_REVENUE_ALL_NOTALLOC as total_revenue_not_allocated_by_gender_or_sport,
     TOT_EXPENSE_ALL_NOTALLOC as total_expenses_not_allocated_by_gender_or_sport,

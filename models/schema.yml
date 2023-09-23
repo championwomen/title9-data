@@ -401,6 +401,7 @@ models:
             format: 'usd'
           metrics:
             total_athletic_student_aid_for_men:
+              label: "Total Athetic Student Aid for Men's Teams"
               type: sum
               format: 'usd'
               round: 0
@@ -412,6 +413,7 @@ models:
             format: 'usd'
           metrics:
             total_athletic_student_aid_for_women:
+              label: "Total Athetic Student Aid for Women's Teams"
               type: sum
               format: 'usd'
               round: 0
