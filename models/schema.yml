@@ -368,44 +368,46 @@ models:
       - name: institution_name
       - name: state
       - name: classification
-      - name: enrollment_men
+      - name: num_male_undergraduates
         label: "# of Male Undergraduates"
         meta:
           metrics:
-            total_enrollment_men:
+            total_num_male_undergraduates:
               label: "Total # of Male Undergraduates"
               type: sum
               round: 0
-      - name: enrollment_women
+      - name: num_female_undergraduates
         label: "# of Female Undergraduates"
         meta:
           metrics:
-            total_enrollment_women:
+            total_num_female_undergraduates:
               label: "Total # of Female Undergraduates"
               type: sum
               round: 0
-      - name: enrollment_total
+      - name: num_undergraduates
         label: "# Undergraduates"
         meta:
           metrics:
-            total_enrollment:
+            total_num_undergraduates:
               label: "Total # Undergraduates"
               type: sum
               round: 0
-      - name: enrollment_men_percentage
+      - name: percentage_of_male_undergraduates
         meta:
           dimension:
             label: "% of Male Undergrad"
-            sql: ${enrollment_men}::float / NULLIF(${enrollment_total},0)
+            sql: ${num_male_undergraduates}::float / NULLIF(${num_undergraduates},0)
             round: 2
             format: "percent"
-      - name: enrollment_women_percentage
+      - name: percentage_of_female_undergraduates
         meta:
           dimension:
             label: "% of Female Undergrad"
-            sql: ${enrollment_women}::float / NULLIF(${enrollment_total},0)
+            sql: ${num_female_undergraduates}::float / NULLIF(${num_undergraduates},0)
             round: 2
             format: "percent"
+
+
       - name: athletic_student_aid_for_men
         meta:
           dimension:
@@ -508,36 +510,36 @@ models:
               format: 'usd'
       - name: num_participating_men_on_mens_teams
       - name: num_participating_women_on_womens_teams
-      - name: num_participating_men_on_coed_teams
+      - name: num_male_participating_in_coed_teams
         label: "# of Male Parcipating in Coed sports"
-      - name: num_participating_women_on_coed_teams
+      - name: num_female_participating_in_coed_teams
         label: "# of Female  Participating in Coed sports"
-      - name: num_participating_men
+      - name: num_male_participation_dup
         meta:
           dimension:
             type: number
             hidden: true
           metrics:
-            total_num_participating_men:
+            total_num_male_participation_dup:
               label: "# Male Total Participation - DUP count"
               type: sum
-      - name: num_participating_women
+      - name: num_female_participation_dup
         meta:
           dimension:
             type: number
             hidden: true
           metrics:
-            total_num_participating_women:
+            total_num_female_participation_dup:
               label: "# Female Total Participation - DUP count"
               type: sum
-      - name: num_participating
+      - name: num_male_and_female_participation_dup
         meta:
           dimension:
             hidden: true
-            sql: ${num_participating_men} + ${num_participating_women}
+            sql: ${num_male_participation_dup} + ${num_female_participation_dup}
             round: 0
           metrics:
-            total_num_participating:
+            total_num_male_and_female_participation_dup:
               label: "# of M/F Total Participation - DUP count"
               type: sum
               round: 0
@@ -545,13 +547,13 @@ models:
         meta:
           dimension:
             label: "Percentage of athletes in the men's student body"
-            sql: ${num_participating_men}::float/NULLIF(${enrollment_men},0)
+            sql: ${num_male_participation_dup}::float/NULLIF(${num_male_undergraduates},0)
             format: 'percent'
       - name: percentage_athletes_in_women_student_body
         meta:
           dimension:
             label: "Percentage of athletes in the women's student body"
-            sql: ${num_participating_women}::float/NULLIF(${enrollment_women},0)
+            sql: ${num_female_participation_dup}::float/NULLIF(${num_female_undergraduates},0)
             format: 'percent'
       - name: num_participating_athletes
         meta:
@@ -565,13 +567,13 @@ models:
             total_men_participating_percentage:
               label: "Unduplicated % of Athletes Men"
               type: number
-              sql: "(${total_num_participating_men}::float / NULLIF(${total_num_participating_athletes},0))"
+              sql: "(${total_num_male_participation_dup}::float / NULLIF(${total_num_participating_athletes},0))"
               round: 2
               format: 'percent'
             total_women_participating_percentage:
               label: "Unduplicated % of Athletes Women"
               type: number
-              sql: "(${total_num_participating_women}::float / NULLIF(${total_num_participating_athletes},0))"
+              sql: "(${total_num_female_participation_dup}::float / NULLIF(${total_num_participating_athletes},0))"
               round: 2
               format: 'percent'
       - name: expenses_per_participant_on_mens_teams
@@ -748,7 +750,7 @@ models:
         meta:
           dimension:
             label: "Percentage of Men Enrolled"
-            sql: "enrollment_men::float / NULLIF(enrollment_total,0)"
+            sql: "num_male_undergraduates::float / NULLIF(num_undergraduates,0)"
             hidden: false
             round: 2
             format: 'percent'
@@ -756,7 +758,7 @@ models:
         meta:
           dimension:
             label: "Percentage of Women Enrolled"
-            sql: "enrollment_women::float / NULLIF(enrollment_total,0)"
+            sql: "num_female_undergraduates::float / NULLIF(num_undergraduates,0)"
             hidden: false
             round: 2
             format: 'percent'
@@ -812,7 +814,7 @@ models:
         meta:
           dimension:
             hidden: true
-            sql: ${percentage_athletes_in_male_student_body}*${enrollment_women}-${num_participating_women}
+            sql: ${percentage_athletes_in_male_student_body}*${num_female_undergraduates}-${num_female_participation_dup}
       - name: participation_gap_women_unduplicated_row
         description: Number of additional women athletes needed to match overall percentage of student body
         meta:
@@ -830,7 +832,7 @@ models:
         meta:
           dimension:
             hidden: true
-            sql: ${num_participating_women} + ${participation_gap_women_unduplicated_row}
+            sql: ${num_female_participation_dup} + ${participation_gap_women_unduplicated_row}
             round: 0
           metrics:
             ideal_total_participating_women:
@@ -842,7 +844,7 @@ models:
         meta:
           dimension:
             hidden: true
-            sql: ${percentage_athletes_in_women_student_body}*${enrollment_men}-${num_participating_men}
+            sql: ${percentage_athletes_in_women_student_body}*${num_male_undergraduates}-${num_male_participation_dup}
       - name: participation_gap_male_unduplicated_row
         description: Number of additional men althletes needed to match overall percentage of student body
         meta:
