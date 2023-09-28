@@ -395,13 +395,13 @@ models:
       - name: percentage_of_male_undergraduates
         meta:
           dimension:
-            label: "Percentage of Male Undergrad"
+            label: "% of Male Undergrad"
             format: 'percent'
             round: 2
       - name: percentage_of_female_undergraduates
         meta:
           dimension:
-            label: "Percentage of Female Undergrad"
+            label: "% of Female Undergrad"
             format: 'percent'
             round: 2
       - name: athletic_student_aid_for_men
@@ -507,9 +507,9 @@ models:
       - name: num_participating_men_on_mens_teams
       - name: num_participating_women_on_womens_teams
       - name: num_male_participating_in_coed_teams
-        label: "# of Male Parcipating in Coed sports"
+        label: "# of Male Partcipating in Coed sports"
       - name: num_female_participating_in_coed_teams
-        label: "# of Female  Participating in Coed sports"
+        label: "# of Female Participating in Coed sports"
       - name: num_male_participation_dup
         meta:
           dimension:
@@ -716,8 +716,24 @@ models:
             label: "Total Revenue All Teams"
             round: 2
             format: 'usd'
-      - name: unduplicated_men_participating_in_mens_and_coed
-      - name: unduplicated_women_participating_in_womens_and_coed
+      - name: num_male_athletes_undup
+        meta:
+          dimension:
+            type: number
+            hidden: true
+          metrics:
+            total_num_male_athletes_undup:
+              label: "# of Male Athletes - UNDUP Count"
+              type: sum
+      - name: num_female_athletes_undup
+        meta:
+          dimension:
+            type: number
+            hidden: true
+          metrics:
+            total_num_female_athletes_undup:
+              label: "# of Female Athletes - UNDUP Count"
+              type: sum
       - name: total_revenue_not_allocated_by_gender_or_sport
         meta:
           dimension:
