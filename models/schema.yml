@@ -395,19 +395,15 @@ models:
       - name: percentage_of_male_undergraduates
         meta:
           dimension:
-            label: "% of Male Undergrad"
-            sql: ${num_male_undergraduates}::float / NULLIF(${num_undergraduates},0)
+            label: "Percentage of Male Undergrad"
+            format: 'percent'
             round: 2
-            format: "percent"
       - name: percentage_of_female_undergraduates
         meta:
           dimension:
-            label: "% of Female Undergrad"
-            sql: ${num_female_undergraduates}::float / NULLIF(${num_undergraduates},0)
+            label: "Percentage of Female Undergrad"
+            format: 'percent'
             round: 2
-            format: "percent"
-
-
       - name: athletic_student_aid_for_men
         meta:
           dimension:

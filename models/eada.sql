@@ -176,5 +176,7 @@ with eada_renanmed as (
     and re.year = rpp.year
 )
 
-select *
+select *,
+  num_male_undergraduates::float / NULLIF(num_undergraduates,0) as percentage_of_male_undergraduates,
+  num_female_undergraduates::float / NULLIF(num_undergraduates,0) as percentage_of_female_undergraduates
 from eada_renanmed
