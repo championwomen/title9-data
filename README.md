@@ -229,6 +229,31 @@ Once the data is loaded, you can update the year in this way:
 UPDATE raw_eada SET year = 2022 WHERE year IS NULL;
 ```
 
+We have a supplementary table that we're manually collecting that
+includes the number of male practice players on each women's sports
+team.  Here is the SQL to create that table:
+
+``` sql
+CREATE TABLE public.raw_practice_players (
+    year integer,
+    unitid integer,
+    num_male_practice_players integer
+);
+
+```
+
+Import from a CSV file:
+
+``` sql
+\COPY raw_practice_players(unitid, num_male_practice_players) FROM 'mpp-2022.csv' DELIMITER ',' CSV HEADER;
+```
+
+Update the practice players data to include the year:
+``` sql
+UPDATE raw_practice_players SET year = 2022 WHERE year IS NULL;
+```
+
+
 ### Resources:
 - Learn more about dbt [in the docs](https://docs.getdbt.com/docs/introduction)
 - Check out [Discourse](https://discourse.getdbt.com/) for commonly asked questions and answers
