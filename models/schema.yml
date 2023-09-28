@@ -734,6 +734,16 @@ models:
             total_num_female_athletes_undup:
               label: "# of Female Athletes - UNDUP Count"
               type: sum
+      - name: num_male_and_female_athletes_undup
+        meta:
+          dimension:
+            sql: ${num_male_athletes_undup} + ${num_female_athletes_undup}
+            type: number
+            hidden: true
+          metrics:
+            total_num_male_and_female_athletes_undup:
+              label: "# of M/F Athletes - UNDUP Count"
+              type: sum
       - name: total_revenue_not_allocated_by_gender_or_sport
         meta:
           dimension:
