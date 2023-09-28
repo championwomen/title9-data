@@ -513,6 +513,7 @@ models:
       - name: num_male_participation_dup
         meta:
           dimension:
+            label: "Male Total Participation - DUP count"
             type: number
             hidden: true
           metrics:
@@ -522,6 +523,7 @@ models:
       - name: num_female_participation_dup
         meta:
           dimension:
+            label: "Female Total Participation - DUP count"
             type: number
             hidden: true
           metrics:
@@ -531,6 +533,7 @@ models:
       - name: num_male_and_female_participation_dup
         meta:
           dimension:
+            label: "M/F Total Participation - DUP count"
             hidden: true
             sql: ${num_male_participation_dup} + ${num_female_participation_dup}
             round: 0
@@ -542,6 +545,7 @@ models:
       - name: num_male_practice_players
         meta:
           dimension:
+            label: "Male Practice Players"
             type: number
             hidden: true
           metrics:
@@ -551,6 +555,7 @@ models:
       - name: num_female_athletes_dup_minus_mpp
         meta:
           dimension:
+            label: "Female Athletes - DUP - Minus MPP"
             type: number
             sql: ${num_female_participation_dup} - coalesce(${num_male_practice_players},0)
             hidden: true
@@ -561,6 +566,7 @@ models:
       - name: num_male_and_female_athletes_dup_minus_mpp
         meta:
           dimension:
+            label: "M/F Athletes - DUP - Minus MPP"
             type: number
             sql: ${num_male_and_female_participation_dup} - ${num_male_practice_players}
             hidden: true
@@ -568,6 +574,18 @@ models:
             total_num_male_and_female_athletes_dup_minus_mpp:
               label: "# of M/F Athletes - DUP - Minus MPP"
               type: sum
+      - name: num_female_athletes_needed_for_equity_dup_minus_mpp
+        meta:
+          dimension:
+            label: "Female Athletes Needed for Equity - Based on DUP Count - Minus MPP"
+            type: number
+            sql: ${num_male_participation_dup}/${percentage_of_male_undergraduates} - ${num_male_and_female_athletes_dup_minus_mpp}
+            hidden: true
+          metrics:
+            total_female_athletes_needed_for_equity_dup_minus_mpp:
+              label: "# of Female Athletes Needed for Equity - Based on DUP Count - Minus MPP"
+              type: sum
+              round: 0
       - name: percentage_athletes_in_male_student_body
         meta:
           dimension:
