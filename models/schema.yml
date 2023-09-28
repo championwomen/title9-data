@@ -558,6 +558,16 @@ models:
             total_num_female_athletes_dup_minus_mpp:
               label: "# Female Athletes - DUP - Minus MPP"
               type: sum
+      - name: num_male_and_female_athletes_dup_minus_mpp
+        meta:
+          dimension:
+            type: number
+            sql: ${num_male_and_female_participation_dup} - ${num_male_practice_players}
+            hidden: true
+          metrics:
+            total_num_male_and_female_athletes_dup_minus_mpp:
+              label: "# of M/F Athletes - DUP - Minus MPP"
+              type: sum
       - name: percentage_athletes_in_male_student_body
         meta:
           dimension:
