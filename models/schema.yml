@@ -520,6 +520,7 @@ models:
             total_num_male_participation_dup:
               label: "# Male Total Participation - DUP count"
               type: sum
+              group_label: "Duplicated"
       - name: num_female_participation_dup
         meta:
           dimension:
@@ -530,6 +531,7 @@ models:
             total_num_female_participation_dup:
               label: "# Female Total Participation - DUP count"
               type: sum
+              group_label: "Duplicated"
       - name: num_male_and_female_participation_dup
         meta:
           dimension:
@@ -542,6 +544,7 @@ models:
               label: "# of M/F Total Participation - DUP count"
               type: sum
               round: 0
+              group_label: "Duplicated"
       - name: num_male_practice_players
         meta:
           dimension:
@@ -563,6 +566,7 @@ models:
             total_num_female_athletes_dup_minus_mpp:
               label: "# Female Athletes - DUP - Minus MPP"
               type: sum
+              group_label: "Duplicated"
       - name: num_male_and_female_athletes_dup_minus_mpp
         meta:
           dimension:
@@ -574,6 +578,7 @@ models:
             total_num_male_and_female_athletes_dup_minus_mpp:
               label: "# of M/F Athletes - DUP - Minus MPP"
               type: sum
+              group_label: "Duplicated"
       - name: num_female_athletes_needed_for_equity_dup_minus_mpp
         meta:
           dimension:
@@ -586,6 +591,7 @@ models:
               label: "# of Female Athletes Needed for Equity - Based on DUP Count - Minus MPP"
               type: sum
               round: 0
+              group_label: "Duplicated"
       - name: percentage_athletes_in_male_student_body
         meta:
           dimension:
