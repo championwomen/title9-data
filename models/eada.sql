@@ -1,6 +1,7 @@
 with eada_renanmed as (
-  select year,
-    unitid as institution_id,
+  select re.year,
+    re.unitid as institution_id,
+    re.opeid,
     institution_name,
     -- addr1_txt as address_1,
     -- addr2_txt as address1,
@@ -13,7 +14,8 @@ with eada_renanmed as (
     efmalecount as enrollment_men,
     effemalecount as enrollment_women,
     eftotalcount as enrollment_total,
-    -- sector_cd, sector_name,
+    sector_cd as sector_id,
+    sector_name,
     studentaid_men as athletic_student_aid_for_men,
     studentaid_women as athletic_student_aid_for_women,
     studentaid_coed as athletic_student_aid_for_coed,
@@ -52,7 +54,7 @@ with eada_renanmed as (
     il_partic_men as num_participating_men_on_mens_teams,
     il_partic_women as num_participating_women_on_womens_teams,
     il_partic_coed_men as num_participating_men_on_coed_teams,
-    il_partic_coed_women as num_participating_coed_women,
+    il_partic_coed_women as num_participating_women_on_coed_teams,
     il_sum_partic_men as num_participating_men,
     il_sum_partic_women as num_participating_women,
     il_sum_partic_men + il_sum_partic_women as num_participating_athletes,
@@ -166,8 +168,12 @@ with eada_renanmed as (
     TOT_REVENUE_ALL_NOTALLOC as total_revenue_not_allocated_by_gender_or_sport,
     TOT_EXPENSE_ALL_NOTALLOC as total_expenses_not_allocated_by_gender_or_sport,
     GRND_TOTAL_REVENUE as grand_total_revenue,
-    GRND_TOTAL_EXPENSE as grand_total_expenses
-  from raw_eada
+    GRND_TOTAL_EXPENSE as grand_total_expenses,
+    rpp.num_male_practice_players
+  from raw_eada re
+  left join raw_practice_players rpp
+    on re.unitid = rpp.unitid
+    and re.year = rpp.year
 )
 
 select *

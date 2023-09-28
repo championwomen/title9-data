@@ -11,6 +11,8 @@ models:
         description: This is a unique identifier for a university
         tests:
           - not_null
+      - name: opeid
+        description: Unique identifier used by the Department of Education's Office of Postsecondary Education (OPE)
       - name: institution_name
         description: Institution Name
       - name: addr1_txt
@@ -358,39 +360,50 @@ models:
             time_intervals: ['YEAR']
             sql: to_date(CAST(year AS CHAR(4)), 'yyyy')
       - name: institution_id
+        description: This is a unique identifier for a university
+        tests:
+          - not_null
+      - name: opeid
+        description: Unique identifier used by the Department of Education's Office of Postsecondary Education (OPE)
       - name: institution_name
       - name: state
       - name: classification
       - name: enrollment_men
+        label: "# of Male Undergraduates"
         meta:
           metrics:
             total_enrollment_men:
+              label: "Total # of Male Undergraduates"
               type: sum
               round: 0
       - name: enrollment_women
+        label: "# of Female Undergraduates"
         meta:
           metrics:
             total_enrollment_women:
+              label: "Total # of Female Undergraduates"
               type: sum
               round: 0
       - name: enrollment_total
+        label: "# Undergraduates"
         meta:
           metrics:
             total_enrollment:
+              label: "Total # Undergraduates"
               type: sum
               round: 0
-      - name: enrollment_women_percentage
-        meta:
-          dimension:
-            label: "Enrollment Women Percentage"
-            sql: ${enrollment_women}::float / NULLIF(${enrollment_total},0)
-            round: 2
-            format: "percent"
       - name: enrollment_men_percentage
         meta:
           dimension:
-            label: "Enrollment Male Percentage"
+            label: "% of Male Undergrad"
             sql: ${enrollment_men}::float / NULLIF(${enrollment_total},0)
+            round: 2
+            format: "percent"
+      - name: enrollment_women_percentage
+        meta:
+          dimension:
+            label: "% of Female Undergrad"
+            sql: ${enrollment_women}::float / NULLIF(${enrollment_total},0)
             round: 2
             format: "percent"
       - name: athletic_student_aid_for_men
@@ -496,7 +509,9 @@ models:
       - name: num_participating_men_on_mens_teams
       - name: num_participating_women_on_womens_teams
       - name: num_participating_men_on_coed_teams
-      - name: num_participating_coed_women
+        label: "# of Male Parcipating in Coed sports"
+      - name: num_participating_women_on_coed_teams
+        label: "# of Female  Participating in Coed sports"
       - name: num_participating_men
         meta:
           dimension:
@@ -504,7 +519,7 @@ models:
             hidden: true
           metrics:
             total_num_participating_men:
-              label: "Total # of Men Athletes"
+              label: "# Male Total Participation - DUP count"
               type: sum
       - name: num_participating_women
         meta:
@@ -513,8 +528,19 @@ models:
             hidden: true
           metrics:
             total_num_participating_women:
-              label: "Total # of Women Athletes"
+              label: "# Female Total Participation - DUP count"
               type: sum
+      - name: num_participating
+        meta:
+          dimension:
+            hidden: true
+            sql: ${num_participating_men} + ${num_participating_women}
+            round: 0
+          metrics:
+            total_num_participating:
+              label: "# of M/F Total Participation - DUP count"
+              type: sum
+              round: 0
       - name: percentage_athletes_in_male_student_body
         meta:
           dimension:
@@ -729,7 +755,7 @@ models:
       - name: percentage_womens_enrolled
         meta:
           dimension:
-            label: "Percentage of Womens Enrolled"
+            label: "Percentage of Women Enrolled"
             sql: "enrollment_women::float / NULLIF(enrollment_total,0)"
             hidden: false
             round: 2
