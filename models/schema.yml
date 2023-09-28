@@ -539,6 +539,25 @@ models:
               label: "# of M/F Total Participation - DUP count"
               type: sum
               round: 0
+      - name: num_male_practice_players
+        meta:
+          dimension:
+            type: number
+            hidden: true
+          metrics:
+            total_num_male_practice_players:
+              label: "# of Male Practice Players"
+              type: sum
+      - name: num_female_athletes_dup_minus_mpp
+        meta:
+          dimension:
+            type: number
+            sql: ${num_female_participation_dup} - coalesce(${num_male_practice_players},0)
+            hidden: true
+          metrics:
+            total_num_female_athletes_dup_minus_mpp:
+              label: "# Female Athletes - DUP - Minus MPP"
+              type: sum
       - name: percentage_athletes_in_male_student_body
         meta:
           dimension:
