@@ -735,6 +735,7 @@ models:
             total_num_male_athletes_undup:
               label: "# of Male Athletes - UNDUP Count"
               type: sum
+              group_label: "Unduplicated"
       - name: num_female_athletes_undup
         meta:
           dimension:
@@ -744,6 +745,7 @@ models:
             total_num_female_athletes_undup:
               label: "# of Female Athletes - UNDUP Count"
               type: sum
+              group_label: "Unduplicated"
       - name: num_male_and_female_athletes_undup
         meta:
           dimension:
@@ -754,6 +756,46 @@ models:
             total_num_male_and_female_athletes_undup:
               label: "# of M/F Athletes - UNDUP Count"
               type: sum
+              group_label: "Unduplicated"
+      - name: percentage_of_male_athletes_undup
+        meta:
+          dimension:
+            label: "% of Male Athletes - UNDUP"
+            round: 2
+            format: "percent"
+            sql: ${num_male_athletes_undup}::float / ${num_male_and_female_athletes_undup}
+            group_label: "Unduplicated"
+      - name: percentage_of_female_athletes_undup
+        meta:
+          dimension:
+            label: "% of Female Athletes - UNDUP"
+            round: 2
+            format: "percent"
+            sql: ${num_female_athletes_undup}::float / ${num_male_and_female_athletes_undup}
+            group_label: "Unduplicated"
+      - name: percentage_of_male_athletes_dup_minus_mpp
+        meta:
+          dimension:
+            label: "% of Male athletes - DUP count - Minus MPP"
+            round: 2
+            format: "percent"
+            sql: ${num_male_participation_dup}::float / ${num_male_and_female_athletes_dup_minus_mpp}
+            group_label: "Duplicated"
+      - name: percentage_of_female_athletes_dup_minus_mpp
+        meta:
+          dimension:
+            label: "% of Female athletes - DUP count - Minus MPP"
+            round: 2
+            format: "percent"
+            sql: ${num_female_participation_dup}::float / ${num_male_and_female_athletes_dup_minus_mpp}
+            group_label: "Duplicated"
+      # Female needed for equity Pass/Fail (DUP - MPP)
+      - name: females_needed_for_equity_pass_fail_dup_minus_mpp
+        meta:
+          dimension:
+            label: "Female needed for equity Pass/Fail (DUP - MPP)"
+            type: string
+            sql: CASE WHEN (${percentage_of_female_undergraduates} - ${percentage_of_female_athletes_dup_minus_mpp}) > 0.01 THEN 'Fail' ELSE 'Pass' END
       - name: total_revenue_not_allocated_by_gender_or_sport
         meta:
           dimension:
