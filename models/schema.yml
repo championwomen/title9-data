@@ -373,6 +373,8 @@ models:
       - name: institution_name
       - name: state
       - name: classification
+      - name: sanction_id
+      - name: sanction_name
       - name: num_male_undergraduates
         label: "# of Male Undergraduates"
         meta:
@@ -419,6 +421,7 @@ models:
               type: sum
               format: 'usd'
               round: 0
+              label: "$ Male Athletic Student Aid"
       - name: athletic_student_aid_for_women
         meta:
           dimension:
@@ -607,24 +610,6 @@ models:
           dimension:
             sql: ${num_female_participation_dup}::float/NULLIF(${num_female_undergraduates},0)
             format: 'percent'
-      - name: num_participating_athletes
-        meta:
-          dimension:
-            type: number
-            hidden: true
-          metrics:
-            total_num_participating_athletes:
-              type: sum
-            total_men_participating_percentage:
-              type: number
-              sql: "(${total_num_male_participation_dup}::float / NULLIF(${total_num_participating_athletes},0))"
-              round: 2
-              format: 'percent'
-            total_women_participating_percentage:
-              type: number
-              sql: "(${total_num_female_participation_dup}::float / NULLIF(${total_num_participating_athletes},0))"
-              round: 2
-              format: 'percent'
       - name: expenses_per_participant_on_mens_teams
         meta:
           dimension:
@@ -750,6 +735,7 @@ models:
           dimension:
             type: number
             hidden: true
+            sql: ${TABLE}.unduplicated_men_participating_in_mens_and_coed
           metrics:
             total_num_male_athletes_undup:
               label: "# of Male Athletes - UNDUP Count"
@@ -760,6 +746,7 @@ models:
           dimension:
             type: number
             hidden: true
+            sql: ${TABLE}.unduplicated_women_participating_in_womens_and_coed
           metrics:
             total_num_female_athletes_undup:
               label: "# of Female Athletes - UNDUP Count"
