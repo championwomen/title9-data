@@ -368,49 +368,81 @@ models:
         description: This is a unique identifier for a university
         tests:
           - not_null
+        meta:
+          dimension:
+            group_label: "School Details"
       - name: opeid
         description: Unique identifier used by the Department of Education's Office of Postsecondary Education (OPE)
-      - name: institution_name
-      - name: state
-      - name: classification
-      - name: sanction_id
-      - name: sanction_name
-      - name: num_male_undergraduates
-        label: "# of Male Undergraduates"
         meta:
+          dimension:
+            label: "OPEID"
+            group_label: "School Details"
+      - name: institution_name
+        meta:
+          dimension:
+            label: "Institution Name"
+            group_label: "School Details"
+      - name: state
+        meta:
+          dimension:
+            group_label: "School Details"
+      - name: classification
+        meta:
+          dimension:
+            group_label: "School Details"
+      - name: sanction_id
+        meta:
+          dimension:
+            hidden: true
+            group_label: "School Details"
+      - name: sanction_name
+        meta:
+          dimension:
+            group_label: "School Details"
+      - name: num_male_undergraduates
+        meta:
+          dimension:
+            hidden: true
           metrics:
             total_num_male_undergraduates:
-              label: "Total # of Male Undergraduates"
+              label: "# of Male Undergraduates"
               type: sum
               round: 0
+              group_label: "School Details"
       - name: num_female_undergraduates
-        label: "# of Female Undergraduates"
         meta:
+          dimension:
+            hidden: true
           metrics:
             total_num_female_undergraduates:
-              label: "Total # of Female Undergraduates"
+              label: "# of Female Undergraduates"
               type: sum
               round: 0
+              group_label: "School Details"
       - name: num_undergraduates
-        label: "# Undergraduates"
         meta:
+          dimension:
+            hidden: true
           metrics:
             total_num_undergraduates:
-              label: "Total # Undergraduates"
+              label: "# Undergraduates"
               type: sum
               round: 0
+              group_label: "School Details"
       - name: percentage_of_male_undergraduates
         meta:
           dimension:
             label: "% of Male Undergrad"
             format: 'percent'
             round: 2
+            group_label: "School Details"
       - name: percentage_of_female_undergraduates
         meta:
           dimension:
             label: "% of Female Undergrad"
             format: 'percent'
             round: 2
+            group_label: "School Details"
       - name: male_athletic_student_aid
         meta:
           dimension:
@@ -505,7 +537,6 @@ models:
             round: 2
             label: "% of Additional Aid for Female needed for Equity - Based on M/F Enrollment"
             group_label: "Athletic Student Aid"
-      # Scholarship Aid Pass/Fail Grade
       - name: scholarship_aid_pass_fail_grade
         meta:
           dimension:
@@ -632,7 +663,6 @@ models:
             type: string
             label: "Grade Recruiting Expense Pass/Fail or N/A for Schools That Do Not Provide Recruiting Resources"
             group_label: "Recruiting Expenses"
-
       - name: num_participating_men_on_mens_teams
       - name: num_participating_women_on_womens_teams
       - name: num_male_participating_in_coed_sports
@@ -775,136 +805,150 @@ models:
               type: sum
               round: 0
               group_label: "Duplicated"
-      - name: percentage_athletes_in_male_student_body
-        meta:
-          dimension:
-            sql: ${num_male_participation_dup}::float/NULLIF(${num_male_undergraduates},0)
-            format: 'percent'
-      - name: percentage_athletes_in_women_student_body
-        meta:
-          dimension:
-            sql: ${num_female_participation_dup}::float/NULLIF(${num_female_undergraduates},0)
-            format: 'percent'
       - name: expenses_per_participant_on_mens_teams
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: total_expenses_for_mens_teams
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: expenses_per_participant_on_womens_teams
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: total_expenses_for_womens_teams
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: total_expenses_for_men_and_women
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: expenses_per_participant_men_on_coed_teams
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: total_expenses_for_men_on_coed_teams
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: expenses_per_participant_women_on_coed_teams
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: total_expenses_for_women_on_coed_teams
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: total_expenses_per_coed_team
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: expenses_per_particpant_men_including_coed
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: total_expenses_men_including_coed
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: expenses_per_participant_women_including_coed
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: total_expenses_women_including_coed
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: total_expenses_including_coed
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: total_revenue_mens_teams
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Revenue"
       - name: total_revenue_womens_teams
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Revenue"
       - name: total_revenue_mens_and_womens_teams
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Revenue"
       - name: total_revenue_men_on_coed_teams
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Revenue"
       - name: total_revenue_women_on_coed_teams
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Revenue"
       - name: total_revenue_coed
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Revenue"
       - name: total_revenue_men_including_coed
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Revenue"
       - name: total_revenue_women_including_coed
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Revenue"
       - name: total_revenue_all_teams
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Revenue"
       - name: num_male_athletes_undup
         meta:
           dimension:
@@ -1084,103 +1128,26 @@ models:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Revenue"
       - name: total_expenses_not_allocated_by_gender_or_sport
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Revenue"
       - name: grand_total_revenue
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Revenue"
       - name: grand_total_expenses
         meta:
           dimension:
             round: 2
             format: 'usd'
+            group_label: "Expenses"
       - name: grade_overall
         meta:
           dimension:
             sql: "'PLACEHOLDER'"
-      - name: grade_scholarships
-        description: Grade for scholarships counting multi-sport athletes multiple times
-        meta:
-          dimension:
-            sql: "'PLACEHOLDER'"
-      - name: gap_scholarships
-        description: Gap in scholarships counting multi-sport athletes multiple times
-        meta:
-          dimension:
-            sql: "PLACEHOLDER"
-      - name: grade_participation
-        description: Grade for participation counting multi-sport athletes multiple times
-        meta:
-          dimension:
-            sql: "CASE WHEN ${participation_gap_women_unduplicated_raw} > 0.5 THEN 'Fail' ELSE 'Pass' END"
-      - name: gap_participation
-        description: Gap in participation counting individual athletes
-        meta:
-          dimension:
-            sql: "${participation_gap_women_unduplicated_row}"
-      - name: grade_recruiting
-        description: Grade for recruiting counting multi-sport athletes multiple times
-        meta:
-          dimension:
-            sql: "'PLACEHOLDER'"
-      - name: gap_recruiting
-        description: Gap in recruiting dollars spent on women
-        meta:
-          dimension:
-            sql: "PLACEHOLDER"
-      - name: athelete_percentage_of_student_body
-        description: Percentage of the overall student body that are athletes
-        meta:
-          dimension:
-            sql: "PLACEHOLDER"
-      - name: participation_gap_women_unduplicated_raw
-        description: Number of additional women athletes needed to match overall percentage of student body (raw)
-        meta:
-          dimension:
-            hidden: true
-            sql: ${percentage_athletes_in_male_student_body}*${num_female_undergraduates}-${num_female_participation_dup}
-      - name: participation_gap_women_unduplicated_row
-        description: Number of additional women athletes needed to match overall percentage of student body
-        meta:
-          dimension:
-            hidden: true
-            sql: CASE WHEN ${participation_gap_women_unduplicated_raw} < 0 THEN NULL ELSE ${participation_gap_women_unduplicated_raw} END
-            round: 0
-          metrics:
-            participation_gap_women_unduplicated:
-              description: "Number of additional women althletes needed to match overall percentage of student body"
-              type: sum
-              round: 0
-      - name: ideal_participating_women
-        meta:
-          dimension:
-            hidden: true
-            sql: ${num_female_participation_dup} + ${participation_gap_women_unduplicated_row}
-            round: 0
-          metrics:
-            ideal_total_participating_women:
-              type: sum
-              round: 0
-      - name: participation_gap_men_unduplicated_raw
-        description: Number of additional men athletes needed to match overall percentage of student body (raw)
-        meta:
-          dimension:
-            hidden: true
-            sql: ${percentage_athletes_in_women_student_body}*${num_male_undergraduates}-${num_male_participation_dup}
-      - name: participation_gap_male_unduplicated_row
-        description: Number of additional men althletes needed to match overall percentage of student body
-        meta:
-          dimension:
-            hidden: true
-            sql: CASE WHEN ${participation_gap_men_unduplicated_raw} < 0 THEN NULL ELSE ${participation_gap_men_unduplicated_raw} END
-            round: 0
-          metrics:
-            participation_gap_men_unduplicated:
-              description: "Number of additional men althletes needed to match overall percentage of student body"
-              type: sum
-              round: 0
