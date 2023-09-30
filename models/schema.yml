@@ -355,7 +355,6 @@ models:
           type: count_distinct
           sql: ${TABLE}.institution_id
     columns:
-      - name: year
       - name: collected
         description: The end year of the data collected from the EADA
         meta:
@@ -363,7 +362,7 @@ models:
             label: "Collected"
             type: date
             time_intervals: ['YEAR']
-            sql: to_date(CAST(year AS CHAR(4)), 'yyyy')
+            sql: to_date(CAST(${TABLE}.year AS CHAR(4)), 'yyyy')
       - name: institution_id
         description: This is a unique identifier for a university
         tests:
@@ -663,8 +662,6 @@ models:
             type: string
             label: "Grade Recruiting Expense Pass/Fail or N/A for Schools That Do Not Provide Recruiting Resources"
             group_label: "Recruiting Expenses"
-      - name: num_participating_men_on_mens_teams
-      - name: num_participating_women_on_womens_teams
       - name: num_male_participating_in_coed_sports
         meta:
           dimension:
@@ -675,6 +672,7 @@ models:
             total_male_participating_in_coed_teams:
               type: sum
               label: "# of Male Participating in Coed sports"
+              group_label: "Coed Sports"
       - name: num_female_participating_in_coed_sports
         meta:
           dimension:
@@ -685,6 +683,7 @@ models:
             total_female_participating_in_coed_teams:
               type: sum
               label: "# of Female Participating in Coed sports"
+              group_label: "Coed Sports"
       - name: num_male_and_female_participating_in_coed_sports
         meta:
           dimension:
@@ -695,6 +694,7 @@ models:
             total_male_and_female_participating_in_coed_sports:
               type: sum
               label: "Total of M/F in Coed Sports"
+              group_label: "Coed Sports"
       - name: percentage_males_in_coed_sports
         meta:
           dimension:
@@ -702,6 +702,7 @@ models:
             round: 2
             sql: ${num_male_participating_in_coed_sports}::float / NULLIF(${num_male_and_female_participating_in_coed_sports},0)
             label: "% of Males in Coed Sports"
+            group_label: "Coed Sports"
       - name: percentage_females_in_coed_sports
         meta:
           dimension:
@@ -709,6 +710,7 @@ models:
             round: 2
             sql: ${num_female_participating_in_coed_sports}::float / NULLIF(${num_male_and_female_participating_in_coed_sports},0)
             label: "% of Females in Coed Sports"
+            group_label: "Coed Sports"
       - name: num_male_participation_dup
         meta:
           dimension:
