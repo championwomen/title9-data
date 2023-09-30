@@ -808,13 +808,56 @@ models:
             format: "percent"
             sql: ${num_female_participation_dup}::float / NULLIF(${num_male_and_female_athletes_dup_minus_mpp},0)
             group_label: "Duplicated"
-      # Female needed for equity Pass/Fail (DUP - MPP)
       - name: females_needed_for_equity_pass_fail_dup_minus_mpp
         meta:
           dimension:
             label: "Female needed for equity Pass/Fail (DUP - MPP)"
             type: string
             sql: CASE WHEN (${percentage_of_female_undergraduates} - ${percentage_of_female_athletes_dup_minus_mpp}) > 0.01 THEN 'Fail' ELSE 'Pass' END
+      - name: num_female_athletes_undup_minus_mpp
+        meta:
+          dimension:
+            sql: ${num_female_athletes_undup} - ${num_male_practice_players}
+            type: number
+            hidden: true
+          metrics:
+            total_female_athletes_undup_minus_mpp:
+              label: "# of Female Athletes - UNDUP -  Minus MPP"
+              type: sum
+              group_label: "Unduplicated"
+      - name: num_male_athletes_that_are_dup_athletes
+        meta:
+          dimension:
+            sql: ${num_male_participation_dup} - ${num_male_athletes_undup}
+            type: number
+            hidden: true
+          metrics:
+            total_male_athletes_that_are_dup_athletes:
+              label: "# of Male Athletes that are DUP Athletes"
+              type: sum
+              group_label: "Duplicated"
+      - name: num_female_athletes_that_are_dup_athletes_minus_mpp
+        meta:
+          dimension:
+            sql: ${num_female_athletes_dup_minus_mpp} - ${num_female_athletes_undup_minus_mpp}
+            type: number
+            hidden: true
+          metrics:
+            total_female_athletes_that_are_dup_athletes_minus_mpp:
+              label: "# of Female Athletes that Are DUP Athletes - minus MPP"
+              type: sum
+              group_label: "Duplicated"
+      - name: gap_between_male_and_female_dup_athletes_minus_mpp
+        meta:
+          dimension:
+            sql: ${num_female_athletes_that_are_dup_athletes_minus_mpp} - ${num_male_athletes_that_are_dup_athletes}
+            type: number
+            hidden: true
+          metrics:
+            total_gap_between_male_and_female_dup_athletes_minus_mpp:
+              label: "# Gap Between Male and Female DUP Athletes - minus MPP"
+              type: sum
+              group_label: "Duplicated"
       - name: total_revenue_not_allocated_by_gender_or_sport
         meta:
           dimension:
