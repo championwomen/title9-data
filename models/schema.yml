@@ -814,6 +814,7 @@ models:
             label: "Female needed for equity Pass/Fail (DUP - MPP)"
             type: string
             sql: CASE WHEN (${percentage_of_female_undergraduates} - ${percentage_of_female_athletes_dup_minus_mpp}) > 0.01 THEN 'Fail' ELSE 'Pass' END
+            group_label: "Duplicated"
       - name: num_female_athletes_undup_minus_mpp
         meta:
           dimension:
@@ -858,6 +859,63 @@ models:
               label: "# Gap Between Male and Female DUP Athletes - minus MPP"
               type: sum
               group_label: "Duplicated"
+      - name: num_male_and_female_athletes_undup_minus_mpp
+        meta:
+          dimension:
+            sql: ${num_male_athletes_undup} + ${num_female_athletes_undup_minus_mpp}
+            type: number
+            hidden: true
+          metrics:
+            total_num_male_and_female_athletes_undup_minus_mpp:
+              label: "# of M/F Athletes - UNDUP - Minus MPP"
+              type: sum
+              group_label: "Unduplicated"
+      - name: percentage_of_male_athletes_undup_minus_mpp
+        meta:
+          dimension:
+            label: "% of Male Athletes UNDUP - Minus MPP"
+            round: 2
+            format: "percent"
+            sql: ${num_male_athletes_undup}::float / NULLIF(${num_male_and_female_athletes_undup_minus_mpp},0)
+            group_label: "Unduplicated"
+      - name: percentage_of_female_athletes_undup_minus_mpp
+        meta:
+          dimension:
+            label: "% of Female Athletes -  UNDUP - Minus MPP"
+            round: 2
+            format: "percent"
+            sql: ${num_female_athletes_undup_minus_mpp}::float / NULLIF(${num_male_and_female_athletes_undup_minus_mpp},0)
+            group_label: "Unduplicated"
+      - name: num_male_and_female_athletes_equality_undup_minus_mpp
+        meta:
+          dimension:
+            sql: ${num_male_athletes_undup}::float / NULLIF(${percentage_of_male_undergraduates},0)
+            type: number
+            hidden: true
+          metrics:
+            total_male_and_female_athletes_equality_undup_minus_mpp:
+              label: "# of M&F Athletes Athletic Department should have with Equality - UNDUP - Minus MPP"
+              type: sum
+              round: 0
+              group_label: "Unduplicated"
+      - name: num_female_needed_for_equity_undup_minus_mpp
+        meta:
+          dimension:
+            sql: ${num_male_and_female_athletes_equality_undup_minus_mpp} - ${num_male_and_female_athletes_undup_minus_mpp}
+            type: number
+            hidden: true
+          metrics:
+            total_female_needed_for_equity_undup_minus_mpp:
+              label: "# of Female Needed for Equity - based on UNDUP Count - MPP"
+              type: sum
+              group_label: "Unduplicated"
+      - name: females_needed_for_equity_pass_fail_undup_minus_mpp
+        meta:
+          dimension:
+            label: "Female needed for equity Pass/Fail (UNDUP - MPP)"
+            type: string
+            sql: CASE WHEN ${num_female_needed_for_equity_undup_minus_mpp} > 12 THEN 'Fail' ELSE 'Pass' END
+            group_label: "Unduplicated"
       - name: total_revenue_not_allocated_by_gender_or_sport
         meta:
           dimension:
