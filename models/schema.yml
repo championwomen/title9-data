@@ -473,32 +473,62 @@ models:
               round: 0
               label: "$ for Female Coed Sports Student Aid"
               group_label: "Athletic Student Aid"
-
-      - name: athletic_student_aid
+      - name: male_and_female_total_student_aid
         meta:
           dimension:
-            round: 2
-            format: 'usd'
+            sql: ${male_athletic_student_aid} + ${female_athletic_student_aid} + ${coed_team_athletic_student_aid}
+            hidden: true
           metrics:
-            total_athletic_student_aid:
+            total_male_and_female_student_aid:
               type: sum
               format: 'usd'
-      - name: athletic_student_aid_ratio_men
+              round: 0
+              label: "$ M/F Total Student Aid"
+              group_label: "Athletic Student Aid"
+      - name: additional_aid_for_females_needed_for_equity
         meta:
           dimension:
-            round: 2
-            format: 'percent'
-      - name: athletic_student_aid_ratio_women
-        meta:
-          dimension:
-            round: 2
-            format: 'percent'
-      - name: athletic_student_aid_coed_ratio
-        meta:
-          dimension:
+            sql: ${male_athletic_student_aid}::float / NULLIF(${percentage_of_male_undergraduates},0) - ${male_and_female_total_student_aid}
             hidden: true
-            round: 2
+          metrics:
+            total_additional_aid_for_females_needed_for_equity:
+              type: sum
+              format: 'usd'
+              round: 0
+              label: "$ Additional Aid for Females Needed for Equity - based on M/F Enrollment"
+              group_label: "Athletic Student Aid"
+      - name: percentage_addtl_aid_for_females_needed_for_equity
+        meta:
+          dimension:
+            sql: ${additional_aid_for_females_needed_for_equity}::float/NULLIF(${male_and_female_total_student_aid},0)
             format: 'percent'
+            round: 2
+            label: "% of Additional Aid for Female needed for Equity - Based on M/F Enrollment"
+            group_label: "Athletic Student Aid"
+      # Scholarship Aid Pass/Fail Grade
+      - name: scholarship_aid_pass_fail_grade
+        meta:
+          dimension:
+            sql: CASE WHEN ${male_and_female_total_student_aid} = 0 THEN 'N/A' WHEN ${percentage_addtl_aid_for_females_needed_for_equity} > 0.01 THEN 'Fail' ELSE 'Pass' END
+            label: "Scholarship Aid Pass/Fail Grade"
+            type: string
+            group_label: "Athletic Student Aid"
+      - name: percentage_athletic_scholarship_aid_to_males
+        meta:
+          dimension:
+            sql: ${male_athletic_student_aid}::float / NULLIF(${male_and_female_total_student_aid},0)
+            format: 'percent'
+            round: 2
+            label: "% of Athletic Scholarship Aid to Males"
+            group_label: "Athletic Student Aid"
+      - name: percentage_athletic_scholarship_aid_to_females
+        meta:
+          dimension:
+            sql: ${female_athletic_student_aid}::float / NULLIF(${male_and_female_total_student_aid},0)
+            format: 'percent'
+            round: 2
+            label: "% of Athletic Scholarship Aid to Females"
+            group_label: "Athletic Student Aid"
       - name: recruiting_expenses_for_men
         meta:
           dimension:
