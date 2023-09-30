@@ -574,8 +574,21 @@ models:
             sql: COALESCE(${num_male_participation_dup}/NULLIF(${percentage_of_male_undergraduates},0) - ${num_male_and_female_athletes_dup_minus_mpp},0)
             hidden: true
           metrics:
-            total_female_athletes_needed_for_equity_dup_minus_mpp:
-              label: "# of Female Athletes Needed for Equity - Based on DUP Count - Minus MPP"
+            addtl_female_athletes_needed_for_equity_dup_minus_mpp:
+              label: "# of Additional Female Athletes Needed for Equity - Based on DUP Count - Minus MPP"
+              type: sum
+              round: 0
+              group_label: "Duplicated"
+      - name: num_female_athletes_for_equity_dup_minus_mpp
+        meta:
+          dimension:
+            label: "Female Athletes for Equity - Based on DUP Count - Minus MPP"
+            type: number
+            sql: COALESCE(${num_male_participation_dup}/NULLIF(${percentage_of_male_undergraduates},0) - ${num_male_and_female_athletes_dup_minus_mpp},0) + ${num_female_participation_dup}
+            hidden: true
+          metrics:
+            total_female_athletes_for_equity_dup_minus_mpp:
+              label: "# of Female Athletes for Equity - Based on DUP Count - Minus MPP"
               type: sum
               round: 0
               group_label: "Duplicated"
