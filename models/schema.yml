@@ -348,15 +348,6 @@ models:
 
   - name: eada
     description: This table contains the processed data from the eada along with the end year of the data collected.
-    meta:
-      metrics:
-        percentage_of_male_athletes_undup:
-          label: "% of Male Athletes - UNDUP"
-          type: number
-          round: 2
-          format: "percent"
-          sql: ${total_num_male_athletes_undup}::float / ${total_num_male_and_female_athletes_undup}
-          group_label: "Unduplicated"
 
     columns:
       - name: year
@@ -766,6 +757,14 @@ models:
               label: "# of M/F Athletes - UNDUP Count"
               type: sum
               group_label: "Unduplicated"
+      - name: percentage_of_male_athletes_undup
+        meta:
+          dimension:
+            label: "% of Male Athletes - UNDUP"
+            round: 2
+            format: "percent"
+            sql: ${num_male_athletes_undup}::float / ${num_male_and_female_athletes_undup}
+            group_label: "Unduplicated"
       - name: percentage_of_female_athletes_undup
         meta:
           dimension:
