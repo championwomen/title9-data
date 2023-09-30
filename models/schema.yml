@@ -529,42 +529,79 @@ models:
             round: 2
             label: "% of Athletic Scholarship Aid to Females"
             group_label: "Athletic Student Aid"
-      - name: recruiting_expenses_for_men
+      - name: male_recruiting_expenses
         meta:
           dimension:
+            sql: ${TABLE}.recruiting_expenses_for_men
             hidden: true
           metrics:
-            total_recruiting_expenses_for_men:
+            total_male_recruiting_expenses:
               type: sum
-              round: 2
+              round: 0
               format: 'usd'
-      - name: recruiting_expenses_for_women
+              label: "$ Male Recruiting Expenses"
+              group_label: "Recruiting Expenses"
+      - name: female_recruiting_expenses
         meta:
           dimension:
+            sql: ${TABLE}.recruiting_expenses_for_women
             hidden: true
           metrics:
-            total_recruiting_expenses_for_women:
+            total_female_recruiting_expenses:
               type: sum
-              round: 2
+              round: 0
               format: 'usd'
-      - name: recruiting_expenses_for_coed
+              label: "$ Female Recruiting Expenses"
+              group_label: "Recruiting Expenses"
+      - name: coed_team_recruiting_expenses
         meta:
           dimension:
+            sql: ${TABLE}.recruiting_expenses_for_coed
             hidden: true
           metrics:
-            total_recruiting_expenses_for_coed:
+            total_coed_team_recruiting_expenses:
               type: sum
-              round: 2
+              round: 0
               format: 'usd'
-      - name: recruiting_expenses_total
+              label: "$ Coed Team Recruiting Expenses"
+              group_label: "Recruiting Expenses"
+      - name: male_coed_sports_recruting_expenses
         meta:
           dimension:
+            sql: ${coed_team_recruiting_expenses} * ${percentage_males_in_coed_sports}
             hidden: true
           metrics:
-            total_recruiting_expenses:
+            total_male_coed_sports_recruting_expenses:
               type: sum
-              round: 2
+              round: 0
               format: 'usd'
+              label: "$ for Male Coed Sports Recruiting Expenses"
+              group_label: "Recruiting Expenses"
+      - name: female_coed_sports_recruting_expenses
+        meta:
+          dimension:
+            sql: ${coed_team_recruiting_expenses} * ${percentage_females_in_coed_sports}
+            hidden: true
+          metrics:
+            total_female_coed_sports_recruting_expenses:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "$ for Female Coed Sports Recruiting Expenses"
+              group_label: "Recruiting Expenses"
+      - name: male_and_female_recruiting_expenses
+        meta:
+          dimension:
+            sql: ${male_recruiting_expenses} + ${female_recruiting_expenses} + ${coed_team_recruiting_expenses}
+            hidden: true
+          metrics:
+            total_male_and_female_recruiting_expenses:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "$ Total M/F Recruiting Expenses"
+              group_label: "Recruiting Expenses"
+
       - name: num_participating_men_on_mens_teams
       - name: num_participating_women_on_womens_teams
       - name: num_male_participating_in_coed_sports

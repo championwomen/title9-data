@@ -26,7 +26,7 @@ with eada_renanmed as (
     recruitexp_men as recruiting_expenses_for_men,
     recruitexp_women as recruiting_expenses_for_women,
     recruitexp_coed as recruiting_expenses_for_coed,
-    recruitexp_total as recruiting_expenses_total,
+    -- recruitexp_total as recruiting_expenses_total,
     -- hdcoach_salary_men,
     -- hdcoach_salary_women,
     -- hdcoach_salary_coed,
