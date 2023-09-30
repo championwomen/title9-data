@@ -348,7 +348,12 @@ models:
 
   - name: eada
     description: This table contains the processed data from the eada along with the end year of the data collected.
-
+    meta:
+      metrics:
+        num_institutions:
+          label: "# of Institutions"
+          type: count_distinct
+          sql: ${TABLE}.institution_id
     columns:
       - name: year
       - name: collected
