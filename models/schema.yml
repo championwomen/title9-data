@@ -1149,7 +1149,9 @@ models:
             round: 2
             format: 'usd'
             group_label: "Expenses"
-      - name: grade_overall
+      - name: overall_grade
         meta:
           dimension:
-            sql: "'PLACEHOLDER'"
+            sql: CASE WHEN ${females_needed_for_equity_pass_fail_dup_minus_mpp} = 'Fail' OR ${recruiting_expense_pass_fail_grade} = 'Fail' OR ${scholarship_aid_pass_fail_grade} = 'Fail' THEN 'Fail' ELSE 'Pass' END
+            type: string
+            label: "Overall Grade"
