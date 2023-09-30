@@ -424,7 +424,7 @@ models:
             hidden: true
           metrics:
             total_num_undergraduates:
-              label: "# Undergraduates"
+              label: "# Total Undergraduates"
               type: sum
               round: 0
               group_label: "School Details"
@@ -532,10 +532,15 @@ models:
         meta:
           dimension:
             sql: ${additional_aid_for_females_needed_for_equity}::float/NULLIF(${male_and_female_total_student_aid},0)
-            format: 'percent'
-            round: 2
-            label: "% of Additional Aid for Female needed for Equity - Based on M/F Enrollment"
-            group_label: "Athletic Student Aid"
+            hidden: true
+          metrics:
+            percentage_addtl_aid_for_females_needed_for_equity_m:
+              sql: ${total_additional_aid_for_females_needed_for_equity}::float/NULLIF(${total_male_and_female_student_aid},0)
+              type: number
+              format: 'percent'
+              round: 2
+              label: "% of Additional Aid for Female needed for Equity - Based on M/F Enrollment"
+              group_label: "Athletic Student Aid"
       - name: scholarship_aid_pass_fail_grade
         meta:
           dimension:
