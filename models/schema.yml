@@ -601,6 +601,37 @@ models:
               format: 'usd'
               label: "$ Total M/F Recruiting Expenses"
               group_label: "Recruiting Expenses"
+      - name: male_and_female_recruiting_expenses_for_equity
+        meta:
+          dimension:
+            sql: ${male_recruiting_expenses}::float / NULLIF(${percentage_of_male_undergraduates},0)
+            hidden: true
+          metrics:
+            total_male_and_female_recruiting_expenses_for_equity:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "$ Schools Should be Spending on Recruiting for M/F Equity - Based on M/F Enrollment"
+              group_label: "Recruiting Expenses"
+      - name: additional_female_recruiting_expenses_for_equity
+        meta:
+          dimension:
+            sql: ${male_and_female_recruiting_expenses_for_equity} - ${male_and_female_recruiting_expenses}
+            hidden: true
+          metrics:
+            total_additional_female_recruiting_expenses_for_equity:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "$ Additional Recruiting Money for Females Needed to Achieve Equity Based on M/F Enrollment"
+              group_label: "Recruiting Expenses"
+      - name: recruiting_expense_pass_fail_grade
+        meta:
+          dimension:
+            sql: CASE WHEN ${male_and_female_recruiting_expenses} = 0 THEN 'N/A' WHEN ${additional_female_recruiting_expenses_for_equity} > 0 THEN 'Fail' ELSE 'Pass' END
+            type: string
+            label: "Grade Recruiting Expense Pass/Fail or N/A for Schools That Do Not Provide Recruiting Resources"
+            group_label: "Recruiting Expenses"
 
       - name: num_participating_men_on_mens_teams
       - name: num_participating_women_on_womens_teams
