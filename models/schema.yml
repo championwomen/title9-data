@@ -411,32 +411,44 @@ models:
             label: "% of Female Undergrad"
             format: 'percent'
             round: 2
-      - name: athletic_student_aid_for_men
+      - name: male_athletic_student_aid
         meta:
           dimension:
-            round: 2
-            format: 'usd'
+            sql: ${TABLE}.athletic_student_aid_for_men
+            hidden: true
           metrics:
-            total_athletic_student_aid_for_men:
+            total_male_athletic_student_aid:
               type: sum
               format: 'usd'
               round: 0
               label: "$ Male Athletic Student Aid"
-      - name: athletic_student_aid_for_women
+              group_label: "Athletic Student Aid"
+      - name: female_athletic_student_aid
         meta:
           dimension:
+            sql: ${TABLE}.athletic_student_aid_for_women
+            hidden: true
             round: 2
             format: 'usd'
           metrics:
-            total_athletic_student_aid_for_women:
+            total_female_athletic_student_aid:
               type: sum
               format: 'usd'
               round: 0
-      - name: athletic_student_aid_for_coed
+              label: "$ Female Athletic Student Aid"
+              group_label: "Athletic Student Aid"
+      - name: coed_team_athletic_student_aid
         meta:
           dimension:
-            round: 2
-            format: 'usd'
+            sql: ${TABLE}.athletic_student_aid_for_coed
+            hidden: true
+          metrics:
+            total_coed_team_athletic_student_aid:
+              type: sum
+              format: 'usd'
+              round: 0
+              label: "$ Coed Team Athletic Student Aid"
+              group_label: "Athletic Student Aid"
       - name: athletic_student_aid
         meta:
           dimension:
@@ -500,10 +512,36 @@ models:
               format: 'usd'
       - name: num_participating_men_on_mens_teams
       - name: num_participating_women_on_womens_teams
-      - name: num_male_participating_in_coed_teams
-        label: "# of Male Partcipating in Coed sports"
-      - name: num_female_participating_in_coed_teams
-        label: "# of Female Participating in Coed sports"
+      - name: num_male_participating_in_coed_sports
+        meta:
+          dimension:
+            type: number
+            hidden: true
+            sql: ${TABLE}.num_male_participating_in_coed_teams}
+          metrics:
+            total_male_participating_in_coed_teams:
+              type: sum
+              label: "# of Male Participating in Coed sports"
+      - name: num_female_participating_in_coed_sports
+        meta:
+          dimension:
+            type: number
+            hidden: true
+            sql: ${TABLE}.num_female_participating_in_coed_teams}
+          metrics:
+            total_female_participating_in_coed_teams:
+              type: sum
+              label: "# of Female Participating in Coed sports"
+      - name: num_male_and_female_participating_in_coed_sports
+        meta:
+          dimension:
+            type: number
+            hidden: true
+            sql: ${num_male_participating_in_coed_sports} + ${num_female_participating_in_coed_sports}
+          metrics:
+            total_male_and_female_participating_in_coed_sports:
+              type: sum
+              label: "Total of M/F in Coed Sports"
       - name: num_male_participation_dup
         meta:
           dimension:
