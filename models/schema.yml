@@ -449,6 +449,31 @@ models:
               round: 0
               label: "$ Coed Team Athletic Student Aid"
               group_label: "Athletic Student Aid"
+      - name: male_coed_sports_student_aid
+        meta:
+          dimension:
+            sql: ${coed_team_athletic_student_aid} * ${percentage_males_in_coed_sports}
+            hidden: true
+          metrics:
+            total_male_coed_sports_student_aid:
+              type: sum
+              format: 'usd'
+              round: 0
+              label: "$ for Male Coed Sports Student Aid"
+              group_label: "Athletic Student Aid"
+      - name: female_coed_sports_student_aid
+        meta:
+          dimension:
+            sql: ${coed_team_athletic_student_aid} * ${percentage_females_in_coed_sports}
+            hidden: true
+          metrics:
+            total_female_coed_sports_student_aid:
+              type: sum
+              format: 'usd'
+              round: 0
+              label: "$ for Female Coed Sports Student Aid"
+              group_label: "Athletic Student Aid"
+
       - name: athletic_student_aid
         meta:
           dimension:
@@ -517,7 +542,7 @@ models:
           dimension:
             type: number
             hidden: true
-            sql: ${TABLE}.num_male_participating_in_coed_teams}
+            sql: ${TABLE}.num_male_participating_in_coed_teams
           metrics:
             total_male_participating_in_coed_teams:
               type: sum
@@ -527,7 +552,7 @@ models:
           dimension:
             type: number
             hidden: true
-            sql: ${TABLE}.num_female_participating_in_coed_teams}
+            sql: ${TABLE}.num_female_participating_in_coed_teams
           metrics:
             total_female_participating_in_coed_teams:
               type: sum
@@ -542,6 +567,20 @@ models:
             total_male_and_female_participating_in_coed_sports:
               type: sum
               label: "Total of M/F in Coed Sports"
+      - name: percentage_males_in_coed_sports
+        meta:
+          dimension:
+            format: 'percent'
+            round: 2
+            sql: ${num_male_participating_in_coed_sports}::float / NULLIF(${num_male_and_female_participating_in_coed_sports},0)
+            label: "% of Males in Coed Sports"
+      - name: percentage_females_in_coed_sports
+        meta:
+          dimension:
+            format: 'percent'
+            round: 2
+            sql: ${num_female_participating_in_coed_sports}::float / NULLIF(${num_male_and_female_participating_in_coed_sports},0)
+            label: "% of Females in Coed Sports"
       - name: num_male_participation_dup
         meta:
           dimension:
@@ -933,6 +972,7 @@ models:
             total_female_needed_for_equity_undup_minus_mpp:
               label: "# of Female Needed for Equity - based on UNDUP Count - MPP"
               type: sum
+              round: 0
               group_label: "Unduplicated"
       - name: females_needed_for_equity_pass_fail_undup_minus_mpp
         meta:
