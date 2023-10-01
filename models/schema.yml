@@ -483,7 +483,7 @@ models:
       - name: male_coed_sports_student_aid
         meta:
           dimension:
-            sql: ${coed_team_athletic_student_aid} * ${percentage_males_in_coed_sports}
+            sql: COALESCE(${coed_team_athletic_student_aid} * ${percentage_males_in_coed_sports}, 0)
             hidden: true
           metrics:
             total_male_coed_sports_student_aid:
@@ -495,7 +495,7 @@ models:
       - name: female_coed_sports_student_aid
         meta:
           dimension:
-            sql: ${coed_team_athletic_student_aid} * ${percentage_females_in_coed_sports}
+            sql: COALESCE(${coed_team_athletic_student_aid} * ${percentage_females_in_coed_sports}, 0)
             hidden: true
           metrics:
             total_female_coed_sports_student_aid:
@@ -603,7 +603,7 @@ models:
       - name: male_coed_sports_recruting_expenses
         meta:
           dimension:
-            sql: ${coed_team_recruiting_expenses} * ${percentage_males_in_coed_sports}
+            sql: COALESCE(${coed_team_recruiting_expenses} * ${percentage_males_in_coed_sports}, 0)
             hidden: true
           metrics:
             total_male_coed_sports_recruting_expenses:
@@ -615,7 +615,7 @@ models:
       - name: female_coed_sports_recruting_expenses
         meta:
           dimension:
-            sql: ${coed_team_recruiting_expenses} * ${percentage_females_in_coed_sports}
+            sql: COALESCE(${coed_team_recruiting_expenses} * ${percentage_females_in_coed_sports}, 0)
             hidden: true
           metrics:
             total_female_coed_sports_recruting_expenses:
