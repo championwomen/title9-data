@@ -471,7 +471,7 @@ models:
       - name: coed_team_athletic_student_aid
         meta:
           dimension:
-            sql: ${TABLE}.athletic_student_aid_for_coed
+            sql: COALESCE(${TABLE}.athletic_student_aid_for_coed, 0)
             hidden: true
           metrics:
             total_coed_team_athletic_student_aid:
@@ -1126,7 +1126,7 @@ models:
       - name: females_needed_for_equity_pass_fail_undup_minus_mpp
         meta:
           dimension:
-            label: "Female needed for equity Pass/Fail (UNDUP - MPP)"
+            label: "Grade - Females needed for equity Pass/Fail (UNDUP - MPP)"
             type: string
             sql: CASE WHEN ${num_female_needed_for_equity_undup_minus_mpp} > 12 THEN 'Fail' ELSE 'Pass' END
             group_label: "Unduplicated"
