@@ -1188,7 +1188,7 @@ models:
               type: sum
               round: 0
               format: 'usd'
-              label: "Head Coach Salaries for Men"
+              label: "Avg. Head Coach Salary for Men"
               group_label: "Coaches"
       - name: head_coach_salaries_for_women
         meta:
@@ -1199,7 +1199,7 @@ models:
               type: sum
               round: 0
               format: 'usd'
-              label: "Head Coach Salaries for Women"
+              label: "Avg. Head Coach Salary for Women"
               group_label: "Coaches"
       - name: head_coach_salaries_for_coed
         meta:
@@ -1210,7 +1210,7 @@ models:
               type: sum
               round: 0
               format: 'usd'
-              label: "Head Coach Salaries for Coed"
+              label: "Avg. Head Coach Salary for Coed"
               group_label: "Coaches"
       - name: num_head_coaches_for_men
         meta:
@@ -1251,7 +1251,7 @@ models:
               type: sum
               round: 0
               format: 'usd'
-              label: "Full-Time Head Coach Salaries for Men"
+              label: "Avg. Full-Time Head Coach Salary for Men"
               group_label: "Coaches"
       - name: head_coach_salaries_fte_for_women
         meta:
@@ -1262,7 +1262,7 @@ models:
               type: sum
               round: 0
               format: 'usd'
-              label: "Full-Time Head Coach Salaries for Women"
+              label: "Avg. Full-Time Head Coach Salary for Women"
               group_label: "Coaches"
       - name: head_coach_salaries_fte_for_coed
         meta:
@@ -1273,34 +1273,34 @@ models:
               type: sum
               round: 0
               format: 'usd'
-              label: "Full-Time Head Coach Salaries for Coed"
+              label: "Avg. Full-Time Head Coach Salary for Coed"
               group_label: "Coaches"
-      - name: num_head_coach_fte_for_men
+      - name: num_head_coaches_fte_for_men
         meta:
           dimension:
             hidden: true
           metrics:
-            total_head_coach_fte_for_men:
+            total_head_coaches_fte_for_men:
               type: sum
               round: 0
               label: "# Full-Time Head Coaches for Men"
               group_label: "Coaches"
-      - name: num_head_coach_fte_for_women
+      - name: num_head_coaches_fte_for_women
         meta:
           dimension:
             hidden: true
           metrics:
-            total_head_coach_fte_for_women:
+            total_head_coaches_fte_for_women:
               type: sum
               round: 0
               label: "# Full-Time Head Coaches for Women"
               group_label: "Coaches"
-      - name: num_head_coach_fte_for_coed
+      - name: num_head_coaches_fte_for_coed
         meta:
           dimension:
             hidden: true
           metrics:
-            total_head_coach_fte_for_coed:
+            total_head_coaches_fte_for_coed:
               type: sum
               round: 0
               label: "# Full-Time Head Coaches for Coed"
@@ -1314,7 +1314,7 @@ models:
               type: sum
               round: 0
               format: 'usd'
-              label: "Assistant Coach Salaries for Men"
+              label: "Avg. Assistant Coach Salary for Men"
               group_label: "Coaches"
       - name: assistant_coach_salaries_for_women
         meta:
@@ -1325,7 +1325,7 @@ models:
               type: sum
               round: 0
               format: 'usd'
-              label: "Assistant Coach Salaries for Women"
+              label: "Avg. Assistant Coach Salary for Women"
               group_label: "Coaches"
       - name: assistant_coach_salaries_for_coed
         meta:
@@ -1336,7 +1336,7 @@ models:
               type: sum
               round: 0
               format: 'usd'
-              label: "Assistant Coach Salaries for Coed"
+              label: "Avg. Assistant Coach Salary for Coed"
               group_label: "Coaches"
       - name: num_assistant_coaches_for_men
         meta:
@@ -1377,7 +1377,7 @@ models:
               type: sum
               round: 0
               format: 'usd'
-              label: "Full-Time Assistant Coach Salaries for Men"
+              label: "Avg. Full-Time Assistant Coach Salary for Men"
               group_label: "Coaches"
       - name: assistant_coach_fte_salaries_for_women
         meta:
@@ -1388,7 +1388,7 @@ models:
               type: sum
               round: 0
               format: 'usd'
-              label: "Full-Time Assistant Coach Salaries for Women"
+              label: "Avg. Full-Time Assistant Coach Salary for Women"
               group_label: "Coaches"
       - name: assistant_coach_fte_salaries_for_coed
         meta:
@@ -1399,35 +1399,101 @@ models:
               type: sum
               round: 0
               format: 'usd'
-              label: "Full-Time Assistant Coach Salaries for Coed"
+              label: "Avg. Full-Time Assistant Coach Salary for Coed"
               group_label: "Coaches"
-      - name: num_assistant_coach_fte_for_men
+      - name: num_assistant_coaches_fte_for_men
         meta:
           dimension:
             hidden: true
           metrics:
-            total_assistant_coach_fte_for_men:
+            total_assistant_coaches_fte_for_men:
               type: sum
               round: 0
               label: "# Full-Time Assistant Coaches for Men"
               group_label: "Coaches"
-      - name: num_assistant_coach_fte_for_women
+      - name: num_assistant_coaches_fte_for_women
         meta:
           dimension:
             hidden: true
           metrics:
-            total_assistant_coach_fte_for_women:
+            total_assistant_coaches_fte_for_women:
               type: sum
               round: 0
               label: "# Full-Time Assistant Coaches for Women"
               group_label: "Coaches"
-      - name: num_assistant_coach_fte_for_coed
+      - name: num_assistant_coaches_fte_for_coed
         meta:
           dimension:
             hidden: true
           metrics:
-            total_assistant_coach_fte_for_coed:
+            total_assistant_coaches_fte_for_coed:
               type: sum
               round: 0
               label: "# Full-Time Assistant Coaches for Coed"
+              group_label: "Coaches"
+      - name: num_head_coaches_pt_for_men
+        meta:
+          dimension:
+            hidden: true
+            sql: ${num_head_coaches_for_men} - ${num_head_coaches_fte_for_men}
+          metrics:
+            total_head_coaches_pt_for_men:
+              type: sum
+              round: 0
+              label: "# Part-Time Head Coaches for Men"
+              group_label: "Coaches"
+      - name: num_head_coaches_pt_for_women
+        meta:
+          dimension:
+            hidden: true
+            sql: ${num_head_coaches_for_women} - ${num_head_coaches_fte_for_women}
+          metrics:
+            total_head_coaches_pt_for_women:
+              type: sum
+              round: 0
+              label: "# Part-Time Head Coaches for Women"
+              group_label: "Coaches"
+      - name: num_head_coaches_pt_for_coed
+        meta:
+          dimension:
+            hidden: true
+            sql: ${num_head_coaches_for_coed} - ${num_head_coaches_fte_for_coed}
+          metrics:
+            total_head_coaches_pt_for_coed:
+              type: sum
+              round: 0
+              label: "# Part-Time Head Coaches for Coed"
+              group_label: "Coaches"
+      - name: num_assistant_coaches_pt_for_men
+        meta:
+          dimension:
+            hidden: true
+            sql: ${num_assistant_coaches_for_men} - ${num_assistant_coaches_fte_for_men}
+          metrics:
+            total_assistant_coaches_pt_for_men:
+              type: sum
+              round: 0
+              label: "# Part-Time Assistant Coaches for Men"
+              group_label: "Coaches"
+      - name: num_assistant_coaches_pt_for_women
+        meta:
+          dimension:
+            hidden: true
+            sql: ${num_assistant_coaches_for_women} - ${num_assistant_coaches_fte_for_women}
+          metrics:
+            total_assistant_coaches_pt_for_women:
+              type: sum
+              round: 0
+              label: "# Part-Time Assistant Coaches for Women"
+              group_label: "Coaches"
+      - name: num_assistant_coaches_pt_for_coed
+        meta:
+          dimension:
+            hidden: true
+            sql: ${num_assistant_coaches_for_coed} - ${num_assistant_coaches_fte_for_coed}
+          metrics:
+            total_assistant_coaches_pt_for_coed:
+              type: sum
+              round: 0
+              label: "# Part-Time Assistant Coaches for Coed"
               group_label: "Coaches"
