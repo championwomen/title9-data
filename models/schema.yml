@@ -381,9 +381,28 @@ models:
           dimension:
             label: "Institution Name"
             group_label: "School Details"
+      - name: address_1
+        meta:
+          dimension:
+            label: "Address Line 1"
+            group_label: "School Details"
+      - name: address_2
+        meta:
+          dimension:
+            label: "Address Line 2"
+            group_label: "School Details"
+      - name: city
+        meta:
+          dimension:
+            group_label: "School Details"
       - name: state
         meta:
           dimension:
+            group_label: "School Details"
+      - name: zip_code
+        meta:
+          dimension:
+            label: "ZIP Code"
             group_label: "School Details"
       - name: classification
         meta:
@@ -1133,25 +1152,25 @@ models:
       - name: total_revenue_not_allocated_by_gender_or_sport
         meta:
           dimension:
-            round: 2
+            round: 0
             format: 'usd'
             group_label: "Revenue"
       - name: total_expenses_not_allocated_by_gender_or_sport
         meta:
           dimension:
-            round: 2
+            round: 0
             format: 'usd'
             group_label: "Revenue"
       - name: grand_total_revenue
         meta:
           dimension:
-            round: 2
+            round: 0
             format: 'usd'
             group_label: "Revenue"
       - name: grand_total_expenses
         meta:
           dimension:
-            round: 2
+            round: 0
             format: 'usd'
             group_label: "Expenses"
       - name: overall_grade
@@ -1160,3 +1179,255 @@ models:
             sql: CASE WHEN ${females_needed_for_equity_pass_fail_dup_minus_mpp} = 'Fail' OR ${recruiting_expense_pass_fail_grade} = 'Fail' OR ${scholarship_aid_pass_fail_grade} = 'Fail' THEN 'Fail' ELSE 'Pass' END
             type: string
             label: "Overall Grade"
+      - name: head_coach_salaries_for_men
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_head_coach_salaries_for_men:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Head Coach Salaries for Men"
+              group_label: "Coaches"
+      - name: head_coach_salaries_for_women
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_head_coach_salaries_for_women:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Head Coach Salaries for Women"
+              group_label: "Coaches"
+      - name: head_coach_salaries_for_coed
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_head_coach_salaries_for_coed:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Head Coach Salaries for Coed"
+              group_label: "Coaches"
+      - name: num_head_coaches_for_men
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_head_coaches_for_men:
+              type: sum
+              round: 0
+              label: "# Head Coaches for Men"
+              group_label: "Coaches"
+      - name: num_head_coaches_for_women
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_head_coaches_for_women:
+              type: sum
+              round: 0
+              label: "# Head Coaches for Women"
+              group_label: "Coaches"
+      - name: num_head_coaches_for_coed
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_head_coaches_for_coed:
+              type: sum
+              round: 0
+              label: "# Head Coaches for Coed"
+              group_label: "Coaches"
+      - name: head_coach_salaries_fte_for_men
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_head_coach_salaries_fte_for_men:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Full-Time Head Coach Salaries for Men"
+              group_label: "Coaches"
+      - name: head_coach_salaries_fte_for_women
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_head_coach_salaries_fte_for_women:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Full-Time Head Coach Salaries for Women"
+              group_label: "Coaches"
+      - name: head_coach_salaries_fte_for_coed
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_head_coach_salaries_fte_for_coed:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Full-Time Head Coach Salaries for Coed"
+              group_label: "Coaches"
+      - name: num_head_coach_fte_for_men
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_head_coach_fte_for_men:
+              type: sum
+              round: 0
+              label: "# Full-Time Head Coaches for Men"
+              group_label: "Coaches"
+      - name: num_head_coach_fte_for_women
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_head_coach_fte_for_women:
+              type: sum
+              round: 0
+              label: "# Full-Time Head Coaches for Women"
+              group_label: "Coaches"
+      - name: num_head_coach_fte_for_coed
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_head_coach_fte_for_coed:
+              type: sum
+              round: 0
+              label: "# Full-Time Head Coaches for Coed"
+              group_label: "Coaches"
+      - name: assistant_coach_salaries_for_men
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_assistant_coach_salaries_for_men:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Assistant Coach Salaries for Men"
+              group_label: "Coaches"
+      - name: assistant_coach_salaries_for_women
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_assistant_coach_salaries_for_women:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Assistant Coach Salaries for Women"
+              group_label: "Coaches"
+      - name: assistant_coach_salaries_for_coed
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_assistant_coach_salaries_for_coed:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Assistant Coach Salaries for Coed"
+              group_label: "Coaches"
+      - name: num_assistant_coaches_for_men
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_assistant_coaches_for_men:
+              type: sum
+              round: 0
+              label: "# Assistant Coaches for Men"
+              group_label: "Coaches"
+      - name: num_assistant_coaches_for_women
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_assistant_coaches_for_women:
+              type: sum
+              round: 0
+              label: "# Assistant Coaches for Women"
+              group_label: "Coaches"
+      - name: num_assistant_coaches_for_coed
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_assistant_coaches_for_coed:
+              type: sum
+              round: 0
+              label: "# Assistant Coaches for Coed"
+              group_label: "Coaches"
+      - name: assistant_coach_fte_salaries_for_men
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_assistant_coach_fte_salaries_for_men:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Full-Time Assistant Coach Salaries for Men"
+              group_label: "Coaches"
+      - name: assistant_coach_fte_salaries_for_women
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_assistant_coach_fte_salaries_for_women:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Full-Time Assistant Coach Salaries for Women"
+              group_label: "Coaches"
+      - name: assistant_coach_fte_salaries_for_coed
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_assistant_coach_fte_salaries_for_coed:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Full-Time Assistant Coach Salaries for Coed"
+              group_label: "Coaches"
+      - name: num_assistant_coach_fte_for_men
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_assistant_coach_fte_for_men:
+              type: sum
+              round: 0
+              label: "# Full-Time Assistant Coaches for Men"
+              group_label: "Coaches"
+      - name: num_assistant_coach_fte_for_women
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_assistant_coach_fte_for_women:
+              type: sum
+              round: 0
+              label: "# Full-Time Assistant Coaches for Women"
+              group_label: "Coaches"
+      - name: num_assistant_coach_fte_for_coed
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_assistant_coach_fte_for_coed:
+              type: sum
+              round: 0
+              label: "# Full-Time Assistant Coaches for Coed"
+              group_label: "Coaches"
