@@ -238,7 +238,7 @@ models:
           dimension:
             hidden: true
           metrics:
-            total_participation_dup:
+            total_participation_undup:
               type: sum
               round: 0
               label: "# Athletes - UNDUP"
