@@ -92,7 +92,7 @@ models:
           dimension:
             hidden: true
           metrics:
-            total_athletic_student_aid:
+            total_recruiting_expenses:
               label: "$ Recruiting Expenses"
               type: sum
               format: 'usd'
