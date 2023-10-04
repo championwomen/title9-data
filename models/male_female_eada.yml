@@ -1,0 +1,248 @@
+version: 2
+
+models:
+  - name: male_female_eada
+    description: This table contains the processed data from the eada along with the end year of the data collected with one row for men and one row for women per institution and year.
+
+    columns:
+      - name: collected
+        description: The end year of the data collected from the EADA
+        meta:
+          dimension:
+            label: "Collected"
+            type: date
+            time_intervals: ['YEAR']
+            sql: to_date(CAST(${TABLE}.year AS CHAR(4)), 'yyyy')
+      - name: institution_id
+        description: This is a unique identifier for a university
+        tests:
+          - not_null
+        meta:
+          dimension:
+            group_label: "School Details"
+      - name: opeid
+        description: Unique identifier used by the Department of Education's Office of Postsecondary Education (OPE)
+        meta:
+          dimension:
+            label: "OPEID"
+            group_label: "School Details"
+      - name: institution_name
+        meta:
+          dimension:
+            label: "Institution Name"
+            group_label: "School Details"
+      - name: address_1
+        meta:
+          dimension:
+            label: "Address Line 1"
+            group_label: "School Details"
+      - name: address_2
+        meta:
+          dimension:
+            label: "Address Line 2"
+            group_label: "School Details"
+      - name: city
+        meta:
+          dimension:
+            group_label: "School Details"
+      - name: state
+        meta:
+          dimension:
+            group_label: "School Details"
+      - name: zip_code
+        meta:
+          dimension:
+            label: "ZIP Code"
+            group_label: "School Details"
+      - name: classification
+        meta:
+          dimension:
+            group_label: "School Details"
+      - name: sanction_id
+        meta:
+          dimension:
+            hidden: true
+            group_label: "School Details"
+      - name: sanction_name
+        meta:
+          dimension:
+            group_label: "School Details"
+      - name: sex
+      - name: num_undergraduates
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_num_undergraduates:
+              label: "# of Undergraduates"
+              type: sum
+              round: 0
+      - name: athletic_student_aid
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_athletic_student_aid:
+              label: "$ Athletic Student Aid"
+              type: sum
+              format: 'usd'
+              round: 0
+      - name: recruiting_expenses
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_athletic_student_aid:
+              label: "$ Recruiting Expenses"
+              type: sum
+              format: 'usd'
+              round: 0
+      - name: head_coach_salaries
+        meta:
+          dimension:
+            round: 0
+            format: 'usd'
+            label: "Avg. Head Coach Salary"
+            group_label: "Coaches"
+      - name: num_head_coaches
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_head_coaches:
+              type: sum
+              round: 0
+              label: "# Head Coaches"
+              group_label: "Coaches"
+      - name: head_coach_salaries_fte
+        meta:
+          dimension:
+            round: 0
+            format: 'usd'
+            label: "Avg. FTE Head Coach Salary"
+            group_label: "Coaches"
+      - name: num_head_coaches_fte
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_head_coaches_fte:
+              type: sum
+              round: 0
+              label: "# FTE Head Coaches"
+              group_label: "Coaches"
+      - name: assistant_coach_salaries
+        meta:
+          dimension:
+            round: 0
+            format: 'usd'
+            label: "Avg. Assistant Coach Salary"
+            group_label: "Coaches"
+      - name: num_assistant_coaches
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_assistant_coaches:
+              type: sum
+              round: 0
+              label: "# Assistant Coaches"
+              group_label: "Coaches"
+      - name: assistant_coach_fte_salaries
+        meta:
+          dimension:
+            round: 0
+            format: 'usd'
+            label: "Avg. FTE Assistant Coach Salary"
+            group_label: "Coaches"
+      - name: num_assistant_coaches_fte
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_assistant_coaches_fte:
+              type: sum
+              round: 0
+              label: "# FTE Assistant Coaches"
+              group_label: "Coaches"
+      - name: num_participation_dup
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_participation_dup:
+              type: sum
+              round: 0
+              label: "# Athletes - DUP"
+              group_label: "Coaches"
+      - name: expenses_per_participant
+        meta:
+          dimension:
+            round: 0
+            format: 'usd'
+            label: "Expenses Per Participant"
+            group_label: "Expenses"
+      - name: total_expenses
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_expenses_total:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Total Expenses"
+              group_label: "Expenses"
+      - name: expenses_per_particpant_including_coed
+        meta:
+          dimension:
+            round: 0
+            format: 'usd'
+            label: "Expenses Per Participant Including Coed"
+            group_label: "Expenses"
+      - name: total_expenses_including_coed
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_expenses_including_coed_total:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Total Expenses Including Coed"
+              group_label: "Expenses"
+      - name: total_revenue
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_revenue_total:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Total Revenue"
+              group_label: "Revenue"
+      - name: total_revenue_including_coed
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_revenue_including_coed_total:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "Total Revenue Including Coed"
+              group_label: "Revenue"
+      - name: unduplicated_participating_including_coed
+        meta:
+          dimension:
+            hidden: true
+          metrics:
+            total_participation_dup:
+              type: sum
+              round: 0
+              label: "# Athletes - UNDUP"
+      - name: num_male_practice_players
+        meta:
+          dimension:
+            hidden: true
