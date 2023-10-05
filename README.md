@@ -1,8 +1,10 @@
 ### Title 9 DBT
 
 This repository contains the database processing and calculations around the data collected on Title IX from the [Equity in Athletics Data Analysis website](https://ope.ed.gov/athletics).  We've loaded the data from each year into a single database segmented by year.  You can see how we process the data by looking at:
-1. Renaming the columns into names that are more complete and easier to understand.  See `models/eada.sql`.
-2. Setting up the formatting and calculations.  See `models/schema.yml`
+1. Renaming the columns into names that are more complete and easier to understand.  See [models/eada.sql](https://github.com/championwomen/title9-data/blob/main/models/eada.sql).
+2. Reformatting some of the data into one row per sex and year and school vs. a single row per school.  See [models/male_female_eada.sql](https://github.com/championwomen/title9-data/blob/main/models/male_female_eada.sql)
+3. Setting up the formatting and calculations.  See [models/eada.yml](https://github.com/championwomen/title9-data/blob/main/models/eada.yml)
+ and [models/male_female_eada.yml](https://github.com/championwomen/title9-data/blob/main/models/male_female_eada.yml).
 
 We are using DBT to process the data and to be able to re-process and test it easily.
 
