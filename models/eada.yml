@@ -24,57 +24,69 @@ models:
           - not_null
         meta:
           dimension:
+            type: string
             group_label: "School Details"
       - name: opeid
         description: Unique identifier used by the Department of Education's Office of Postsecondary Education (OPE)
         meta:
           dimension:
+            type: string
             label: "OPEID"
             group_label: "School Details"
       - name: institution_name
         meta:
           dimension:
+            type: string
             label: "Institution Name"
             group_label: "School Details"
       - name: address_1
         meta:
           dimension:
+            type: string
             label: "Address Line 1"
             group_label: "School Details"
       - name: address_2
         meta:
           dimension:
+            type: string
             label: "Address Line 2"
             group_label: "School Details"
       - name: city
         meta:
           dimension:
+            type: string
             group_label: "School Details"
       - name: state
         meta:
           dimension:
+            type: string
             group_label: "School Details"
       - name: zip_code
         meta:
           dimension:
+            type: string
             label: "ZIP Code"
             group_label: "School Details"
       - name: classification
         meta:
           dimension:
+            type: string
             group_label: "School Details"
       - name: sanction_id
         meta:
           dimension:
             hidden: true
+            type: string
             group_label: "School Details"
       - name: sanction_name
         meta:
           dimension:
+            type: string
             group_label: "School Details"
       - name: num_male_undergraduates
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_num_male_undergraduates:
@@ -85,6 +97,7 @@ models:
       - name: num_female_undergraduates
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_num_female_undergraduates:
@@ -95,6 +108,7 @@ models:
       - name: num_undergraduates
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_num_undergraduates:
@@ -105,13 +119,16 @@ models:
       - name: percentage_of_male_undergraduates
         meta:
           dimension:
+            type: number
             label: "% of Male Undergrad"
             format: 'percent'
+            type: number
             round: 2
             group_label: "School Details"
       - name: percentage_of_female_undergraduates
         meta:
           dimension:
+            type: number
             label: "% of Female Undergrad"
             format: 'percent'
             round: 2
@@ -119,6 +136,7 @@ models:
       - name: male_athletic_student_aid
         meta:
           dimension:
+            type: number
             sql: ${TABLE}.athletic_student_aid_for_men
             hidden: true
           metrics:
@@ -131,6 +149,7 @@ models:
       - name: female_athletic_student_aid
         meta:
           dimension:
+            type: number
             sql: ${TABLE}.athletic_student_aid_for_women
             hidden: true
             round: 2
@@ -145,6 +164,7 @@ models:
       - name: coed_team_athletic_student_aid
         meta:
           dimension:
+            type: number
             sql: COALESCE(${TABLE}.athletic_student_aid_for_coed, 0)
             hidden: true
           metrics:
@@ -157,6 +177,7 @@ models:
       - name: male_coed_sports_student_aid
         meta:
           dimension:
+            type: number
             sql: COALESCE(${coed_team_athletic_student_aid} * ${percentage_males_in_coed_sports}, 0)
             hidden: true
           metrics:
@@ -169,6 +190,7 @@ models:
       - name: female_coed_sports_student_aid
         meta:
           dimension:
+            type: number
             sql: COALESCE(${coed_team_athletic_student_aid} * ${percentage_females_in_coed_sports}, 0)
             hidden: true
           metrics:
@@ -181,6 +203,7 @@ models:
       - name: male_and_female_total_student_aid
         meta:
           dimension:
+            type: number
             sql: ${male_athletic_student_aid} + ${female_athletic_student_aid} + ${coed_team_athletic_student_aid}
             hidden: true
           metrics:
@@ -193,6 +216,7 @@ models:
       - name: additional_aid_for_females_needed_for_equity
         meta:
           dimension:
+            type: number
             sql: ${male_athletic_student_aid}::float / NULLIF(${percentage_of_male_undergraduates},0) - ${male_and_female_total_student_aid}
             hidden: true
           metrics:
@@ -205,6 +229,7 @@ models:
       - name: percentage_addtl_aid_for_females_needed_for_equity
         meta:
           dimension:
+            type: number
             sql: ${additional_aid_for_females_needed_for_equity}::float/NULLIF(${male_and_female_total_student_aid},0)
             hidden: true
           metrics:
@@ -225,6 +250,7 @@ models:
       - name: percentage_athletic_scholarship_aid_to_males
         meta:
           dimension:
+            type: number
             sql: ${male_athletic_student_aid}::float / NULLIF(${male_and_female_total_student_aid},0)
             format: 'percent'
             round: 2
@@ -233,6 +259,7 @@ models:
       - name: percentage_athletic_scholarship_aid_to_females
         meta:
           dimension:
+            type: number
             sql: ${female_athletic_student_aid}::float / NULLIF(${male_and_female_total_student_aid},0)
             format: 'percent'
             round: 2
@@ -241,6 +268,7 @@ models:
       - name: male_recruiting_expenses
         meta:
           dimension:
+            type: number
             sql: ${TABLE}.recruiting_expenses_for_men
             hidden: true
           metrics:
@@ -253,6 +281,7 @@ models:
       - name: female_recruiting_expenses
         meta:
           dimension:
+            type: number
             sql: ${TABLE}.recruiting_expenses_for_women
             hidden: true
           metrics:
@@ -265,6 +294,7 @@ models:
       - name: coed_team_recruiting_expenses
         meta:
           dimension:
+            type: number
             sql: COALESCE(${TABLE}.recruiting_expenses_for_coed, 0)
             hidden: true
           metrics:
@@ -277,6 +307,7 @@ models:
       - name: male_coed_sports_recruting_expenses
         meta:
           dimension:
+            type: number
             sql: COALESCE(${coed_team_recruiting_expenses} * ${percentage_males_in_coed_sports}, 0)
             hidden: true
           metrics:
@@ -289,6 +320,7 @@ models:
       - name: female_coed_sports_recruting_expenses
         meta:
           dimension:
+            type: number
             sql: COALESCE(${coed_team_recruiting_expenses} * ${percentage_females_in_coed_sports}, 0)
             hidden: true
           metrics:
@@ -301,6 +333,7 @@ models:
       - name: male_and_female_recruiting_expenses
         meta:
           dimension:
+            type: number
             sql: ${male_recruiting_expenses} + ${female_recruiting_expenses} + ${coed_team_recruiting_expenses}
             hidden: true
           metrics:
@@ -313,6 +346,7 @@ models:
       - name: male_and_female_recruiting_expenses_for_equity
         meta:
           dimension:
+            type: number
             sql: ${male_recruiting_expenses}::float / NULLIF(${percentage_of_male_undergraduates},0)
             hidden: true
           metrics:
@@ -325,6 +359,7 @@ models:
       - name: additional_female_recruiting_expenses_for_equity
         meta:
           dimension:
+            type: number
             sql: ${male_and_female_recruiting_expenses_for_equity} - ${male_and_female_recruiting_expenses}
             hidden: true
           metrics:
@@ -377,6 +412,7 @@ models:
       - name: percentage_males_in_coed_sports
         meta:
           dimension:
+            type: number
             format: 'percent'
             round: 2
             sql: ${num_male_participating_in_coed_sports}::float / NULLIF(${num_male_and_female_participating_in_coed_sports},0)
@@ -385,6 +421,7 @@ models:
       - name: percentage_females_in_coed_sports
         meta:
           dimension:
+            type: number
             format: 'percent'
             round: 2
             sql: ${num_female_participating_in_coed_sports}::float / NULLIF(${num_male_and_female_participating_in_coed_sports},0)
@@ -415,6 +452,7 @@ models:
       - name: num_male_and_female_participation_dup
         meta:
           dimension:
+            type: number
             label: "M/F Total Participation - DUP count"
             hidden: true
             sql: ${num_male_participation_dup} + ${num_female_participation_dup}
@@ -489,6 +527,7 @@ models:
       - name: expenses_per_participant_on_mens_teams
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Expenses"
@@ -501,132 +540,154 @@ models:
       - name: expenses_per_participant_on_womens_teams
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Expenses"
       - name: total_expenses_for_womens_teams
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Expenses"
       - name: total_expenses_for_men_and_women
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Expenses"
       - name: expenses_per_participant_men_on_coed_teams
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Expenses"
       - name: total_expenses_for_men_on_coed_teams
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Expenses"
       - name: expenses_per_participant_women_on_coed_teams
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Expenses"
       - name: total_expenses_for_women_on_coed_teams
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Expenses"
       - name: total_expenses_per_coed_team
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Expenses"
       - name: expenses_per_particpant_men_including_coed
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Expenses"
       - name: total_expenses_men_including_coed
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Expenses"
       - name: expenses_per_participant_women_including_coed
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Expenses"
       - name: total_expenses_women_including_coed
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Expenses"
       - name: total_expenses_including_coed
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Expenses"
       - name: total_revenue_mens_teams
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Revenue"
       - name: total_revenue_womens_teams
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Revenue"
       - name: total_revenue_mens_and_womens_teams
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Revenue"
       - name: total_revenue_men_on_coed_teams
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Revenue"
       - name: total_revenue_women_on_coed_teams
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Revenue"
       - name: total_revenue_coed
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Revenue"
       - name: total_revenue_men_including_coed
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Revenue"
       - name: total_revenue_women_including_coed
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Revenue"
       - name: total_revenue_all_teams
         meta:
           dimension:
+            type: number
             round: 2
             format: 'usd'
             group_label: "Revenue"
@@ -666,6 +727,7 @@ models:
       - name: percentage_of_male_athletes_undup
         meta:
           dimension:
+            type: number
             label: "% of Male Athletes - UNDUP"
             round: 2
             format: "percent"
@@ -674,6 +736,7 @@ models:
       - name: percentage_of_female_athletes_undup
         meta:
           dimension:
+            type: number
             label: "% of Female Athletes - UNDUP"
             round: 2
             format: "percent"
@@ -682,6 +745,7 @@ models:
       - name: percentage_of_male_athletes_dup_minus_mpp
         meta:
           dimension:
+            type: number
             label: "% of Male athletes - DUP count - Minus MPP"
             round: 2
             format: "percent"
@@ -690,6 +754,7 @@ models:
       - name: percentage_of_female_athletes_dup_minus_mpp
         meta:
           dimension:
+            type: number
             label: "% of Female athletes - DUP count - Minus MPP"
             round: 2
             format: "percent"
@@ -760,6 +825,7 @@ models:
       - name: percentage_of_male_athletes_undup_minus_mpp
         meta:
           dimension:
+            type: number
             label: "% of Male Athletes UNDUP - Minus MPP"
             round: 2
             format: "percent"
@@ -768,6 +834,7 @@ models:
       - name: percentage_of_female_athletes_undup_minus_mpp
         meta:
           dimension:
+            type: number
             label: "% of Female Athletes -  UNDUP - Minus MPP"
             round: 2
             format: "percent"
@@ -807,24 +874,28 @@ models:
       - name: total_revenue_not_allocated_by_gender_or_sport
         meta:
           dimension:
+            type: number
             round: 0
             format: 'usd'
             group_label: "Revenue"
       - name: total_expenses_not_allocated_by_gender_or_sport
         meta:
           dimension:
+            type: number
             round: 0
             format: 'usd'
             group_label: "Revenue"
       - name: grand_total_revenue
         meta:
           dimension:
+            type: number
             round: 0
             format: 'usd'
             group_label: "Revenue"
       - name: grand_total_expenses
         meta:
           dimension:
+            type: number
             round: 0
             format: 'usd'
             group_label: "Expenses"
@@ -837,6 +908,7 @@ models:
       - name: head_coach_salaries_for_men
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_head_coach_salaries_for_men:
@@ -848,6 +920,7 @@ models:
       - name: head_coach_salaries_for_women
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_head_coach_salaries_for_women:
@@ -859,6 +932,7 @@ models:
       - name: head_coach_salaries_for_coed
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_head_coach_salaries_for_coed:
@@ -870,6 +944,7 @@ models:
       - name: num_head_coaches_for_men
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_head_coaches_for_men:
@@ -880,6 +955,7 @@ models:
       - name: num_head_coaches_for_women
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_head_coaches_for_women:
@@ -890,6 +966,7 @@ models:
       - name: num_head_coaches_for_coed
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_head_coaches_for_coed:
@@ -900,6 +977,7 @@ models:
       - name: head_coach_salaries_fte_for_men
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_head_coach_salaries_fte_for_men:
@@ -911,6 +989,7 @@ models:
       - name: head_coach_salaries_fte_for_women
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_head_coach_salaries_fte_for_women:
@@ -922,6 +1001,7 @@ models:
       - name: head_coach_salaries_fte_for_coed
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_head_coach_salaries_fte_for_coed:
@@ -933,6 +1013,7 @@ models:
       - name: num_head_coaches_fte_for_men
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_head_coaches_fte_for_men:
@@ -943,6 +1024,7 @@ models:
       - name: num_head_coaches_fte_for_women
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_head_coaches_fte_for_women:
@@ -953,6 +1035,7 @@ models:
       - name: num_head_coaches_fte_for_coed
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_head_coaches_fte_for_coed:
@@ -963,6 +1046,7 @@ models:
       - name: assistant_coach_salaries_for_men
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_assistant_coach_salaries_for_men:
@@ -974,6 +1058,7 @@ models:
       - name: assistant_coach_salaries_for_women
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_assistant_coach_salaries_for_women:
@@ -985,6 +1070,7 @@ models:
       - name: assistant_coach_salaries_for_coed
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_assistant_coach_salaries_for_coed:
@@ -996,6 +1082,7 @@ models:
       - name: num_assistant_coaches_for_men
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_assistant_coaches_for_men:
@@ -1006,6 +1093,7 @@ models:
       - name: num_assistant_coaches_for_women
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_assistant_coaches_for_women:
@@ -1016,6 +1104,7 @@ models:
       - name: num_assistant_coaches_for_coed
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_assistant_coaches_for_coed:
@@ -1026,6 +1115,7 @@ models:
       - name: assistant_coach_fte_salaries_for_men
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_assistant_coach_fte_salaries_for_men:
@@ -1037,6 +1127,7 @@ models:
       - name: assistant_coach_fte_salaries_for_women
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_assistant_coach_fte_salaries_for_women:
@@ -1048,6 +1139,7 @@ models:
       - name: assistant_coach_fte_salaries_for_coed
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_assistant_coach_fte_salaries_for_coed:
@@ -1059,6 +1151,7 @@ models:
       - name: num_assistant_coaches_fte_for_men
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_assistant_coaches_fte_for_men:
@@ -1069,6 +1162,7 @@ models:
       - name: num_assistant_coaches_fte_for_women
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_assistant_coaches_fte_for_women:
@@ -1079,6 +1173,7 @@ models:
       - name: num_assistant_coaches_fte_for_coed
         meta:
           dimension:
+            type: number
             hidden: true
           metrics:
             total_assistant_coaches_fte_for_coed:
@@ -1089,6 +1184,7 @@ models:
       - name: num_head_coaches_pt_for_men
         meta:
           dimension:
+            type: number
             hidden: true
             sql: ${num_head_coaches_for_men} - ${num_head_coaches_fte_for_men}
           metrics:
@@ -1100,6 +1196,7 @@ models:
       - name: num_head_coaches_pt_for_women
         meta:
           dimension:
+            type: number
             hidden: true
             sql: ${num_head_coaches_for_women} - ${num_head_coaches_fte_for_women}
           metrics:
@@ -1111,6 +1208,7 @@ models:
       - name: num_head_coaches_pt_for_coed
         meta:
           dimension:
+            type: number
             hidden: true
             sql: ${num_head_coaches_for_coed} - ${num_head_coaches_fte_for_coed}
           metrics:
@@ -1122,6 +1220,7 @@ models:
       - name: num_assistant_coaches_pt_for_men
         meta:
           dimension:
+            type: number
             hidden: true
             sql: ${num_assistant_coaches_for_men} - ${num_assistant_coaches_fte_for_men}
           metrics:
@@ -1133,6 +1232,7 @@ models:
       - name: num_assistant_coaches_pt_for_women
         meta:
           dimension:
+            type: number
             hidden: true
             sql: ${num_assistant_coaches_for_women} - ${num_assistant_coaches_fte_for_women}
           metrics:
@@ -1144,6 +1244,7 @@ models:
       - name: num_assistant_coaches_pt_for_coed
         meta:
           dimension:
+            type: number
             hidden: true
             sql: ${num_assistant_coaches_for_coed} - ${num_assistant_coaches_fte_for_coed}
           metrics:
