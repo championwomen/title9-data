@@ -97,13 +97,25 @@ models:
               type: sum
               format: 'usd'
               round: 0
-      - name: head_coach_salaries
+      - name: avg_head_coach_salaries
         meta:
           dimension:
             round: 0
             format: 'usd'
             label: "Avg. Head Coach Salary"
             group_label: "Coaches"
+      - name: head_coach_salaries
+        meta:
+          dimension:
+            type: number
+            sql: ${avg_head_coach_salaries} * ${num_head_coaches}
+            hidden: true
+          metrics:
+            total_head_coach_salaries:
+              label: "Total Head Coach Salaries"
+              type: sum
+              format: 'usd'
+              group_label: "Coaches"
       - name: num_head_coaches
         meta:
           dimension:
@@ -114,7 +126,7 @@ models:
               round: 0
               label: "# Head Coaches"
               group_label: "Coaches"
-      - name: head_coach_salaries_fte
+      - name: avg_head_coach_salaries_fte
         meta:
           dimension:
             round: 0
@@ -131,13 +143,25 @@ models:
               round: 0
               label: "# FTE Head Coaches"
               group_label: "Coaches"
-      - name: assistant_coach_salaries
+      - name: avg_assistant_coach_salaries
         meta:
           dimension:
             round: 0
             format: 'usd'
             label: "Avg. Assistant Coach Salary"
             group_label: "Coaches"
+      - name: assistant_coach_salaries
+        meta:
+          dimension:
+            type: number
+            sql: ${avg_assistant_coach_salaries} * ${num_assistant_coaches}
+            hidden: true
+          metrics:
+            total_assistant_coach_salaries:
+              label: "Total Assistant Coach Salaries"
+              type: sum
+              format: 'usd'
+              group_label: "Coaches"
       - name: num_assistant_coaches
         meta:
           dimension:
@@ -148,7 +172,7 @@ models:
               round: 0
               label: "# Assistant Coaches"
               group_label: "Coaches"
-      - name: assistant_coach_fte_salaries
+      - name: avg_assistant_coach_fte_salaries
         meta:
           dimension:
             round: 0
@@ -164,6 +188,18 @@ models:
               type: sum
               round: 0
               label: "# FTE Assistant Coaches"
+              group_label: "Coaches"
+      - name: coach_salaries
+        meta:
+          dimension:
+            type: number
+            sql: ${head_coach_salaries} + ${assistant_coach_salaries}
+            hidden: true
+          metrics:
+            total_coach_salaries:
+              label: "Total Coach Salaries"
+              type: sum
+              format: 'usd'
               group_label: "Coaches"
       - name: num_participation_dup
         meta:
