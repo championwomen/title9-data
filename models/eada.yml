@@ -625,72 +625,122 @@ models:
         meta:
           dimension:
             type: number
-            round: 2
-            format: 'usd'
-            group_label: "Expenses"
+            hidden: true
+          metrics:
+            sum_expenses_including_coed:
+              label: "$ Expenses Including Coed"
+              round: 0
+              format: 'usd'
+              type: sum
+              group_label: "Expenses"
       - name: total_revenue_mens_teams
         meta:
           dimension:
             type: number
-            round: 2
-            format: 'usd'
-            group_label: "Revenue"
+            hidden: true
+          metrics:
+            sum_revenue_mens_teams:
+              label: "$ Revenue Men's Teams"
+              round: 0
+              format: 'usd'
+              type: sum
+              group_label: "Revenue"
       - name: total_revenue_womens_teams
         meta:
           dimension:
             type: number
-            round: 2
-            format: 'usd'
-            group_label: "Revenue"
+            hidden: true
+          metrics:
+            sum_revenue_womens_teams:
+              label: "$ Revenue Women's Teams"
+              round: 0
+              format: 'usd'
+              type: sum
+              group_label: "Revenue"
       - name: total_revenue_mens_and_womens_teams
         meta:
           dimension:
             type: number
-            round: 2
-            format: 'usd'
-            group_label: "Revenue"
+            hidden: true
+          metrics:
+            sum_revenue_mens_and_womens_teams:
+              label: "$ Revenue Men's and Women's Teams"
+              round: 0
+              format: 'usd'
+              type: sum
+              group_label: "Revenue"
       - name: total_revenue_men_on_coed_teams
         meta:
           dimension:
             type: number
-            round: 2
-            format: 'usd'
-            group_label: "Revenue"
+            hidden: true
+          metrics:
+            sum_revenue_men_on_coed_teams:
+              label: "$ Revenue Men on Coed Teams"
+              round: 0
+              format: 'usd'
+              type: sum
+              group_label: "Revenue"
       - name: total_revenue_women_on_coed_teams
         meta:
           dimension:
             type: number
-            round: 2
-            format: 'usd'
-            group_label: "Revenue"
+            hidden: true
+          metrics:
+            sum_revenue_women_on_coed_teams:
+              label: "$ Revenue Women on Coed Teams"
+              round: 0
+              format: 'usd'
+              type: sum
+              group_label: "Revenue"
       - name: total_revenue_coed
         meta:
           dimension:
             type: number
-            round: 2
-            format: 'usd'
-            group_label: "Revenue"
+            hidden: true
+          metrics:
+            sum_revenue_coed_teams:
+              label: "$ Revenue Coed Teams"
+              round: 0
+              format: 'usd'
+              type: sum
+              group_label: "Revenue"
       - name: total_revenue_men_including_coed
         meta:
           dimension:
             type: number
-            round: 2
-            format: 'usd'
-            group_label: "Revenue"
+            hidden: true
+          metrics:
+            sum_revenue_men_including_coed:
+              label: "$ Revenue Men (inc. Coed Teams)"
+              round: 0
+              format: 'usd'
+              type: sum
+              group_label: "Revenue"
       - name: total_revenue_women_including_coed
         meta:
           dimension:
             type: number
-            round: 2
-            format: 'usd'
-            group_label: "Revenue"
+            hidden: true
+          metrics:
+            sum_revenue_women_including_coed:
+              label: "$ Revenue Women (inc. Coed Teams)"
+              round: 0
+              format: 'usd'
+              type: sum
+              group_label: "Revenue"
       - name: total_revenue_all_teams
         meta:
           dimension:
             type: number
-            round: 2
-            format: 'usd'
-            group_label: "Revenue"
+            hidden: true
+          metrics:
+            sum_revenue_all_teams:
+              label: "$ Revenue (All Teams)"
+              round: 0
+              format: 'usd'
+              type: sum
+              group_label: "Revenue"
       - name: num_male_athletes_undup
         meta:
           dimension:
@@ -878,13 +928,27 @@ models:
             round: 0
             format: 'usd'
             group_label: "Revenue"
+          metrics:
+            sum_revenue_not_allocated_by_gender_or_sport:
+              label: "$ Revenue Not Allocated by Gender or Sport"
+              round: 0
+              format: 'usd'
+              type: sum
+              group_label: "Revenue"
       - name: total_expenses_not_allocated_by_gender_or_sport
         meta:
           dimension:
             type: number
             round: 0
             format: 'usd'
-            group_label: "Revenue"
+            group_label: "Expenses"
+          metrics:
+            sum_expenses_not_allocated_by_gender_or_sport:
+              label: "$ Expenses Not Allocated by Gender or Sport"
+              round: 0
+              format: 'usd'
+              type: sum
+              group_label: "Expenses"
       - name: grand_total_revenue
         meta:
           dimension:
@@ -892,6 +956,13 @@ models:
             round: 0
             format: 'usd'
             group_label: "Revenue"
+          metrics:
+            sum_grand_total_revenue:
+              label: "$ Grand Total Revenue"
+              round: 0
+              format: 'usd'
+              type: sum
+              group_label: "Revenue"
       - name: grand_total_expenses
         meta:
           dimension:
@@ -899,6 +970,13 @@ models:
             round: 0
             format: 'usd'
             group_label: "Expenses"
+          metrics:
+            sum_grand_total_expenses:
+              label: "$ Grand Total Expenses"
+              round: 0
+              format: 'usd'
+              type: sum
+              group_label: "Expenses"
       - name: overall_grade
         meta:
           dimension:
