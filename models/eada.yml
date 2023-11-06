@@ -380,7 +380,7 @@ models:
         meta:
           dimension:
             type: number
-            sql: ${percentage_of_female_athletes_undup_minus_mpp} * ${male_and_female_recruiting_expenses} -${female_recruiting_expenses}
+            sql: COALESCE(${percentage_of_female_athletes_undup_minus_mpp} * ${male_and_female_recruiting_expenses} - ${female_recruiting_expenses}, 0)
             hidden: true
           metrics:
             total_addtl_female_recruiting_expenses_for_equity_partic_undup:
