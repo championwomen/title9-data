@@ -376,12 +376,23 @@ models:
             type: string
             label: "Grade Recruiting Expense Pass/Fail or N/A for Schools That Do Not Provide Recruiting Resources"
             group_label: "Recruiting Expenses"
+      - name: female_recruiting_expenses_for_equity_partic_undup
+        meta:
+          dimension:
+            type: number
+            sql: ${percentage_of_female_athletes_undup_minus_mpp} * ${male_and_female_recruiting_expenses}
+          metrics:
+            total_female_recruiting_expenses_for_equity_partic_undup:
+              type: sum
+              round: 0
+              format: 'usd'
+              label: "$ Recruiting for Females Needed for Equity, Based on M/F Athletic Participation, Undup Minus MPP"
+              group_label: "Recruiting Expenses"
       - name: addtl_female_recruiting_expenses_for_equity_partic_undup
         meta:
           dimension:
             type: number
-            sql: COALESCE(${percentage_of_female_athletes_undup_minus_mpp} * ${male_and_female_recruiting_expenses} - ${female_recruiting_expenses}, 0)
-            hidden: true
+            sql: ${female_recruiting_expenses_for_equity_partic_undup} - ${female_recruiting_expenses}
           metrics:
             total_addtl_female_recruiting_expenses_for_equity_partic_undup:
               type: sum
