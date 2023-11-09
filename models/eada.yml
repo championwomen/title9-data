@@ -398,7 +398,7 @@ models:
               type: sum
               round: 0
               format: 'usd'
-              label: "$ Additional Recruiting for Females Needed for Equity, Based on M/F Athletic Participation, Undup Minus MPP"
+              label: "$ Additional Recruiting for Females based on Undup Participation"
               group_label: "Recruiting Expenses"
       - name: num_male_participating_in_coed_sports
         meta:
