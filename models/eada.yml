@@ -230,7 +230,7 @@ models:
         meta:
           dimension:
             type: number
-            sql: ${male_athletic_student_aid}::float / NULLIF(${percentage_of_male_athletes_undup_minus_mpp},0) - ${female_athletic_student_aid}
+            sql: ${male_athletic_student_aid}::float / NULLIF(${percentage_of_male_athletes_undup_minus_mpp},0) * NULLIF(${percentage_of_female_athletes_undup_minus_mpp},0) - ${female_athletic_student_aid}
             hidden: true
           metrics:
             total_additional_aid_for_females_needed_for_equity_partic:
