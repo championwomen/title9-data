@@ -407,11 +407,11 @@ models:
             type: number
             sql: ${female_recruiting_expenses_for_equity_partic_undup} - COALESCE(${female_recruiting_expenses}, 0)
           metrics:
-            total_addtl_female_recruiting_expenses_for_equity_partic_undup:
+            total_addtl_female_recruiting_expenses_for_eq_part_undup:
               type: sum
               round: 0
               format: 'usd'
-              label: "$ Additional Recruiting for Females based on Undup Participation"
+              label: "$ Addtl Recruiting for Females Needed for Equity, Based on M/F Athletic Participation, Undup Minus MPP"
               group_label: "Recruiting Expenses"
       - name: num_male_participating_in_coed_sports
         meta:
