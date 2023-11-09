@@ -269,7 +269,7 @@ models:
         meta:
           dimension:
             type: number
-            sql: ${TABLE}.recruiting_expenses_for_men
+            sql: COALESCE(${TABLE}.recruiting_expenses_for_men, 0)
             hidden: true
           metrics:
             total_male_recruiting_expenses:
@@ -282,7 +282,7 @@ models:
         meta:
           dimension:
             type: number
-            sql: ${TABLE}.recruiting_expenses_for_women
+            sql: COALESCE(${TABLE}.recruiting_expenses_for_women, 0)
             hidden: true
           metrics:
             total_female_recruiting_expenses:
@@ -380,7 +380,7 @@ models:
         meta:
           dimension:
             type: number
-            sql: (${percentage_of_female_athletes_undup_minus_mpp} * COALESCE(${male_and_female_recruiting_expenses}, 0))
+            sql: ${percentage_of_female_athletes_undup_minus_mpp} * COALESCE(${male_and_female_recruiting_expenses}, 0)
           metrics:
             total_female_recruiting_expenses_for_equity_partic_undup:
               type: sum
@@ -392,7 +392,7 @@ models:
         meta:
           dimension:
             type: number
-            sql: (${female_recruiting_expenses_for_equity_partic_undup} - COALESCE(${female_recruiting_expenses}, 0))
+            sql: ${female_recruiting_expenses_for_equity_partic_undup} - COALESCE(${female_recruiting_expenses}, 0)
           metrics:
             total_addtl_female_recruiting_expenses_for_equity_partic_undup:
               type: sum
