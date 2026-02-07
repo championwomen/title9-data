@@ -12,13 +12,63 @@ Try running the following commands:
 - `dbt run`
 - `dbt test`
 
-### Configure dbt
-In order to set up `dbt`, you have to set up a `~/.dbt/profiles.yml` configuration file.  This should look something like:
+### Docker Setup (Recommended)
 
+If you're already using PostgreSQL for other projects, it's recommended to run a dedicated Postgres instance in Docker on a non-standard port (5434) to avoid conflicts.
+
+```bash
+# Start the database
+docker compose up -d
+
+# Stop the database
+docker compose down
+
+# Reset everything (including data)
+docker compose down -v
+
+# View logs
+docker compose logs -f postgres
+```
+
+The Docker setup includes:
+- PostgreSQL 15 running on port **5434** (mapped from container port 5432)
+- Persistent volume for data storage
+- Mounted `./data` directory for loading CSV files
+- Health checks to ensure the database is ready
+
+### Configure dbt
+
+In order to set up `dbt`, you have to set up a `~/.dbt/profiles.yml` configuration file.  
+
+**For Docker setup (recommended):**
+```yaml
+title9:
+  outputs:
+    dev:
+      type: postgres
+      threads: 1
+      host: localhost
+      port: 5434  # Note: Non-standard port for Docker (5433 was taken)
+      user: title9
+      pass: title9
+      dbname: title9
+      schema: dev
+    prod:
+      type: postgres
+      threads: 1
+      host: xxxx
+      port: 5432
+      user: xxxx
+      pass: xxxx
+      dbname: xxxx
+      schema: prod
+  target: dev
+```
+
+**For local PostgreSQL:**
 ```
 title9:
   outputs:
-
     dev:
       type: postgres
       threads: 1
@@ -221,6 +271,12 @@ CREATE TABLE public.raw_eada (
 
 Save the data from the EADA website as a CSV and load it into this table using:
 
+**For Docker setup:**
+Place your CSV files in the `./data/` directory (mounted to `/data/` in the container), then use the path `/data/yourfile.csv` in the COPY command below.
+
+**For local PostgreSQL:**
+Use your local file path in the COPY command below.
+
 ``` sql
 \COPY raw_eada(unitid, opeid, institution_name, addr1_txt, addr2_txt, city_txt, state_cd, zip_text, classificationcode, classification_name, classificationother, efmalecount, effemalecount, eftotalcount, sector_cd, sector_name, studentaid_men, studentaid_women, studentaid_coed, studentaid_total, stuaid_men_ratio, stuaid_women_ratio, stuaid_coed_ratio, recruitexp_men, recruitexp_women, recruitexp_coed, recruitexp_total, hdcoach_salary_men, hdcoach_salary_women, hdcoach_salary_coed, num_hdcoach_men, num_hdcoach_women, num_hdcoach_coed, hdcoach_sal_fte_men, hdcoach_sal_fte_womn, hdcoach_sal_fte_coed, fte_hdcoach_men, fte_hdcoach_women, fte_hdcoach_coed, ascoach_salary_men, ascoach_salary_women, ascoach_salary_coed, num_ascoach_men, num_ascoach_women, num_ascoach_coed, ascoach_sal_fte_men, ascoach_sal_fte_womn, ascoach_sal_fte_coed, fte_ascoach_men, fte_ascoach_women, fte_ascoach_coed, il_partic_men, il_partic_women, il_partic_coed_men, il_partic_coed_women, il_sum_partic_men, il_sum_partic_women, il_opexpperpart_men, il_opexpperteam_men, il_opexpperpart_women, il_opexpperteam_women, il_total_opexp_menwomen, il_opexpperpart_coed_men, il_opexpperteam_coed_men, il_opexp_part_coed_women, il_opexp_team_coed_women, il_total_opexp_coedteam, il_sum_opexpperpart_men, il_sum_opexpperteam_men, il_sum_opexpperpart_women, il_sum_opexpperteam_women, il_total_opexp_inclcoed, il_men_ftheadcoach_male, il_men_ptheadcoach_male, il_men_ftunivemploy_male, il_men_ptunivemploy_male, il_men_ftheadcoach_fem, il_men_ptheadcoach_fem, il_men_ftunivemploy_fem, il_men_ptunivemploy_fem, il_men_total_headcoach, il_women_fthdcoach_male, il_women_pthdcoach_male, il_women_ftunivemp_male, il_women_ptunivemp_male, il_women_fthdcoach_fem, il_women_pthdcoach_fem, il_women_ftunivemp_fem, il_women_ptunivemp_fem, il_women_total_hdcoach, il_coed_fthdcoach_male, il_coed_pthdcoach_male, il_coed_ftunivemp_male, il_coed_ptunivemp_male, il_coed_fthdcoach_fem, il_coed_pthdcoach_fem, il_coed_ftunivemp_fem, il_coed_ptunivemp_fem, il_coed_total_hdcoach, il_sum_fthdcoach_male, il_sum_pthdcoach_male, il_sum_ftunivemp_male, il_sum_ptunivemp_male, il_sum_fthdcoach_fem, il_sum_pthdcoach_fem, il_sum_ftunivemp_fem, il_sum_ptunivemp_fem, il_sum_total_hdcoach, il_men_ftascoach_male, il_men_ptascoach_male, il_men_ftacunivemp_male, il_men_ptacunivemp_male, il_men_ftasstcoach_fem, il_men_ptasstcoach_fem, il_men_ftacunivemp_fem, il_men_ptacunivemp_fem, il_men_total_asstcoach, il_women_ftascoach_male, il_women_ptascoach_male, il_women_ftacunemp_male, il_women_ptacunemp_male, il_women_ftastcoach_fem, il_women_ptastcoach_fem, il_womn_ftacunivemp_fem, il_womn_ptacunivemp_fem, il_women_total_astcoach, il_coed_ftascoach_male, il_coed_ptascoach_male, il_coed_ftacunemp_male, il_coed_ptacunemp_male, il_coed_ftastcoach_fem, il_coed_ptastcoach_fem, il_coed_ftacunivemp_fem, il_coed_ptacunivemp_fem, il_coed_total_astcoach, il_sum_ftascoach_male, il_sum_ptascoach_male, il_sum_ftacunivemp_male, il_sum_ptacunivemp_male, il_sum_ftascoach_fem, il_sum_ptascoach_fem, il_sum_ftacunivemp_fem, il_sum_ptacunivemp_fem, il_sum_total_asstcoach, il_rev_men, il_rev_women, il_total_rev_menwomen, il_rev_coed_men, il_rev_coed_women, il_total_rev_coed, il_revenue_menall, il_revenue_womenall, il_total_revenue_all, il_exp_men, il_exp_women, il_total_exp_menwomen, il_exp_coed_men, il_exp_coed_women, il_total_exp_coed, il_expense_menall, il_expense_womenall, il_total_expense_all, undup_ct_partic_men, undup_ct_partic_women, tot_revenue_all_notalloc, tot_expense_all_notalloc, grnd_total_revenue, grnd_total_expense) FROM '2022.csv' DELIMITER ',' CSV HEADER;
 ```
@@ -245,6 +301,8 @@ CREATE TABLE public.raw_practice_players (
 ```
 
 Import from a CSV file:
+
+**Note:** For Docker, place the file in `./data/` and use `/data/mpp-2022.csv` as the path.
 
 ``` sql
 \COPY raw_practice_players(unitid, num_male_practice_players) FROM 'mpp-2022.csv' DELIMITER ',' CSV HEADER;

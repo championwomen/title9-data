@@ -1,0 +1,12 @@
+title9:
+  outputs:
+    dev:
+      type: postgres
+      threads: 1
+      host: localhost
+      port: 5434
+      user: title9
+      pass: title9
+      dbname: title9
+      schema: dev
+  target: dev
