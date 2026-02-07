@@ -10,3 +10,6 @@ tramp
 target/
 dbt_packages/
 logs/
+*.csv
+*.sql
+dbt-env
