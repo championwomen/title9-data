@@ -262,3 +262,6 @@ UPDATE raw_practice_players SET year = 2022 WHERE year IS NULL;
 - Join the [chat](https://community.getdbt.com/) on Slack for live discussions and support
 - Find [dbt events](https://events.getdbt.com) near you
 - Check out [the blog](https://blog.getdbt.com/) for the latest news on dbt's development and best practices
+
+
+UPDATE raw_eada SET year = 2023 WHERE year IS NULL;
