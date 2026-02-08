@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:15
@@ -19,5 +17,64 @@ services:
       timeout: 5s
       retries: 5
 
+  # Lightdash - BI tool for testing dbt models
+  # RECOMMENDED: Use pre-built image (works on all architectures via emulation)
+  lightdash:
+    image: lightdash/lightdash:latest
+    container_name: title9-lightdash
+    platform: linux/amd64  # Uses emulation on ARM64 - stable and tested
+    ports:
+      - "8080:8080"
+    environment:
+      # Lightdash configuration
+      - LIGHTDASH_SECRET=dev-secret-key-change-in-production
+      - LIGHTDASH_LOG_LEVEL=debug
+      # Database connection (uses same PostgreSQL)
+      - PGHOST=postgres
+      - PGPORT=5432
+      - PGUSER=title9
+      - PGPASSWORD=title9
+      - PGDATABASE=title9
+      - DATABASE_URL=postgresql://title9:title9@postgres:5432/title9
+      # dbt configuration
+      - DBT_PROJECT_DIR=/dbt
+      - DBT_PROFILES_DIR=/dbt
+      - DBT_TARGET=docker  # Use the 'docker' target from profiles.yml
+
+    volumes:
+      - ./:/dbt:ro  # Mount dbt project read-only
+      - lightdash_data:/usr/src/app/storage
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/api/v1/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+
+  # Alternative: Metabase (ARM64-native, faster on Apple Silicon)
+  # Uncomment this section and comment out Lightdash above if you want faster performance
+  # metabase:
+  #   image: metabase/metabase:latest
+  #   container_name: title9-metabase
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     - MB_DB_TYPE=postgres
+  #     - MB_DB_DBNAME=title9
+  #     - MB_DB_PORT=5432
+  #     - MB_DB_USER=title9
+  #     - MB_DB_PASS=title9
+  #     - MB_DB_HOST=postgres
+  #   volumes:
+  #     - metabase_data:/metabase-data
+  #   depends_on:
+  #     postgres:
+  #       condition: service_healthy
+
 volumes:
   postgres_data:
+  lightdash_data:
+  # metabase_data:

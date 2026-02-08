@@ -17,10 +17,13 @@ Try running the following commands:
 If you're already using PostgreSQL for other projects, it's recommended to run a dedicated Postgres instance in Docker on a non-standard port (5434) to avoid conflicts.
 
 ```bash
-# Start the database
+# Start both PostgreSQL and Lightdash
 docker compose up -d
 
-# Stop the database
+# Start only PostgreSQL
+docker compose up -d postgres
+
+# Stop all services
 docker compose down
 
 # Reset everything (including data)
@@ -28,41 +31,141 @@ docker compose down -v
 
 # View logs
 docker compose logs -f postgres
+docker compose logs -f lightdash
 ```
 
 The Docker setup includes:
-- PostgreSQL 15 running on port **5434** (mapped from container port 5432)
-- Persistent volume for data storage
+- **PostgreSQL 15** running on port **5434** (mapped from container port 5432)
+- **Lightdash** BI tool running on port **8080** for local testing
+- Persistent volumes for data storage
 - Mounted `./data` directory for loading CSV files
-- Health checks to ensure the database is ready
+- Health checks to ensure services are ready
+
+#### Lightdash (Local BI Testing)
+
+The Docker setup includes Lightdash for testing your dbt models locally:
+
+```bash
+# Start all services (includes Lightdash)
+docker compose up -d
+
+# Wait for Lightdash to start (first time may take 2-3 minutes)
+docker compose logs -f lightdash
+
+# Access Lightdash
+open http://localhost:8080
+```
+
+**First-time setup:**
+
+⚠️ **Important:** The available connection methods in the UI have limitations:
+- **dbt Cloud** - For cloud-hosted dbt (not local)
+- **dbt local server** - Requires dbt RPC server (❌ deprecated in dbt 1.5+)
+- **CLI** - Lightdash CLI expects HTTPS; local HTTP server causes SSL errors
+- **GitHub** - Can work with public repos or local files
+
+**Recommended approach for local development:**
+
+1. **Start the services** (if not already running):
+   ```bash
+   docker compose up -d
+   ```
+
+2. **Run dbt** to compile your models:
+   ```bash
+   source venv/bin/activate
+   dbt run --profiles-dir .
+   ```
+
+3. **Open Lightdash:** http://localhost:8080
+
+4. **Create a new project:**
+   - Click "Create project"
+   - Try **"GitHub"** option first:
+     - For testing, you can create a public GitHub repo with your dbt project
+     - Or use local development workarounds below
+   - If GitHub doesn't work, try the **CLI** option (see troubleshooting below)
+
+5. **Connect to PostgreSQL:**
+   - Host: `postgres`
+   - Port: `5432`
+   - Database: `title9`
+   - User: `title9`
+   - Password: `title9`
+   - Schema: `dev`
+
+6. **Explore your data!**
+
+**Troubleshooting - CLI SSL Error:**
+If you get "The server does not support SSL connections" with the CLI:
+```bash
+# The CLI requires HTTPS but local server uses HTTP
+# Workaround: Push your dbt project to GitHub and use GitHub integration
+# Or use Lightdash Cloud (https://app.lightdash.com) with your production database
+```
+
+**Alternative: Direct SQL Exploration**
+Since Lightdash local setup has limitations, you can also:
+- Use the Lightdash UI to write custom SQL queries directly
+- Connect to your PostgreSQL database at `postgres:5432`
+- Query the compiled dbt models in the `dev` schema
+
+**Note:** Lightdash connects to the PostgreSQL container internally using the Docker network. From your host machine, use port 5434 for dbt commands, but Lightdash uses the internal `postgres:5432` connection.
+
+**Note:** Lightdash runs via emulation on ARM64 (Apple Silicon) Macs. For local testing, this works fine and is the recommended approach.
 
 ### Configure dbt
 
-In order to set up `dbt`, you have to set up a `~/.dbt/profiles.yml` configuration file.  
+In order to set up `dbt`, you have to set up a `profiles.yml` configuration file. We provide one in the project root (`./profiles.yml`), or you can put it in `~/.dbt/profiles.yml`.
 
-**For Docker setup (recommended):**
+**The project includes three targets:**
+
+1. **`dev`** - For local dbt CLI usage (outside Docker)
+   - Connects to: `localhost:5434`
+   - Used when running: `dbt run --profiles-dir .`
+
+2. **`docker`** - For Lightdash running in Docker
+   - Connects to: `postgres:5432` (internal Docker network)
+   - Used automatically by Lightdash container
+
+3. **`prod`** - For production deployment
+   - Update with your production database credentials
+
+**Current profiles.yml:**
 ```yaml
 title9:
   outputs:
     dev:
       type: postgres
-      threads: 1
+      threads: 4
       host: localhost
-      port: 5434  # Note: Non-standard port for Docker (5433 was taken)
+      port: 5434
       user: title9
       pass: title9
       dbname: title9
       schema: dev
+    
+    docker:
+      type: postgres
+      threads: 4
+      host: postgres  # Internal Docker network
+      port: 5432
+      user: title9
+      pass: title9
+      dbname: title9
+      schema: dev
+    
     prod:
       type: postgres
-      threads: 1
-      host: xxxx
+      threads: 4
+      host: YOUR_PROD_HOST
       port: 5432
-      user: xxxx
-      pass: xxxx
-      dbname: xxxx
+      user: title9
+      pass: YOUR_PASSWORD
+      dbname: title9
       schema: prod
-  target: dev
+  
+  target: dev  # Default target for local CLI
 ```
 
 **For local PostgreSQL:**

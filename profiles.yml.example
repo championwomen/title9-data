@@ -1,29 +1,29 @@
+# Lightdash Docker Configuration
+# Place this in ~/.dbt/profiles.yml for local Lightdash testing
+# or use environment variables
+
 title9:
   outputs:
-    # For local dbt CLI usage (outside Docker)
     dev:
       type: postgres
       threads: 4
-      host: localhost
+      host: localhost  # For local dbt CLI
       port: 5434
       user: title9
       pass: title9
       dbname: title9
       schema: dev
     
-    # For Lightdash running in Docker
-    # Uses internal Docker network to connect to postgres service
     docker:
       type: postgres
       threads: 4
-      host: postgres  # Service name from docker-compose.yml
+      host: postgres  # Service name in Docker network
       port: 5432
       user: title9
       pass: title9
       dbname: title9
       schema: dev
     
-    # Production target (update with your production DB details)
     prod:
       type: postgres
       threads: 4
