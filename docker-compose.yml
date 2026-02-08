@@ -25,6 +25,8 @@ services:
     platform: linux/amd64  # Uses emulation on ARM64 - stable and tested
     ports:
       - "8080:8080"
+    env_file:
+      - .env
     environment:
       # Lightdash configuration
       - LIGHTDASH_SECRET=dev-secret-key-change-in-production
@@ -40,13 +42,6 @@ services:
       - DBT_PROJECT_DIR=/dbt
       - DBT_PROFILES_DIR=/dbt
       - DBT_TARGET=docker  # Use the 'docker' target from profiles.yml
-      # S3 Storage configuration (REQUIRED for query results)
-      # Replace these with your actual S3 credentials
-      - S3_BUCKET=your-lightdash-bucket
-      - S3_REGION=us-east-1
-      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
-      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
-      - S3_ENDPOINT=https://s3.us-east-1.amazonaws.com  # Optional: for non-AWS S3
 
     volumes:
       - ./:/dbt:ro  # Mount dbt project read-only
