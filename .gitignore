@@ -13,3 +13,4 @@ logs/
 *.csv
 *.sql
 dbt-env
+.env
