@@ -93,8 +93,9 @@ open http://localhost:8080
    - User: `title9`
    - Password: `title9`
    - Schema: `dev`
+   - **⚠️ Important:** Look for "SSL Mode" or "Require SSL" setting and set it to **"Disable"** or **"No Verify"** (local development doesn't use SSL)
 
-6. **Explore your data!**
+6. **Test connection and compile**
 
 **Troubleshooting - CLI SSL Error:**
 If you get "The server does not support SSL connections" with the CLI:
@@ -113,6 +114,22 @@ Since Lightdash local setup has limitations, you can also:
 **Note:** Lightdash connects to the PostgreSQL container internally using the Docker network. From your host machine, use port 5434 for dbt commands, but Lightdash uses the internal `postgres:5432` connection.
 
 **Note:** Lightdash runs via emulation on ARM64 (Apple Silicon) Macs. For local testing, this works fine and is the recommended approach.
+
+**⚠️ S3 Storage Required:** Lightdash requires S3 storage for query results. If you see "Native pagination not supported" error, configure S3:
+
+```bash
+# 1. Copy the example environment file
+cp .env.example .env
+
+# 2. Edit .env with your S3 credentials
+# - AWS_ACCESS_KEY_ID
+# - AWS_SECRET_ACCESS_KEY  
+# - S3_BUCKET (create a bucket for Lightdash dev)
+# - S3_REGION
+
+# 3. Restart Lightdash with the environment variables
+docker compose up -d lightdash
+```
 
 ### Configure dbt
 
