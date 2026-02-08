@@ -5,7 +5,8 @@ on:
     branches: [ "main", "master" ]
 
 env:
-  DBT_VERSION: "1.3.0"
+  DBT_VERSION: "1.11.3"
+  DBT_ADAPTER_VERSION: "1.10.0"  # dbt-postgres latest version
 
 jobs:
   deploy:
@@ -49,7 +50,7 @@ jobs:
 
       - name: Install dbt
         run: |
-          pip install dbt-core==$DBT_VERSION dbt-postgres==$DBT_VERSION dbt-redshift==$DBT_VERSION dbt-snowflake==$DBT_VERSION dbt-bigquery==$DBT_VERSION
+          pip install dbt-core==$DBT_VERSION dbt-postgres==$DBT_ADAPTER_VERSION
           dbt deps --project-dir "$PROJECT_DIR"
 
       - name: Install lightdash CLI

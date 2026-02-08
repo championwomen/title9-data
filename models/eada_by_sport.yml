@@ -1,0 +1,74 @@
+version: 2
+
+sources:
+  - name: raw
+    schema: public
+    tables:
+      - name: raw_eada_by_sport
+        description: Raw EADA data by sport (2004-2023) in wide format
+
+models:
+  - name: eada_by_sport
+    description: |
+      EADA data transformed from wide to long format. One row per sport per institution per year per sex.
+      Includes participation counts, revenue, expenses, and operating expenses for each sport.
+      Coed sports are split into separate Male/Female rows with is_coed_sport=true flag.
+    columns:
+      - name: year
+        description: Survey year (2004-2023)
+        tests:
+          - not_null
+      - name: unitid
+        description: Institution ID
+        tests:
+          - not_null
+      - name: ope_id
+        description: Office of Postsecondary Education ID
+      - name: institution_name
+        description: Name of the institution
+      - name: state
+        description: State code
+      - name: classification
+        description: NCAA/NAIA classification
+      - name: sanction
+        description: Sanctioning body (NCAA, NAIA, etc.)
+      - name: male_undergraduates
+        description: Total male undergraduate enrollment
+      - name: female_undergraduates
+        description: Total female undergraduate enrollment
+      - name: total_undergraduates
+        description: Total undergraduate enrollment
+      - name: sport_name
+        description: Standardized sport name
+        tests:
+          - not_null
+      - name: sex
+        description: Male, Female, or Coed
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['Male', 'Female']
+      - name: is_coed_sport
+        description: True if this row represents participation in a coed team
+      - name: participation
+        description: Number of participants
+      - name: revenue
+        description: Sport revenue
+      - name: expenses
+        description: Sport expenses
+      - name: operating_expenses
+        description: Sport operating expenses
+    meta:
+      metrics:
+        total_participation:
+          type: sum
+          sql: participation
+          label: Total Participation
+        total_revenue:
+          type: sum
+          sql: revenue
+          label: Total Revenue
+        total_expenses:
+          type: sum
+          sql: expenses
+          label: Total Expenses
