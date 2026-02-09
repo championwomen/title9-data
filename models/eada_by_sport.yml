@@ -13,6 +13,7 @@ models:
       EADA data transformed from wide to long format. One row per sport per institution per year per sex.
       Includes participation counts, revenue, expenses, and operating expenses for each sport.
       Coed sports are split into separate Male/Female rows with is_coed_sport=true flag.
+    
     columns:
       - name: year
         description: Survey year (2004-2023)
@@ -20,104 +21,174 @@ models:
           - not_null
         meta:
           dimension:
-            type: number
+            label: "Year"
+            type: date
+            time_intervals: ['YEAR']
+            sql: to_date(CAST(${TABLE}.year AS CHAR(4)), 'yyyy')
+            group_label: "Time Period"
+      
       - name: unitid
         description: Institution ID
         tests:
           - not_null
         meta:
           dimension:
+            label: "Unit ID"
             type: string
+            group_label: "School Details"
+      
       - name: ope_id
         description: Office of Postsecondary Education ID
         meta:
           dimension:
+            label: "OPE ID"
             type: string
+            group_label: "School Details"
+      
       - name: institution_name
         description: Name of the institution
         meta:
           dimension:
+            label: "Institution Name"
             type: string
+            group_label: "School Details"
+      
       - name: state
         description: State code
         meta:
           dimension:
+            label: "State"
             type: string
+            group_label: "School Details"
+      
       - name: classification
         description: NCAA/NAIA classification
         meta:
           dimension:
+            label: "Classification"
             type: string
+            group_label: "School Details"
+      
       - name: sanction
         description: Sanctioning body (NCAA, NAIA, etc.)
         meta:
           dimension:
+            label: "Sanction"
             type: string
+            group_label: "School Details"
+      
       - name: male_undergraduates
         description: Total male undergraduate enrollment
         meta:
           dimension:
+            label: "Male Undergraduates"
             type: number
+            hidden: true
+            group_label: "School Details"
+      
       - name: female_undergraduates
         description: Total female undergraduate enrollment
         meta:
           dimension:
+            label: "Female Undergraduates"
             type: number
+            hidden: true
+            group_label: "School Details"
+      
       - name: total_undergraduates
         description: Total undergraduate enrollment
         meta:
           dimension:
+            label: "Total Undergraduates"
             type: number
+            hidden: true
+            group_label: "School Details"
+      
       - name: sport_name
         description: Standardized sport name
         tests:
           - not_null
         meta:
           dimension:
+            label: "Sport"
             type: string
+            group_label: "Sport Details"
+      
       - name: sex
-        description: Male, Female, or Coed
+        description: Male or Female
         tests:
           - not_null
           - accepted_values:
               values: ['Male', 'Female']
         meta:
           dimension:
+            label: "Sex"
             type: string
+            group_label: "Sport Details"
+      
       - name: is_coed_sport
         description: True if this row represents participation in a coed team
         meta:
           dimension:
+            label: "Coed Sport"
             type: boolean
+            group_label: "Sport Details"
+      
       - name: participation
         description: Number of participants
         meta:
           dimension:
+            label: "Participants"
             type: number
+            hidden: true
+            group_label: "Sport Metrics"
           metrics:
             total_participation:
+              label: "Total Participants"
               type: sum
               sql: ${TABLE}.participation
+              round: 0
+              group_label: "Sport Metrics"
+      
       - name: revenue
         description: Sport revenue
         meta:
           dimension:
+            label: "Revenue"
             type: number
+            hidden: true
+            group_label: "Sport Finances"
           metrics:
             total_revenue:
+              label: "Total Revenue"
               type: sum
               sql: ${TABLE}.revenue
+              format: 'usd'
+              round: 0
+              group_label: "Sport Finances"
+      
       - name: expenses
         description: Sport expenses
         meta:
           dimension:
+            label: "Expenses"
             type: number
+            hidden: true
+            group_label: "Sport Finances"
           metrics:
             total_expenses:
+              label: "Total Expenses"
               type: sum
               sql: ${TABLE}.expenses
+              format: 'usd'
+              round: 0
+              group_label: "Sport Finances"
+      
       - name: operating_expenses
         description: Sport operating expenses
         meta:
           dimension:
+            label: "Operating Expenses"
             type: number
+            hidden: true
+            group_label: "Sport Finances"
