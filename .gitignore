@@ -11,6 +11,6 @@ target/
 dbt_packages/
 logs/
 *.csv
-*.sql
+/*.sql
 dbt-env
 .env
