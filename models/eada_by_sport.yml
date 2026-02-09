@@ -18,57 +18,106 @@ models:
         description: Survey year (2004-2023)
         tests:
           - not_null
+        meta:
+          dimension:
+            type: number
       - name: unitid
         description: Institution ID
         tests:
           - not_null
+        meta:
+          dimension:
+            type: string
       - name: ope_id
         description: Office of Postsecondary Education ID
+        meta:
+          dimension:
+            type: string
       - name: institution_name
         description: Name of the institution
+        meta:
+          dimension:
+            type: string
       - name: state
         description: State code
+        meta:
+          dimension:
+            type: string
       - name: classification
         description: NCAA/NAIA classification
+        meta:
+          dimension:
+            type: string
       - name: sanction
         description: Sanctioning body (NCAA, NAIA, etc.)
+        meta:
+          dimension:
+            type: string
       - name: male_undergraduates
         description: Total male undergraduate enrollment
+        meta:
+          dimension:
+            type: number
       - name: female_undergraduates
         description: Total female undergraduate enrollment
+        meta:
+          dimension:
+            type: number
       - name: total_undergraduates
         description: Total undergraduate enrollment
+        meta:
+          dimension:
+            type: number
       - name: sport_name
         description: Standardized sport name
         tests:
           - not_null
+        meta:
+          dimension:
+            type: string
       - name: sex
         description: Male, Female, or Coed
         tests:
           - not_null
           - accepted_values:
               values: ['Male', 'Female']
+        meta:
+          dimension:
+            type: string
       - name: is_coed_sport
         description: True if this row represents participation in a coed team
+        meta:
+          dimension:
+            type: boolean
       - name: participation
         description: Number of participants
+        meta:
+          dimension:
+            type: number
+          metrics:
+            total_participation:
+              type: sum
+              sql: ${TABLE}.participation
       - name: revenue
         description: Sport revenue
+        meta:
+          dimension:
+            type: number
+          metrics:
+            total_revenue:
+              type: sum
+              sql: ${TABLE}.revenue
       - name: expenses
         description: Sport expenses
+        meta:
+          dimension:
+            type: number
+          metrics:
+            total_expenses:
+              type: sum
+              sql: ${TABLE}.expenses
       - name: operating_expenses
         description: Sport operating expenses
-    meta:
-      metrics:
-        total_participation:
-          type: sum
-          sql: participation
-          label: Total Participation
-        total_revenue:
-          type: sum
-          sql: revenue
-          label: Total Revenue
-        total_expenses:
-          type: sum
-          sql: expenses
-          label: Total Expenses
+        meta:
+          dimension:
+            type: number
