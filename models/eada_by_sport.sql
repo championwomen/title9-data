@@ -176,4 +176,26 @@ with sport_data as (
     from {{ source('raw', 'raw_eada_by_sport') }}
     where NULLIF(partic_coed_women, '') is not null and NULLIF(partic_coed_women, '') != '0'
 )
-select * from sport_data
+-- Convenience coaching rollups (collapse FT/PT and head/assistant by coach sex).
+-- NOTE: university-employee columns are deliberately excluded — they are a
+-- separate axis (is the coach a full-time university employee), not a subset of
+-- FT coaching positions. NULL is preserved where no coaching data exists
+-- (e.g. coed-women rows, which carry coaching on the coed-men row).
+select *,
+    case when ft_head_coaches_male is null and pt_head_coaches_male is null then null
+         else coalesce(ft_head_coaches_male,0) + coalesce(pt_head_coaches_male,0) end as head_coaches_male,
+    case when ft_head_coaches_female is null and pt_head_coaches_female is null then null
+         else coalesce(ft_head_coaches_female,0) + coalesce(pt_head_coaches_female,0) end as head_coaches_female,
+    case when ft_asst_coaches_male is null and pt_asst_coaches_male is null then null
+         else coalesce(ft_asst_coaches_male,0) + coalesce(pt_asst_coaches_male,0) end as asst_coaches_male,
+    case when ft_asst_coaches_female is null and pt_asst_coaches_female is null then null
+         else coalesce(ft_asst_coaches_female,0) + coalesce(pt_asst_coaches_female,0) end as asst_coaches_female,
+    case when coalesce(ft_head_coaches_male, pt_head_coaches_male, ft_asst_coaches_male, pt_asst_coaches_male) is null then null
+         else coalesce(ft_head_coaches_male,0) + coalesce(pt_head_coaches_male,0)
+            + coalesce(ft_asst_coaches_male,0) + coalesce(pt_asst_coaches_male,0) end as total_coaches_male,
+    case when coalesce(ft_head_coaches_female, pt_head_coaches_female, ft_asst_coaches_female, pt_asst_coaches_female) is null then null
+         else coalesce(ft_head_coaches_female,0) + coalesce(pt_head_coaches_female,0)
+            + coalesce(ft_asst_coaches_female,0) + coalesce(pt_asst_coaches_female,0) end as total_coaches_female,
+    case when total_head_coaches is null and total_asst_coaches is null then null
+         else coalesce(total_head_coaches,0) + coalesce(total_asst_coaches,0) end as total_coaches
+from sport_data

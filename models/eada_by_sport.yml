@@ -438,3 +438,120 @@ models:
               sql: ${TABLE}.pt_asst_coach_univ_emp_female
               round: 0
               group_label: "Coaching — Assistant"
+
+      # --- Simplified coaching rollups (FT+PT, head+assistant, by coach sex).
+      # Excludes university-employee columns (separate axis). Positions, not unique people.
+      - name: total_coaches
+        meta:
+          dimension:
+            label: "Total Coaches"
+            type: number
+            hidden: true
+            group_label: "Coaching — Summary"
+          metrics:
+            coaching_positions:
+              label: "Total Coaches"
+              type: sum
+              sql: ${TABLE}.total_coaches
+              round: 0
+              group_label: "Coaching — Summary"
+      - name: total_coaches_male
+        meta:
+          dimension:
+            label: "Male Coaches"
+            type: number
+            hidden: true
+            group_label: "Coaching — Summary"
+          metrics:
+            male_coaches:
+              label: "Male Coaches"
+              type: sum
+              sql: ${TABLE}.total_coaches_male
+              round: 0
+              group_label: "Coaching — Summary"
+      - name: total_coaches_female
+        meta:
+          dimension:
+            label: "Female Coaches"
+            type: number
+            hidden: true
+            group_label: "Coaching — Summary"
+          metrics:
+            female_coaches:
+              label: "Female Coaches"
+              type: sum
+              sql: ${TABLE}.total_coaches_female
+              round: 0
+              group_label: "Coaching — Summary"
+            pct_female_coaches:
+              label: "% Female Coaches"
+              description: "Female coaching positions as a share of all coaching positions (head + assistant)."
+              type: number
+              sql: "SUM(COALESCE(${TABLE}.total_coaches_female,0)) / NULLIF(SUM(COALESCE(${TABLE}.total_coaches_male,0) + COALESCE(${TABLE}.total_coaches_female,0)), 0)"
+              format: 'percent'
+              round: 1
+              group_label: "Coaching — Summary"
+            pct_female_head_coaches:
+              label: "% Female Head Coaches"
+              description: "Female head-coach positions as a share of all head-coach positions."
+              type: number
+              sql: "SUM(COALESCE(${TABLE}.head_coaches_female,0)) / NULLIF(SUM(COALESCE(${TABLE}.head_coaches_male,0) + COALESCE(${TABLE}.head_coaches_female,0)), 0)"
+              format: 'percent'
+              round: 1
+              group_label: "Coaching — Summary"
+      - name: head_coaches_male
+        meta:
+          dimension:
+            label: "Male Head Coaches"
+            type: number
+            hidden: true
+            group_label: "Coaching — Summary"
+          metrics:
+            male_head_coaches:
+              label: "Male Head Coaches"
+              type: sum
+              sql: ${TABLE}.head_coaches_male
+              round: 0
+              group_label: "Coaching — Summary"
+      - name: head_coaches_female
+        meta:
+          dimension:
+            label: "Female Head Coaches"
+            type: number
+            hidden: true
+            group_label: "Coaching — Summary"
+          metrics:
+            female_head_coaches:
+              label: "Female Head Coaches"
+              type: sum
+              sql: ${TABLE}.head_coaches_female
+              round: 0
+              group_label: "Coaching — Summary"
+      - name: asst_coaches_male
+        meta:
+          dimension:
+            label: "Male Assistant Coaches"
+            type: number
+            hidden: true
+            group_label: "Coaching — Summary"
+          metrics:
+            male_asst_coaches:
+              label: "Male Assistant Coaches"
+              type: sum
+              sql: ${TABLE}.asst_coaches_male
+              round: 0
+              group_label: "Coaching — Summary"
+      - name: asst_coaches_female
+        meta:
+          dimension:
+            label: "Female Assistant Coaches"
+            type: number
+            hidden: true
+            group_label: "Coaching — Summary"
+          metrics:
+            female_asst_coaches:
+              label: "Female Assistant Coaches"
+              type: sum
+              sql: ${TABLE}.asst_coaches_female
+              round: 0
+              group_label: "Coaching — Summary"
