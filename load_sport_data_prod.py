@@ -30,8 +30,8 @@ DEFAULTS = {
     "password": os.getenv("DB_PASSWORD", "title9"),
 }
 
-CSV_FILE = "data/All_Data_Combined_2004_2005_2006_2007_2008_2009_2010_2011_2012_2013_2014_2015_2016_2017_2018_2019_2020_2021_2022_2023.csv"
-BATCH_SIZE = 1000  # Commit every N rows
+CSV_FILE = "data/eada_by_sport_long_2009_2025.csv"
+BATCH_SIZE = 1000  # Commit every N rows (unused with COPY)
 # ============== END CONFIGURATION ==============
 
 
@@ -100,50 +100,18 @@ def load_data(conn):
     cursor.execute("TRUNCATE raw_eada_by_sport")
     conn.commit()
 
-    # Load data
-    print(f"→ Loading data from {CSV_FILE}...")
-
+    # Load data with server-side-style streaming COPY (fast; maps by column
+    # position, header skipped — so CSV column order must match the table).
+    print(f"→ Loading data from {CSV_FILE} via COPY...")
     with open(CSV_FILE, "r", encoding="utf-8-sig") as f:
-        reader = csv.reader(f)
-        next(reader)  # Skip header
+        cursor.copy_expert(
+            "COPY raw_eada_by_sport FROM STDIN WITH (FORMAT CSV, HEADER, NULL '')",
+            f,
+        )
+    conn.commit()
 
-        row_count = 0
-        batch = []
-
-        for row in reader:
-            # Pad or truncate row to match DB columns
-            while len(row) < len(db_columns):
-                row.append(None)
-            row = row[: len(db_columns)]
-
-            # Convert empty strings to None
-            row = [None if x == "" else x for x in row]
-
-            batch.append(row)
-            row_count += 1
-
-            if len(batch) >= BATCH_SIZE:
-                # Insert batch
-                placeholders = ",".join(["%s"] * len(db_columns))
-                sql = f"INSERT INTO raw_eada_by_sport ({','.join(db_columns)}) VALUES ({placeholders})"
-
-                for row_data in batch:
-                    cursor.execute(sql, row_data)
-
-                conn.commit()
-                print(f"  Loaded {row_count} rows...")
-                batch = []
-
-        # Insert remaining rows
-        if batch:
-            placeholders = ",".join(["%s"] * len(db_columns))
-            sql = f"INSERT INTO raw_eada_by_sport ({','.join(db_columns)}) VALUES ({placeholders})"
-
-            for row_data in batch:
-                cursor.execute(sql, row_data)
-
-            conn.commit()
-
+    cursor.execute("SELECT COUNT(*) FROM raw_eada_by_sport")
+    row_count = cursor.fetchone()[0]
     print(f"\n✓ Successfully loaded {row_count} rows")
 
     # Verify

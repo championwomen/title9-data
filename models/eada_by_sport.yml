@@ -5,18 +5,18 @@ sources:
     schema: public
     tables:
       - name: raw_eada_by_sport
-        description: Raw EADA data by sport (2004-2023) in wide format
+        description: Raw EADA long-format by-sport data (2009-2025), one row per sport per institution per year.
 
 models:
   - name: eada_by_sport
     description: |
-      EADA data transformed from wide to long format. One row per sport per institution per year per sex.
-      Includes participation counts, revenue, expenses, and operating expenses for each sport.
-      Coed sports are split into separate Male/Female rows with is_coed_sport=true flag.
-    
+      EADA data by sport in long format. One row per sport per institution per year per sex.
+      Includes participation, revenue, expenses, operating expenses, and full head/assistant
+      coaching-staff breakdowns (full/part-time, by coach sex, and university-employee status).
+      Coed teams are split into Male/Female rows (is_coed_sport=true); coed coaching counts are
+      attributed to the Male row to avoid double-counting.
     columns:
       - name: year
-        description: Survey year (2004-2023)
         tests:
           - not_null
         meta:
@@ -26,96 +26,77 @@ models:
             time_intervals: ['YEAR']
             sql: to_date(CAST(${TABLE}.year AS CHAR(4)), 'yyyy')
             group_label: "Time Period"
-      
       - name: unitid
-        description: Institution ID
-        tests:
-          - not_null
         meta:
           dimension:
             label: "Unit ID"
             type: string
             group_label: "School Details"
-      
       - name: ope_id
-        description: Office of Postsecondary Education ID
         meta:
           dimension:
             label: "OPE ID"
             type: string
             group_label: "School Details"
-      
       - name: institution_name
-        description: Name of the institution
         meta:
           dimension:
             label: "Institution Name"
             type: string
             group_label: "School Details"
-      
       - name: state
-        description: State code
         meta:
           dimension:
             label: "State"
             type: string
             group_label: "School Details"
-      
       - name: classification
-        description: NCAA/NAIA classification
         meta:
           dimension:
             label: "Classification"
             type: string
             group_label: "School Details"
-      
-      - name: sanction
-        description: Sanctioning body (NCAA, NAIA, etc.)
+      - name: sector
         meta:
           dimension:
-            label: "Sanction"
+            label: "Sector"
             type: string
             group_label: "School Details"
-      
       - name: male_undergraduates
-        description: Total male undergraduate enrollment
         meta:
           dimension:
             label: "Male Undergraduates"
             type: number
-            hidden: true
             group_label: "School Details"
-      
+            hidden: true
       - name: female_undergraduates
-        description: Total female undergraduate enrollment
         meta:
           dimension:
             label: "Female Undergraduates"
             type: number
-            hidden: true
             group_label: "School Details"
-      
+            hidden: true
       - name: total_undergraduates
-        description: Total undergraduate enrollment
         meta:
           dimension:
             label: "Total Undergraduates"
             type: number
-            hidden: true
             group_label: "School Details"
-      
+            hidden: true
+      - name: sport_code
+        meta:
+          dimension:
+            label: "Sport Code"
+            type: string
+            group_label: "Sport Details"
+            hidden: true
       - name: sport_name
-        description: Standardized sport name
-        tests:
-          - not_null
         meta:
           dimension:
             label: "Sport"
             type: string
             group_label: "Sport Details"
-      
       - name: sex
-        description: Male or Female
         tests:
           - not_null
           - accepted_values:
@@ -125,33 +106,27 @@ models:
             label: "Sex"
             type: string
             group_label: "Sport Details"
-      
       - name: is_coed_sport
-        description: True if this row represents participation in a coed team
         meta:
           dimension:
             label: "Coed Sport"
             type: boolean
             group_label: "Sport Details"
-      
       - name: participation
-        description: Number of participants
         meta:
           dimension:
-            label: "Participants"
+            label: "Participation"
             type: number
             hidden: true
             group_label: "Sport Metrics"
           metrics:
             total_participation:
-              label: "Total Participants"
+              label: "Total Participation"
               type: sum
               sql: ${TABLE}.participation
               round: 0
               group_label: "Sport Metrics"
-      
       - name: revenue
-        description: Sport revenue
         meta:
           dimension:
             label: "Revenue"
@@ -166,29 +141,300 @@ models:
               format: 'usd'
               round: 0
               group_label: "Sport Finances"
-      
-      - name: expenses
-        description: Sport expenses
+      - name: total_expenses
         meta:
           dimension:
-            label: "Expenses"
+            label: "Total Expenses"
             type: number
             hidden: true
             group_label: "Sport Finances"
           metrics:
-            total_expenses:
-              label: "Total Expenses"
+            total_total_expenses:
+              label: "Total Total Expenses"
               type: sum
-              sql: ${TABLE}.expenses
+              sql: ${TABLE}.total_expenses
               format: 'usd'
               round: 0
               group_label: "Sport Finances"
-      
       - name: operating_expenses
-        description: Sport operating expenses
         meta:
           dimension:
             label: "Operating Expenses"
             type: number
             hidden: true
             group_label: "Sport Finances"
+          metrics:
+            total_operating_expenses:
+              label: "Total Operating Expenses"
+              type: sum
+              sql: ${TABLE}.operating_expenses
+              format: 'usd'
+              round: 0
+              group_label: "Sport Finances"
+      - name: operating_expense_per_participant
+        meta:
+          dimension:
+            label: "Operating Expense Per Participant"
+            type: number
+            hidden: true
+            group_label: "Sport Finances"
+          metrics:
+            total_operating_expense_per_participant:
+              label: "Total Operating Expense Per Participant"
+              type: sum
+              sql: ${TABLE}.operating_expense_per_participant
+              format: 'usd'
+              round: 0
+              group_label: "Sport Finances"
+      - name: ft_head_coaches_male
+        meta:
+          dimension:
+            label: "FT Head Coaches Male"
+            type: number
+            hidden: true
+            group_label: "Coaching — Head"
+          metrics:
+            total_ft_head_coaches_male:
+              label: "Total FT Head Coaches Male"
+              type: sum
+              sql: ${TABLE}.ft_head_coaches_male
+              round: 0
+              group_label: "Coaching — Head"
+      - name: pt_head_coaches_male
+        meta:
+          dimension:
+            label: "PT Head Coaches Male"
+            type: number
+            hidden: true
+            group_label: "Coaching — Head"
+          metrics:
+            total_pt_head_coaches_male:
+              label: "Total PT Head Coaches Male"
+              type: sum
+              sql: ${TABLE}.pt_head_coaches_male
+              round: 0
+              group_label: "Coaching — Head"
+      - name: ft_head_coaches_female
+        meta:
+          dimension:
+            label: "FT Head Coaches Female"
+            type: number
+            hidden: true
+            group_label: "Coaching — Head"
+          metrics:
+            total_ft_head_coaches_female:
+              label: "Total FT Head Coaches Female"
+              type: sum
+              sql: ${TABLE}.ft_head_coaches_female
+              round: 0
+              group_label: "Coaching — Head"
+      - name: pt_head_coaches_female
+        meta:
+          dimension:
+            label: "PT Head Coaches Female"
+            type: number
+            hidden: true
+            group_label: "Coaching — Head"
+          metrics:
+            total_pt_head_coaches_female:
+              label: "Total PT Head Coaches Female"
+              type: sum
+              sql: ${TABLE}.pt_head_coaches_female
+              round: 0
+              group_label: "Coaching — Head"
+      - name: total_head_coaches
+        meta:
+          dimension:
+            label: "Total Head Coaches"
+            type: number
+            hidden: true
+            group_label: "Coaching — Head"
+          metrics:
+            total_total_head_coaches:
+              label: "Total Total Head Coaches"
+              type: sum
+              sql: ${TABLE}.total_head_coaches
+              round: 0
+              group_label: "Coaching — Head"
+      - name: ft_head_coach_univ_emp_male
+        meta:
+          dimension:
+            label: "FT Head Coach Univ. Employee Male"
+            type: number
+            hidden: true
+            group_label: "Coaching — Head"
+          metrics:
+            total_ft_head_coach_univ_emp_male:
+              label: "Total FT Head Coach Univ. Employee Male"
+              type: sum
+              sql: ${TABLE}.ft_head_coach_univ_emp_male
+              round: 0
+              group_label: "Coaching — Head"
+      - name: pt_head_coach_univ_emp_male
+        meta:
+          dimension:
+            label: "PT Head Coach Univ. Employee Male"
+            type: number
+            hidden: true
+            group_label: "Coaching — Head"
+          metrics:
+            total_pt_head_coach_univ_emp_male:
+              label: "Total PT Head Coach Univ. Employee Male"
+              type: sum
+              sql: ${TABLE}.pt_head_coach_univ_emp_male
+              round: 0
+              group_label: "Coaching — Head"
+      - name: ft_head_coach_univ_emp_female
+        meta:
+          dimension:
+            label: "FT Head Coach Univ. Employee Female"
+            type: number
+            hidden: true
+            group_label: "Coaching — Head"
+          metrics:
+            total_ft_head_coach_univ_emp_female:
+              label: "Total FT Head Coach Univ. Employee Female"
+              type: sum
+              sql: ${TABLE}.ft_head_coach_univ_emp_female
+              round: 0
+              group_label: "Coaching — Head"
+      - name: pt_head_coach_univ_emp_female
+        meta:
+          dimension:
+            label: "PT Head Coach Univ. Employee Female"
+            type: number
+            hidden: true
+            group_label: "Coaching — Head"
+          metrics:
+            total_pt_head_coach_univ_emp_female:
+              label: "Total PT Head Coach Univ. Employee Female"
+              type: sum
+              sql: ${TABLE}.pt_head_coach_univ_emp_female
+              round: 0
+              group_label: "Coaching — Head"
+      - name: ft_asst_coaches_male
+        meta:
+          dimension:
+            label: "FT Asst Coaches Male"
+            type: number
+            hidden: true
+            group_label: "Coaching — Assistant"
+          metrics:
+            total_ft_asst_coaches_male:
+              label: "Total FT Asst Coaches Male"
+              type: sum
+              sql: ${TABLE}.ft_asst_coaches_male
+              round: 0
+              group_label: "Coaching — Assistant"
+      - name: pt_asst_coaches_male
+        meta:
+          dimension:
+            label: "PT Asst Coaches Male"
+            type: number
+            hidden: true
+            group_label: "Coaching — Assistant"
+          metrics:
+            total_pt_asst_coaches_male:
+              label: "Total PT Asst Coaches Male"
+              type: sum
+              sql: ${TABLE}.pt_asst_coaches_male
+              round: 0
+              group_label: "Coaching — Assistant"
+      - name: ft_asst_coaches_female
+        meta:
+          dimension:
+            label: "FT Asst Coaches Female"
+            type: number
+            hidden: true
+            group_label: "Coaching — Assistant"
+          metrics:
+            total_ft_asst_coaches_female:
+              label: "Total FT Asst Coaches Female"
+              type: sum
+              sql: ${TABLE}.ft_asst_coaches_female
+              round: 0
+              group_label: "Coaching — Assistant"
+      - name: pt_asst_coaches_female
+        meta:
+          dimension:
+            label: "PT Asst Coaches Female"
+            type: number
+            hidden: true
+            group_label: "Coaching — Assistant"
+          metrics:
+            total_pt_asst_coaches_female:
+              label: "Total PT Asst Coaches Female"
+              type: sum
+              sql: ${TABLE}.pt_asst_coaches_female
+              round: 0
+              group_label: "Coaching — Assistant"
+      - name: total_asst_coaches
+        meta:
+          dimension:
+            label: "Total Asst Coaches"
+            type: number
+            hidden: true
+            group_label: "Coaching — Assistant"
+          metrics:
+            total_total_asst_coaches:
+              label: "Total Total Asst Coaches"
+              type: sum
+              sql: ${TABLE}.total_asst_coaches
+              round: 0
+              group_label: "Coaching — Assistant"
+      - name: ft_asst_coach_univ_emp_male
+        meta:
+          dimension:
+            label: "FT Asst Coach Univ. Employee Male"
+            type: number
+            hidden: true
+            group_label: "Coaching — Assistant"
+          metrics:
+            total_ft_asst_coach_univ_emp_male:
+              label: "Total FT Asst Coach Univ. Employee Male"
+              type: sum
+              sql: ${TABLE}.ft_asst_coach_univ_emp_male
+              round: 0
+              group_label: "Coaching — Assistant"
+      - name: pt_asst_coach_univ_emp_male
+        meta:
+          dimension:
+            label: "PT Asst Coach Univ. Employee Male"
+            type: number
+            hidden: true
+            group_label: "Coaching — Assistant"
+          metrics:
+            total_pt_asst_coach_univ_emp_male:
+              label: "Total PT Asst Coach Univ. Employee Male"
+              type: sum
+              sql: ${TABLE}.pt_asst_coach_univ_emp_male
+              round: 0
+              group_label: "Coaching — Assistant"
+      - name: ft_asst_coach_univ_emp_female
+        meta:
+          dimension:
+            label: "FT Asst Coach Univ. Employee Female"
+            type: number
+            hidden: true
+            group_label: "Coaching — Assistant"
+          metrics:
+            total_ft_asst_coach_univ_emp_female:
+              label: "Total FT Asst Coach Univ. Employee Female"
+              type: sum
+              sql: ${TABLE}.ft_asst_coach_univ_emp_female
+              round: 0
+              group_label: "Coaching — Assistant"
+      - name: pt_asst_coach_univ_emp_female
+        meta:
+          dimension:
+            label: "PT Asst Coach Univ. Employee Female"
+            type: number
+            hidden: true
+            group_label: "Coaching — Assistant"
+          metrics:
+            total_pt_asst_coach_univ_emp_female:
+              label: "Total PT Asst Coach Univ. Employee Female"
+              type: sum
+              sql: ${TABLE}.pt_asst_coach_univ_emp_female
+              round: 0
+              group_label: "Coaching — Assistant"
