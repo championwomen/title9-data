@@ -487,7 +487,7 @@ models:
               label: "% Female Coaches"
               description: "Female coaching positions as a share of all coaching positions (head + assistant)."
               type: number
-              sql: "SUM(COALESCE(${TABLE}.total_coaches_female,0)) / NULLIF(SUM(COALESCE(${TABLE}.total_coaches_male,0) + COALESCE(${TABLE}.total_coaches_female,0)), 0)"
+              sql: "SUM(COALESCE(${TABLE}.total_coaches_female,0))::numeric / NULLIF(SUM(COALESCE(${TABLE}.total_coaches_male,0) + COALESCE(${TABLE}.total_coaches_female,0)), 0)"
               format: 'percent'
               round: 1
               group_label: "Coaching — Summary"
@@ -495,7 +495,7 @@ models:
               label: "% Female Head Coaches"
               description: "Female head-coach positions as a share of all head-coach positions."
               type: number
-              sql: "SUM(COALESCE(${TABLE}.head_coaches_female,0)) / NULLIF(SUM(COALESCE(${TABLE}.head_coaches_male,0) + COALESCE(${TABLE}.head_coaches_female,0)), 0)"
+              sql: "SUM(COALESCE(${TABLE}.head_coaches_female,0))::numeric / NULLIF(SUM(COALESCE(${TABLE}.head_coaches_male,0) + COALESCE(${TABLE}.head_coaches_female,0)), 0)"
               format: 'percent'
               round: 1
               group_label: "Coaching — Summary"
