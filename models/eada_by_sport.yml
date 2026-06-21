@@ -186,6 +186,22 @@ models:
               format: 'usd'
               round: 0
               group_label: "Sport Finances"
+      - name: net_revenue
+        description: "Total revenue minus total expenses (surplus/deficit). Positive = revenue exceeds expenses."
+        meta:
+          dimension:
+            label: "Net Revenue"
+            type: number
+            hidden: true
+            group_label: "Sport Finances"
+          metrics:
+            total_net_revenue:
+              label: "Net Revenue"
+              type: sum
+              sql: ${TABLE}.net_revenue
+              format: 'usd'
+              round: 0
+              group_label: "Sport Finances"
       - name: ft_head_coaches_male
         meta:
           dimension:

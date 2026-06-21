@@ -182,6 +182,9 @@ with sport_data as (
 -- FT coaching positions. NULL is preserved where no coaching data exists
 -- (e.g. coed-women rows, which carry coaching on the coed-men row).
 select *,
+    -- Net revenue = total revenue minus total expenses (surplus/deficit per sport).
+    case when revenue is null and total_expenses is null then null
+         else coalesce(revenue,0) - coalesce(total_expenses,0) end as net_revenue,
     case when ft_head_coaches_male is null and pt_head_coaches_male is null then null
          else coalesce(ft_head_coaches_male,0) + coalesce(pt_head_coaches_male,0) end as head_coaches_male,
     case when ft_head_coaches_female is null and pt_head_coaches_female is null then null
